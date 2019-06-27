@@ -79,6 +79,7 @@ r.jack$range <- r.jack$yrmax - r.jack$yrmin
 
 # Jacksonville-4907
 lm.jack <- lm(r.jack$mean ~ r.jack$Distance..um.) # The is the OVERALL linear model, not split into two
+lm.jack <- lm(r.jack$X14C.Age ~ r.jack$Distance..um.)
 
 #' --------------------------------------------
 #' NOTE:
@@ -110,10 +111,14 @@ lm.stet <- lm(r.stet.edit$mean ~ r.stet.edit$Distance..um.) # linear model for S
 
 # To NOT leave out the points, and do a regression model on all of them:
 lm.stet.all <- lm(r.stet$mean ~ r.stet$Distance..um.) # linear model for Stetson
+lm.stet.all <- lm(r.stet$X14C.Age ~ r.stet$Distance..um.) # linear model for Stetson
+
 summary(lm.stet.all)
 
 # Savannah-4902
 lm.sav <- lm(r.sav$mean ~ r.sav$Distance..um.) # linear model for Savannah
+lm.sav <- lm(r.sav$X14C.Age ~ r.sav$Distance..um.) # linear model for Savannah
+
 summary(lm.sav)
 
 ################################

@@ -31,129 +31,53 @@ eaa_norm <- df_eaa[,-c(1)] - rowMeans(df_eaa[,-c(1)])
 eaa_norm <- cbind(df_eaa[,1], eaa_norm)
 
 carbon %>%
-  dplyr::select(Group.ID2, Phe, Thr, Ile, Leu, Val) %>% 
-  filter(Group.ID2 == "Isidella" | Group.ID2 == "Leiopathes") -> df_coral  
+  filter(Group.ID2 == "Leiopathes") %>%
+  dplyr::select(Group.ID3, Phe, Thr, Ile, Leu, Val) -> df_coral 
+
 coral_norm <- df_coral[,-c(1)] - rowMeans(df_coral[,-c(1)])
 coral_norm <- cbind(df_coral[,1], coral_norm)
 
-####################################
-##                                ##
-##                                ##
-## Principal Components Analysis  ##
-##                                ##
-##                                ##
-####################################
+cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
-# eaa_norm <- droplevels(eaa_norm) # Remove 'levels' not being used, since we subsetted the data
-# eaa_pca <- rda(eaa_norm[,-c(1)], scale = TRUE)
-# # eaa_pca <- prcomp(eaa_norm[,-c(1)], center = TRUE, scale. = TRUE)
-# # eaa_pca <- princomp(eaa_norm[,-c(1)], cor = TRUE, score = TRUE)
-# 
-# coral_norm <- droplevels(coral_norm)
-# coral_pca <- rda(coral_norm[,-c(1)], scale = TRUE)
-# 
-# # predicted <- predict(eaa_pca, newdata = coral_norm[,-c(1)]) # Not sure this works?
-# 
-# ##############
-# ## Plotting ##
-# ##############
-# # If using rda() from vegan
-# biplot(eaa_pca,
-#        display = c("species"),
-#        type = c("text"),
-#        col = c("#252525", "black"),
-#        xlab = "PC1",
-#        ylab = "PC2")
-# points(eaa_pca,
-#        pch = c(21,22,23,24,25)[as.numeric(eaa_norm$`df_eaa[, 1]`)],
-#        # col = c("red", "yellow", "blue", "green", "orange")[as.numeric(eaa_norm$`df_eaa[, 1]`)],
-#        col = "black",
-#        bg = c("red", "yellow", "blue", "darkgreen", "orange")[as.numeric(eaa_norm$`df_eaa[, 1]`)])
-# legend("bottomleft",
-#        lty = NULL,
-#        bty = "n",
-#        pch = c(21,22,23,24,25),
-#        legend = levels(eaa_norm$`df_eaa[, 1]`),
-#        cex = 0.45,
-#        pt.cex = 0.95,
-#        # col = "black",
-#        pt.bg = c("red", "yellow", "blue", "darkgreen", "orange"))
-# 
-# biplot(coral_pca,
-#        display = c("species"),
-#        type = c("text"),
-#        col = c("#252525", "black"),
-#        xlab = "PC1",
-#        ylab = "PC2")
-# points(coral_pca,
-#        pch = c(21,22,23,24,25)[as.numeric(coral_norm$`df_coral[, 1]`)],
-#        # col = c("red", "yellow", "blue", "green", "orange")[as.numeric(eaa_norm$`df_eaa[, 1]`)],
-#        col = "black",
-#        bg = c("red", "yellow", "blue", "darkgreen", "orange")[as.numeric(coral_norm$`df_eaa[, 1]`)])
-# legend("bottomleft",
-#        lty = NULL,
-#        bty = "n",
-#        pch = c(21,22,23,24,25),
-#        legend = levels(coral_norm$`df_coral[, 1]`),
-#        cex = 0.45,
-#        pt.cex = 0.95,
-#        # col = "black",
-#        pt.bg = c("red", "yellow", "blue", "darkgreen", "orange"))
-# 
-# # If using princomp() from base stats
-# biplot(eaa_pca,
-#        # col = c("#252525", "black"),
-#        xlab = "PC1",
-#        ylab = "PC2",
-#        col=c(2,3), cex=c(1/2, 1.25))
-# legend("bottomleft",
-#        lty = NULL,
-#        bty = "n",
-#        legend = levels(eaa_norm$`df_eaa[, 1]`),
-#        cex = 0.45,
-#        pt.cex = 0.95)
-#        # col = "black",
-#        # pt.bg = c("red", "yellow", "blue", "darkgreen", "orange"))
-
-####################################
-##                                ##
-##                                ##
-## Principal Components Analysis  ## 03/07/2019
-## Part II.                       ##
-##                                ##
-####################################
-
-#' Here, I am doing PCA on the data
-#' that was already normalized in the carbon_csiaa script.
+#'
+#'
+#' Below are other kinds of filtered datasets.
+#' I have decided to collate them here at the top
+#' rather than throughout the file.
 #' 
-# View(aa_norm)
-# t.aa <- aa_norm %>% select(-c(Lys, Pro, Ser))
-# t.aa <- droplevels(t.aa)
-# aa_pca <- vegan::rda(t.aa[,-c(1,2)], scale = TRUE) # this includes all AA samples
-# 
-# ############
-# # Plotting #
-# ############
-# biplot(aa_pca,
-#        display = c("species"),
-#        type = c("text"),
-#        col = c("#252525", "black"),
-#        xlab = "PC1",
-#        ylab = "PC2")
-# points(aa_pca,
-#        pch = c(21,22,23,24,25)[as.numeric(t.aa$Group.ID2)],
-#        # col = c("red", "yellow", "blue", "green", "orange")[as.numeric(eaa_norm$`df_eaa[, 1]`)],
-#        col = "black",
-#        bg = c("red", "yellow", "blue", "darkgreen", "orange")[as.numeric(t.aa$Group.ID2)])
-# legend("bottomleft",
-#        lty = NULL,
-#        bty = "n",
-#        pch = c(21,22,23,24,25),
-#        legend = levels(t.aa$Group.ID2),
-#        cex = 0.45,
-#        pt.cex = 0.95,
-#        # col = "black",
-#        pt.bg = c("red", "yellow", "blue", "darkgreen", "orange"))
+
+# Meant to mimic the idea in McMahon (2015)
+carbon %>%
+  dplyr::select(Group.ID, Group.ID2, Group.ID3, Source, Phe, Thr, Ile, Leu, Val) %>%
+  filter(Group.ID3 == "N2 fixing" |
+           Group.ID3 == "Non-N2 fixing" |
+           Group.ID3 == "Eukaryotic algae" |
+           Group.ID3 == "Heterotrophic bacteria" |
+           Group.ID3 == "Leiopathes-post" |
+           Group.ID3 == "Leiopathes-pre") -> pca_set
+
+# Here, I filter Macroalgae, Microalgae, Bacteria, Seagrasses, Terrestrial plants
+carbon %>%
+  filter(Source == "Larsen 2013") %>%
+  filter(Group.ID2 == "Bacteria"
+         | Group.ID2 == "Macroalgae"
+         | Group.ID2 == "Microalgae"
+         | Group.ID2 == "Plants"
+         | Group.ID2 == "Seagrasses") -> t.larsen
+
+carbon %>%
+  dplyr::select(Group.ID3, Phe, Thr, Ile, Leu, Val) %>%
+  filter(Group.ID3 == "N2 fixing" |
+           Group.ID3 == "Non-N2 fixing" |
+           Group.ID3 == "Eukaryotic algae" |
+           Group.ID3 == "Heterotrophic bacteria") -> training_set
+
+training_norm <- training_set[,-c(1)] - rowMeans(training_set[,-c(1)])
+training_set2 <- cbind(training_set[,1], training_norm)
+
+# Group.ID3 == "Leiopathes-post" |
+# Group.ID3 == "Leiopathes-pre") -> pca_set
+
 
 ####################################
 ##                                ##
@@ -166,22 +90,19 @@ coral_norm <- cbind(df_coral[,1], coral_norm)
 #' I create below for LDA. I may as well see how
 #' they look.
 #' 
-carbon %>%
-  dplyr::select(Group.ID, Group.ID2, Group.ID3, Source, Phe, Thr, Ile, Leu, Val) %>%
-  filter(Group.ID3 == "N2 fixing" |
-           Group.ID3 == "Non-N2 fixing" |
-           Group.ID3 == "Euk microalgae" |
-           # Group.ID3 == "Euk macroalgae" |
-           # Group.ID3 == "Het bacteria" | 
-           Group.ID3 == "Leiopathes-post" |
-           Group.ID3 == "Leiopathes-pre") -> pca_set
+
+
+#' This is for using biplot in vegan package.
+#' I have mostly abandoned this for the flexibility 
+#' with prcomp() function and ggplot2 for plotting
+#' 
+
 
 pca_set <- droplevels(pca_set)
 pca_set2 <- pca_set[,c(5:9)] - rowMeans(pca_set[,c(5:9)])
 t.pca <- rda(pca_set2, scale = TRUE)
-t.pca2 <- prcomp(pca_set2, center = TRUE, scale. = TRUE)
-
-# autoplot(t.pca2)
+df_pca <- prcomp(pca_set2, center = TRUE, scale. = TRUE)
+summary(eigenvals(t.pca)) # Important for getting variance in vegan objects
 
 par(pty = "s")
 biplot(t.pca,
@@ -216,69 +137,57 @@ legend("bottomleft",
 #' but I don't want to erase old code (could still be useful).
 #' Here, I filter Macroalgae, Microalgae, Bacteria, Seagrasses, Terrestrial plants
 
-carbon %>%
-  filter(Source == "Larsen 2013") %>%
-  filter(Group.ID2 == "Bacteria"
-         | Group.ID2 == "Macroalgae"
-         | Group.ID2 == "Microalgae"
-         | Group.ID2 == "Plants"
-         | Group.ID2 == "Seagrasses") -> t.larsen
-
-carbon %>% 
-  filter(Group.ID5 != "" & Group.ID5 != "Leiopathes-pre" & Group.ID5 != "Leiopathes-post") -> t.larsen
-
-carbon %>%
-  filter(Source == "Schiff") %>%
-  filter(Group.ID5 == "Leiopathes-pre" | Group.ID5 == "Leiopathes-post") -> t.schiff
-
-t.compile <- rbind(t.larsen, t.schiff)
-write.csv(t.compile, "temp_csiaa.csv")
-t.compile <- read.csv("temp_csiaa.csv")
-t.compile %>%
-  dplyr::select(Group.ID5, Phe, Thr, Ile, Leu) -> t.compile
-t.compile <- na.omit(t.compile)
-t.compile <- droplevels(t.compile)
-t.norm <- t.compile[,-c(1)] - rowMeans(t.compile[,-c(1)])
-t.norm
-
 #' 6/25/2019 trying a new way to do PCA and then plotting it with ggplot
 #' 
+#' 
+#' 
+#' 
+#' 
+#' 
 
-df_pca <- prcomp(t.norm, scale = TRUE)
+# pca_set <- droplevels(pca_set)
+# pca_set2 <- pca_set[,c(5:9)] - rowMeans(pca_set[,c(5:9)])
+# t.pca <- rda(pca_set2, scale = TRUE)
+# df_pca <- prcomp(pca_set2, scale = TRUE)
+
+# df_pca <- prcomp(t.norm, scale = TRUE)
+df_pca <- prcomp(training_set2[,-c(1)], scale = TRUE)
 df_out <- as.data.frame(df_pca$x)
-df_out$group <- sapply( strsplit(as.character(row.names(df)), "_"), "[[", 1)
+df_out$group <- sapply(strsplit(as.character(row.names(training_set2)), "_"), "[[", 1)
 head(df_out)
 
-p<-ggplot(df_out,aes(x=PC1,y=PC2,color=t.compile$Group.ID5))
-p<-p+geom_point()
-p
+df_pca$rotation
+df_pca$x
+summary(df_pca)
+
+# prediction of PCs for validation dataset
+pred <- predict(df_pca, newdata=coral_norm[,2:6])
+pred <- as.data.frame(pred)
+legend_title <- NULL
+
+p <- ggplot(df_out, aes(x=PC1,y=PC2, fill = training_set2[,c(1)], shape = training_set2[,c(1)]))
+p + geom_point(size = 3.5, color = "black") +
+  theme_classic() +
+  # scale_color_manual(legend_title, values = cbPalette) +
+  scale_shape_manual(legend_title, values = c(21:24)) +
+  scale_fill_manual(legend_title, values = cbPalette) +
+  # xlim(-2,2) +
+  # ylim(-2,2) +
+  xlab("PC1 (45%)") +
+  ylab("PC2 (34%)") +
+  geom_hline(yintercept = 0, color = "black", linetype = "dashed") +
+  geom_vline(xintercept = 0, color = "black", linetype = "dashed") +
+  geom_point(data = pred, aes(x=PC1, y=PC2), shape = 4, fill = "black", size = 4) +
+  theme(axis.text.y   = element_text(size=12, color = "black"),
+        axis.text.x   = element_text(size=12, color = "black"),
+        axis.title.y  = element_text(size=12),
+        axis.title.x  = element_text(size=12))
+
 
 # pca1 <- princomp(t.norm, cor = TRUE, scores = TRUE)
 col8 <- c('#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00') # 8 variables needing colors
 col4 <- c("#E69F00", "#56B4E9", "#009E73", "#D55E00")
 
-# pca1 <- rda(t.norm, scale = TRUE)
-# par(pty = "s", bty = "L", xpd = FALSE)
-# biplot(pca1,
-#        display = c("species"),
-#        type = c("text"),
-#        col = c("#252525", "black"),
-#        xlab = "PC1 (49%)",
-#        ylab = "PC2 (28%)")
-# points(pca1,
-#        pch = c(22),
-#        cex = 1.25,
-#        col = "black",
-#        bg = col8[as.numeric(t.compile$Group.ID5)])
-# legend("topright",
-#        inset = c(0, 0),
-#        lty = NULL,
-#        bty = "n",
-#        pch = c(22),
-#        legend = levels(t.compile$Group.ID5),
-#        cex = 0.65,
-#        pt.cex = 0.95,
-#        pt.bg = c("#91bfdb","#7fbf7b", "brown", "#ffffbf", "#fee090", "#fc8d59", "#d73027"))
 
 ##################################
 ##                              ##
@@ -400,16 +309,6 @@ lda_larsen_values <- predict(lda_larsen, dimen=2)$x
 lda_predicted_set2 <- predict(lda_larsen, newdata = set2)
 lda_predicted_set3 <- predict(lda_larsen, newdata = set3)
 
-# plot(lda_larsen, dimen = 2, abbrev = 1, ylim = c(-6,6), note 3/8/2019 -- keep working on this
-#      panel = function(x, y, ...)
-#      points(x, y, ...),
-#      col = as.numeric(larsen_eaa$Group.ID2), pch = c(21,22,24))
-
-# x <- seq(-7, 5.5, 0.25) http link: https://stat.ethz.ch/pipermail/r-help/2009-August/402378.html
-# y <- seq(-4.5, 6.5, 0.25)
-# Xcon <- matrix(c(rep(x,length(y)),
-#                  rep(y, rep(length(x), length(y)))),,2)
-
 par(pty = "s")
 plot(lda_larsen, dimen = 2, abbrev = TRUE, ylim = c(-6,6), xlim = c(-6,6),
      pch = c(21,22,24)[as.numeric(larsen_eaa$Group.ID3)])
@@ -492,6 +391,187 @@ legend("bottomleft",
        pt.cex = 0.95,
        pt.bg = c("#2b83ba", "#abdda4", "#ffffbf", "#fdae61", "#d7191c"))
 
+#'
+#'
+#' UNUSED CODE
+#' 
+#' 
+
+# carbon %>% 
+#   filter(Group.ID5 != "" & Group.ID5 != "Leiopathes-pre" & Group.ID5 != "Leiopathes-post") -> t.larsen
+# 
+# carbon %>%
+#   filter(Source == "Schiff") %>%
+#   filter(Group.ID5 == "Leiopathes-pre" | Group.ID5 == "Leiopathes-post") -> t.schiff
+# 
+# t.compile <- rbind(t.larsen, t.schiff)
+# write.csv(t.compile, "temp_csiaa.csv")
+# t.compile <- read.csv("temp_csiaa.csv")
+# t.compile %>%
+#   dplyr::select(Group.ID5, Phe, Thr, Ile, Leu) -> t.compile
+# t.compile <- na.omit(t.compile)
+# t.compile <- droplevels(t.compile)
+# t.norm <- t.compile[,-c(1)] - rowMeans(t.compile[,-c(1)])
+# t.norm
+
+
+
+
+####################################
+##                                ##
+##                                ##
+## Principal Components Analysis  ##
+##                                ##
+##                                ##
+####################################
+
+# eaa_norm <- droplevels(eaa_norm) # Remove 'levels' not being used, since we subsetted the data
+# eaa_pca <- rda(eaa_norm[,-c(1)], scale = TRUE)
+# # eaa_pca <- prcomp(eaa_norm[,-c(1)], center = TRUE, scale. = TRUE)
+# # eaa_pca <- princomp(eaa_norm[,-c(1)], cor = TRUE, score = TRUE)
+# 
+# coral_norm <- droplevels(coral_norm)
+# coral_pca <- rda(coral_norm[,-c(1)], scale = TRUE)
+# 
+# # predicted <- predict(eaa_pca, newdata = coral_norm[,-c(1)]) # Not sure this works?
+# 
+# ##############
+# ## Plotting ##
+# ##############
+# # If using rda() from vegan
+# biplot(eaa_pca,
+#        display = c("species"),
+#        type = c("text"),
+#        col = c("#252525", "black"),
+#        xlab = "PC1",
+#        ylab = "PC2")
+# points(eaa_pca,
+#        pch = c(21,22,23,24,25)[as.numeric(eaa_norm$`df_eaa[, 1]`)],
+#        # col = c("red", "yellow", "blue", "green", "orange")[as.numeric(eaa_norm$`df_eaa[, 1]`)],
+#        col = "black",
+#        bg = c("red", "yellow", "blue", "darkgreen", "orange")[as.numeric(eaa_norm$`df_eaa[, 1]`)])
+# legend("bottomleft",
+#        lty = NULL,
+#        bty = "n",
+#        pch = c(21,22,23,24,25),
+#        legend = levels(eaa_norm$`df_eaa[, 1]`),
+#        cex = 0.45,
+#        pt.cex = 0.95,
+#        # col = "black",
+#        pt.bg = c("red", "yellow", "blue", "darkgreen", "orange"))
+# 
+# biplot(coral_pca,
+#        display = c("species"),
+#        type = c("text"),
+#        col = c("#252525", "black"),
+#        xlab = "PC1",
+#        ylab = "PC2")
+# points(coral_pca,
+#        pch = c(21,22,23,24,25)[as.numeric(coral_norm$`df_coral[, 1]`)],
+#        # col = c("red", "yellow", "blue", "green", "orange")[as.numeric(eaa_norm$`df_eaa[, 1]`)],
+#        col = "black",
+#        bg = c("red", "yellow", "blue", "darkgreen", "orange")[as.numeric(coral_norm$`df_eaa[, 1]`)])
+# legend("bottomleft",
+#        lty = NULL,
+#        bty = "n",
+#        pch = c(21,22,23,24,25),
+#        legend = levels(coral_norm$`df_coral[, 1]`),
+#        cex = 0.45,
+#        pt.cex = 0.95,
+#        # col = "black",
+#        pt.bg = c("red", "yellow", "blue", "darkgreen", "orange"))
+# 
+# # If using princomp() from base stats
+# biplot(eaa_pca,
+#        # col = c("#252525", "black"),
+#        xlab = "PC1",
+#        ylab = "PC2",
+#        col=c(2,3), cex=c(1/2, 1.25))
+# legend("bottomleft",
+#        lty = NULL,
+#        bty = "n",
+#        legend = levels(eaa_norm$`df_eaa[, 1]`),
+#        cex = 0.45,
+#        pt.cex = 0.95)
+#        # col = "black",
+#        # pt.bg = c("red", "yellow", "blue", "darkgreen", "orange"))
+
+####################################
+##                                ##
+##                                ##
+## Principal Components Analysis  ## 03/07/2019
+## Part II.                       ##
+##                                ##
+####################################
+
+#' Here, I am doing PCA on the data
+#' that was already normalized in the carbon_csiaa script.
+#' 
+# View(aa_norm)
+# t.aa <- aa_norm %>% select(-c(Lys, Pro, Ser))
+# t.aa <- droplevels(t.aa)
+# aa_pca <- vegan::rda(t.aa[,-c(1,2)], scale = TRUE) # this includes all AA samples
+# 
+# ############
+# # Plotting #
+# ############
+# biplot(aa_pca,
+#        display = c("species"),
+#        type = c("text"),
+#        col = c("#252525", "black"),
+#        xlab = "PC1",
+#        ylab = "PC2")
+# points(aa_pca,
+#        pch = c(21,22,23,24,25)[as.numeric(t.aa$Group.ID2)],
+#        # col = c("red", "yellow", "blue", "green", "orange")[as.numeric(eaa_norm$`df_eaa[, 1]`)],
+#        col = "black",
+#        bg = c("red", "yellow", "blue", "darkgreen", "orange")[as.numeric(t.aa$Group.ID2)])
+# legend("bottomleft",
+#        lty = NULL,
+#        bty = "n",
+#        pch = c(21,22,23,24,25),
+#        legend = levels(t.aa$Group.ID2),
+#        cex = 0.45,
+#        pt.cex = 0.95,
+#        # col = "black",
+#        pt.bg = c("red", "yellow", "blue", "darkgreen", "orange"))
+
+
+
+
+# pca1 <- rda(t.norm, scale = TRUE)
+# par(pty = "s", bty = "L", xpd = FALSE)
+# biplot(pca1,
+#        display = c("species"),
+#        type = c("text"),
+#        col = c("#252525", "black"),
+#        xlab = "PC1 (49%)",
+#        ylab = "PC2 (28%)")
+# points(pca1,
+#        pch = c(22),
+#        cex = 1.25,
+#        col = "black",
+#        bg = col8[as.numeric(t.compile$Group.ID5)])
+# legend("topright",
+#        inset = c(0, 0),
+#        lty = NULL,
+#        bty = "n",
+#        pch = c(22),
+#        legend = levels(t.compile$Group.ID5),
+#        cex = 0.65,
+#        pt.cex = 0.95,
+#        pt.bg = c("#91bfdb","#7fbf7b", "brown", "#ffffbf", "#fee090", "#fc8d59", "#d73027"))
+
+
+# plot(lda_larsen, dimen = 2, abbrev = 1, ylim = c(-6,6), note 3/8/2019 -- keep working on this
+#      panel = function(x, y, ...)
+#      points(x, y, ...),
+#      col = as.numeric(larsen_eaa$Group.ID2), pch = c(21,22,24))
+
+# x <- seq(-7, 5.5, 0.25) http link: https://stat.ethz.ch/pipermail/r-help/2009-August/402378.html
+# y <- seq(-4.5, 6.5, 0.25)
+# Xcon <- matrix(c(rep(x,length(y)),
+#                  rep(y, rep(length(x), length(y)))),,2)
 
 
 # carbon %>%
