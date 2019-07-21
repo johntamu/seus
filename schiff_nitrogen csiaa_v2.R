@@ -145,6 +145,8 @@ write.csv(ndata, file = 'ndata_all.csv')
 # Read in the new, cleaned up file that has been combined with others
 ndata <- read.csv("cleaned_ndata.csv")
 
+
+
 ##################################
 ## Principal Component Analysis ##
 ##################################
@@ -156,7 +158,6 @@ ndata <- read.csv("cleaned_ndata.csv")
 #' I am following the same idea with carbon:
 #' Use it on Source-AA data. 
 #' 
-
 
 ##########################
 ## Statistical Analyses ##
@@ -206,3 +207,27 @@ reg <- lm(TrAA ~ SrcAA, corals)
 reg <- lm(Sum.V ~ SrcAA, corals)
 reg <- lm(SrcAA ~ Phe, corals)
 summary(reg)
+
+################################
+## Predicted bulk d15N        ##
+## based on Trophic Position  ##
+## in CSIAA samples           ##
+################################
+
+# Calculation: d15N (predicted) = (TP * d15N-source) + d15N-source or d15N-phe (try both)
+nitrate <- 4.5 # d15N of nitrate based on depth profiles
+src <- 4.5 # d15N of source nitrate or Phe depending on test you want to do
+enrichment <- 3 # How much d15N enriches with each trophic transfer, in permil
+corals$d15N.pred <- (corals$TP * enrichment) + nitrate
+
+ggplot(corals, aes(Year.AD, d15N.pred)) +
+  geom_point() +
+  theme_classic() +
+  ylab(n) +
+  xlab(x)
+
+ggplot(corals, aes(Year.AD, TP)) +
+  geom_point() +
+  theme_classic() +
+  ylab("Trophic Position (Glu - Phe)") +
+  xlab(x)

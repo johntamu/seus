@@ -957,3 +957,15 @@ test <- melt(df.bulk, id = 'coral.id')
 ggplot(df.bulk, aes (linear.ad, d15n)) +
 
 View(stet.post)
+
+obj2 <- xyplot(d15n ~ linear.ad4, data = df.stet, type = "l", ylab = n, xlab = x)
+obj1 <- xyplot(d13c ~ linear.ad4, data = df.stet, type = "l", ylab = c, xlab = x)
+doubleYScale(obj1, obj2, add.ylab2 = TRUE)
+
+
+#' -----------------------------------------------------------
+#' This space below is test calculations for SSA outputs
+#' from SSA-MTM toolkit
+#' -----------------------------------------------------------
+#' 
+

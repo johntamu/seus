@@ -32,6 +32,7 @@ library(data.table)
 library(lattice)
 library(pracma)
 library(TTR)
+library(dplyr)
 # library(hht) # Empirical mode decomposition
 
 # First, import the Iodine data
@@ -45,7 +46,7 @@ stetson <- read.csv(link1)
 stetdata <- as.data.table(stetson) # To use data.table() functions, but could also use dplyr instead
 stetdata <- stetdata[, .(Distance, Total.Iodine, Total.Br, BSE.1)]
 stetdata <- na.omit(stetdata)
-stetdata$i.ma <- forecast::ma(stetdata$Total.Iodine, order = 6, centre = TRUE)
+stetdata$i.ma <- forecast::ma(stetdata$Total.Iodine, order = 6, centre = TRUE) # Moving average. Probably not using this.
 stetdata$b.ma <- forecast::ma(stetdata$Total.Br, order = 6, centre = TRUE)
 names(stetdata) <- c("distance", "iodine", "bromine", "BSE", "i.ma", "b.ma") # rename columns for easier coding
 
@@ -58,6 +59,37 @@ lines(bromine ~ distance, data = s, col = "blue")
 ################################
 ## Spectrum Analysis          ##
 ################################
+
+#'
+#' NEW CODE: 7-4-2019
+#' Will import vector outputs from SSA-MTM toolkit and analyze those against time
+#' to see if bromine or iodine vary through time in a way
+#' that makes sense.
+#' 
+#' 
+#'
+
+# First, filter the data with dplyr to get rid of "gaps"
+# Based on Mitty thesis, anything less than 50 in Iodine is a "gap"
+s %>% 
+  filter(iodine > 50) -> s
+
+# Make a columnw with ages based on growth rate from age model script file. 7-4-2019
+s$year.ad <- 2005 - ((s$distance)/growth.stet2)
+v <- s$BSE
+p <- ggplot(s, aes(x = year.ad, y = v)) +
+  geom_line() +
+  theme_classic()
+p
+
+write.csv(
+  s$iodine, "~/Desktop/iodine_filt.csv"
+)
+write.csv(
+  s$BSE, "~/Desktop/BSE_filt.csv"
+)
+
+s$ssarvec <- read.delim("~/Desktop/ssarvec_iodine.txt")
 
 ################################
 ## Will use Rssa package here ##

@@ -69,6 +69,13 @@ sav$linear.ad2 <- NA
 jack4684$linear.ad2 <- NA
 jack4686$linear.ad2 <- NA
 
+jack$linear.ad3 <- NA # From age models script. This is based on the overall growth rate for the coral, approximately 
+jack2$linear.ad3 <- NA
+stetson$linear.ad3 <- stet.linear.ad3 # Taking into account split growth rates
+sav$linear.ad3 <- NA
+jack4684$linear.ad3 <- NA
+jack4686$linear.ad3 <- NA
+
 ##########################################
 ## Add secondary (i.e., min and max)    ##
 ## growth rate ages to the bulk records ##

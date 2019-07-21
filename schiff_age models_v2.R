@@ -115,6 +115,25 @@ lm.stet.all <- lm(r.stet$X14C.Age ~ r.stet$Distance..um.) # linear model for Ste
 
 summary(lm.stet.all)
 
+# Stetson-4904 
+# Note: 07/12/2019, splitting the Stetson record into two grwoth rates like with Jacksonville to see how it varies
+r.stet %>% 
+  filter(Distance..um. < 6200) -> stet.split1
+r.stet %>%
+  filter(Distance..um. > 4900) -> stet.split2
+
+View(stet.split1)
+View(stet.split2)
+
+plot(mean ~ Distance..um., stet.split1)
+plot(mean ~ Distance..um., stet.split2)
+
+s1 <- lm(mean ~ Distance..um., stet.split1)
+s2 <- lm(mean ~ Distance..um., stet.split2)
+
+summary(s1)
+summary(s2)
+
 # Savannah-4902
 lm.sav <- lm(r.sav$mean ~ r.sav$Distance..um.) # linear model for Savannah
 lm.sav <- lm(r.sav$X14C.Age ~ r.sav$Distance..um.) # linear model for Savannah
@@ -180,6 +199,16 @@ plot(mean ~ Distance..um., r.stet2, type = "o",
      bg = "#bdbdbd")
 abline(lm(r.stet2$mean ~ r.stet2$Distance..um.), col = "#41b6c4", lty = "dashed", lwd = 2)
 
+
+plot(mean ~ Distance..um., r.stet, type = "o",
+     xlab = expression(paste("Distance", " (",mu,"m)")),
+     ylab = "Median Age (Yrs BP)",
+     pch = 21,
+     cex = 1.25,
+     bg = "#bdbdbd")
+abline(s1, col = "black", lwd = 1.25)
+abline(s2, col = "black", lwd = 1.25)
+
 ##################
 # Savannah Banks #
 ##################
@@ -210,7 +239,7 @@ print(growth3)
 
 # Create a column of ages to attach to bulk record dataframe in separate script file
 distance <- jack$distance..mm.*1000
-yrs1 <- (1950-min(r.jack$mean)) - (distance/1) # 588 is median year AD for the edge of the coral
+yrs1 <- (1950-min(r.jack$mean)) - (distance/1) # 588 (minimum) is median year AD for the edge of the coral
 yrs2 <- (1950-1380) - (distance/growth2) # 1380 is median year for the coral at distance 512 microns from edge
 t.dat <- cbind(distance,yrs1,yrs2)
 t.dat <- as.data.frame(t.dat)
@@ -257,13 +286,27 @@ growth.stet2 <- as.numeric(1/lm.stet.all$coefficients[2]) # Rsquared = 0.86, res
 stet.linear.ad1 <- 2005 - ((stetson$distance..mm.*1000)/growth.stet1) # 'stetson' from timeseries script file
 stet.linear.ad2 <- 2005 - ((stetson$distance..mm.*1000)/growth.stet2)
 
+iodine.rate <- 11 # growth rate from the iodine SSA-MTM output, about 11.5 but has error.
+stet.linear.ad4 <- 2005 - ((stetson$distance..mm.*1000)/iodine.rate)
 
 print(growth.stet1)
 print(growth.stet2)
 
 test <- 2005 - ((stetson$distance..mm.*1000)/growth.stet)
 
+# Update: 07/12/2019, growth rates for the split regression mdoels
+s1.growth <- as.numeric(1/s1$coefficients[2])
+s2.growth <- as.numeric(1/s2$coefficients[2])
 
+print(s1.growth)
+print(s2.growth)
+
+# yrs2 <- (1950-1380) - (distance/growth2) this is for Jacksonville for reference
+
+lin1 <- 2005 - ((stetson$distance..mm.*1000)/s1.growth)
+lin2 <- 2005 - ((stetson$distance..mm.*1000)/s2.growth)
+
+f <- cbind(lin1, lin2)
 #################
 # Savannah-4902 #
 #################

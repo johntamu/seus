@@ -31,10 +31,25 @@ df.jack2 <- df.bulk %>% filter(coral.id == 'jack-4907-bc1-d1')
 df.jack4684 <- df.bulk %>% filter(coral.id == 'jack-4684-bc-unk')
 df.jack4686 <- df.bulk %>% filter(coral.id == 'jack-4686-bc-d1-t1')
 
+#' --------------------------------------------------------------- 07/12/2019
+#' Adding the THIRD growth rate for the Stetson coral.
+#' This accounts for 1) the split growth rates
+#' and also 2) the apparently faster growth rate identified in 
+#' the iodine data.
+#'
+#' I SHOULD be doing this in the age model/time series scripts, but I would rather not
+#' reload everything right now.
+#' ---------------------------------------------------------------
+
+# df.stet$linear.ad3 <- ... combined ages from the two growth rates
+df.stet$linear.ad4 <- stet.linear.ad4
+
+
+
 #'
 #' Commonly used strings for axis labels
 #' 
-x <- 'Calendar Year (A.D.)'
+x <- 'Year CE'
 phe <- expression({delta}^15*"N"[" Phe"]*" (\u2030)")
 n <- expression(delta^{15}*"N (\u2030)")
 c <- expression(delta^{13}*"C (\u2030)")
@@ -126,7 +141,7 @@ abline(mod3)
 # Stetson Banks bulk d15N
 # par(pty = "s", mfrow=c(2,1))
 par(pty = "s")
-plot(d15n ~ linear.ad2, df.stet,
+plot(d15n ~ linear.ad4, df.stet,
      xlab = x,
      ylab = n,
      type = "l",
@@ -152,7 +167,7 @@ lines(d13c.5pt ~ linear.ad2, df.stet,
 
 
 # with ggplot, focus on LIA and forward
-s1 <- ggplot(df.stet, aes(x=linear.ad2, y=d15n))
+s1 <- ggplot(df.stet, aes(x=linear.ad4, y=d15n))
 s1 + geom_line(color = alpha("#009E73", 0.01)) +
   coord_fixed(ratio = 160) +
   geom_line(data=df.stet, aes(x=linear.ad2, y=d15n.3pt), color = "#009E73", size = 1.15) +
@@ -184,7 +199,7 @@ s1 + geom_line(color = alpha("#009E73", 0.01)) +
 
 # Stetson Banks bulk d13C
 
-s2 <- ggplot(df.stet, aes(linear.ad, d13c))
+s2 <- ggplot(df.stet, aes(linear.ad4, d13c))
 s2 + geom_line() +
   geom_point(shape = 21, fill = "gray", color = "black", size = 3) +
   # geom_ribbon(aes(ymin = d13c + 0.3, ymax = d13c - 0.3), alpha = 0.2, color = "black", size = 0.25) +
@@ -222,32 +237,32 @@ lines(forecast::ma(d13c.corrected, order = 5, centre = TRUE) ~ linear.ad2, df.st
 #' biogeochemical regimes
 #' -------------------------------------------------------------
 
-df.stet %>% 
-  select(linear.ad, d15n, d13c) -> t.stet
-t.stet %>%
-  melt(., "linear.ad") -> t.stet
-
-t.stet$variable <- factor(t.stet$variable, labels = c(expression(paste(delta^{15}*'N (\u2030)')),
-                                                       expression(paste(delta^{13}*'C (\u2030)'))))
-
-ggplot(data = t.stet, aes(x = linear.ad, y = value, shape = 21)) +
-  annotate("rect",xmin=1600,xmax=1850,
-           ymin=-Inf,ymax=Inf,fill="#9ecae1",color=NA,size=0.25,alpha=0.25) +
-  annotate("rect",xmin=950,xmax=1250,
-           ymin=-Inf,ymax=Inf,fill="#e9a3c9",color=NA,size=0.25,alpha=0.25) +
-  geom_point(aes(color = "black", fill = factor(variable))) +
-  facet_wrap(~ variable, scales = "free_y",
-             strip.position = "left",
-             nrow = 4,
-             # labeller = as_labeller(proxynames)) +
-             labeller = label_parsed) +
-  xlab(x) +
-  ylab(NULL) +
-  xlim(500, 2010) +
-  theme_classic() +
-  theme(strip.background = element_blank(), strip.placement = "outside", legend.position = "none")
-  # geom_vline(xintercept=600, color="black", linetype="dashed")
-# ggsave("stetson_sst_cores.pdf", width=8, height=9)
+# df.stet %>% 
+#   select(linear.ad4, d15n, d13c) -> t.stet
+# t.stet %>%
+#   melt(., "linear.ad4") -> t.stet
+# 
+# t.stet$variable <- factor(t.stet$variable, labels = c(expression(paste(delta^{15}*'N (\u2030)')),
+#                                                        expression(paste(delta^{13}*'C (\u2030)'))))
+# 
+# ggplot(data = t.stet, aes(x = linear.ad4, y = value, shape = 21)) +
+#   # annotate("rect",xmin=1600,xmax=1850,
+#   #          ymin=-Inf,ymax=Inf,fill="#9ecae1",color=NA,size=0.25,alpha=0.25) +
+#   # annotate("rect",xmin=950,xmax=1250,
+#   #          ymin=-Inf,ymax=Inf,fill="#e9a3c9",color=NA,size=0.25,alpha=0.25) +
+#   geom_point(aes(color = "black", fill = factor(variable))) +
+#   facet_wrap(~ variable, scales = "free_y",
+#              strip.position = "left",
+#              nrow = 4,
+#              # labeller = as_labeller(proxynames)) +
+#              labeller = label_parsed) +
+#   xlab(x) +
+#   ylab(NULL) +
+#   xlim(500, 2010) +
+#   theme_classic() +
+#   theme(strip.background = element_blank(), strip.placement = "outside", legend.position = "none")
+#   # geom_vline(xintercept=600, color="black", linetype="dashed")
+# # ggsave("stetson_sst_cores.pdf", width=8, height=9)
 
 #' -------------------------------------------------------------
 #' Trying above again but with some different code: https://gist.github.com/tomhopper/faa24797bb44addeba79
@@ -255,9 +270,9 @@ ggplot(data = t.stet, aes(x = linear.ad, y = value, shape = 21)) +
 #' -------------------------------------------------------------
 
 plot1 <- df.stet %>%
-  select(linear.ad2, d15n, d15n.5pt) %>%
+  select(linear.ad4, d15n, d15n.5pt) %>%
   na.omit() %>%
-  ggplot(aes(x = linear.ad2, y = d15n), size = 0.5, alpha = 0.75) +
+  ggplot(aes(x = linear.ad4, y = d15n), size = 0.5, alpha = 0.75) +
   geom_point(shape = 16, color = "#f46d43", alpha = 0.4, size = 1.85) +
   geom_line(aes(y=d15n.5pt), size = 1.0, color = 'black') +
   ylab(n) +
@@ -275,9 +290,9 @@ plot1 <- df.stet %>%
 plot1
 
 plot2 <- df.stet %>%
-  select(linear.ad2, d13c, d13c.5pt) %>%
+  select(linear.ad4, d13c, d13c.5pt) %>%
   na.omit() %>%
-  ggplot(aes(x = linear.ad2, y = d13c), size = 0.5, alpha = 0.75) +
+  ggplot(aes(x = linear.ad4, y = d13c), size = 0.5, alpha = 0.75) +
   geom_point(shape = 16, color = "#4575b4", alpha = 0.4, size = 1.85) +
   geom_line(aes(y=d13c.5pt), size = 1.0, color = 'black') +
   ylab(c) +
@@ -314,7 +329,7 @@ lines(d15n ~ linear.ad, df.jack,
       col = "red", lwd = 2)
 lines(d15n.3pt ~ linear.ad, df.sav,
       col = "blue", lwd = 2)
-# lines(d15n.3pt ~ linear.ad2, df.stet, col = "purple", lwd = 2)
+lines(d15n.3pt ~ linear.ad4, df.stet, col = "purple", lwd = 2)
 
 plot(d13c ~ linear.ad, df.jack,
      xlab = x,
@@ -323,7 +338,7 @@ plot(d13c ~ linear.ad, df.jack,
      col = alpha("black", 0.4))
 lines(d13c.3pt ~ linear.ad, df.jack,
       col = "red", lwd = 2)
-lines(d13c.3pt ~ linear.ad2, df.stet,
+lines(d13c.3pt ~ linear.ad4, df.stet,
       col = "purple", lwd = 2)
 lines(d13c.3pt ~ linear.ad, df.sav,
       col = "blue", lwd = 2)
@@ -512,7 +527,7 @@ grid.draw(rbind(ggplotGrob(plots1), ggplotGrob(plots2), size = "last"))
 # Jacksonville-4684 #
 #####################
 par(pty = "s")
-plot(d15n.3pt ~ linear.ad2, df.stet,
+plot(d15n.3pt ~ linear.ad4, df.stet,
      xlab = "Calendar Years (C.E.)",
      ylab = n,
      xlim=c(1300, 2005),
