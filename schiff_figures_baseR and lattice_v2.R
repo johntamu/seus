@@ -323,12 +323,12 @@ plot(d15n ~ linear.ad, df.sav,
      xlab = x,
      ylab = n,
      type = "l",
-     xlim = c(-250, 1250),
-     col = alpha("black", 0.4))
+     xlim = c(0, 1400),
+     col = alpha("black", 0.0))
 lines(d15n ~ linear.ad, df.jack,
-      col = "red", lwd = 2)
-lines(d15n.3pt ~ linear.ad, df.sav,
-      col = "blue", lwd = 2)
+      col = "red", lwd = 2, type = "o")
+lines(d15n ~ linear.ad, df.sav,
+      col = "blue", lwd = 2, type = "o")
 lines(d15n.3pt ~ linear.ad4, df.stet, col = "purple", lwd = 2)
 
 plot(d13c ~ linear.ad, df.jack,
