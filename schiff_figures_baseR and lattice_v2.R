@@ -15,15 +15,21 @@ library(grid)
 ## Load df.bulk from timeseries ##
 ## script file                  ##
 ##################################
-path.mac <- '~/Google Drive/projects/rproj/seus/data/schiff_bulk_years_06-18-2019.csv'
-path.win <- 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/schiff_bulk_years_06-18-2019.csv'
-df.bulk <- read.csv(path.mac)
-df.bulk <- read.csv(path.win)
+path1 <- '~/Google Drive/projects/rproj/seus/data/schiff_bulk_years_06-18-2019.csv'
+path2 <- 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/schiff_bulk_years_06-18-2019.csv'
+path3 <- '/home/john/Desktop/data/schiff_bulk_years_06-18-2019.csv'
+  
+path <- read.csv(path3)
+
+df.bulk <- path
+View(df.bulk)
+
 colnames(df.bulk)[names(df.bulk) == "distance..mm."] <- "distance" # Rename some columns for easier coding
 colnames(df.bulk)[names(df.bulk) == "d15n.vs.air"] <- "d15n"
 colnames(df.bulk)[names(df.bulk) == "d13c.vs.vpdb"] <- "d13c"
+
 # write.csv(df.bulk, 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/schiff_bulk_years_03-04-2019.csv')
-library(dplyr)
+
 df.jack <- df.bulk %>% filter(coral.id == 'jack-4907-bc1-d3')
 df.sav <- df.bulk %>% filter(coral.id == 'sav-4902-bc1-unk')
 df.stet <- df.bulk %>% filter(coral.id == 'stet-4904-bc1-d2')
