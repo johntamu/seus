@@ -147,7 +147,7 @@ abline(mod3)
 # Stetson Banks bulk d15N
 # par(pty = "s", mfrow=c(2,1))
 par(pty = "s")
-plot(d15n ~ linear.ad4, df.stet,
+plot(d15n ~ linear.ad2, df.stet,
      xlab = x,
      ylab = n,
      type = "l",

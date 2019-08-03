@@ -18,8 +18,11 @@ library(dplyr)
 # Create pathnames
 path1 <- '~/Google Drive/projects/rproj/seus/data/schiff radiocarbon 02-05-2019.csv'
 path2 <- 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/schiff radiocarbon 02-05-2019.csv'
-radiocarbon <- read.csv(path1) # Mac
-radiocarbon <- read.csv(path2) # Windows
+path3 <- '/home/john/Desktop/data/schiff radiocarbon 02-05-2019.csv'
+
+df <- read.csv(path3)
+
+radiocarbon <- df
 
 ##################################
 ## Create separate dataframes.  ##
