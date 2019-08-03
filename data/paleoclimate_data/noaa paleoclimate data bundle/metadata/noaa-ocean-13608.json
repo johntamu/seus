@@ -1,0 +1,189 @@
+{
+  "xmlId" : "11629",
+  "NOAAStudyId" : "13608",
+  "studyName" : "Florida Straits KNR166-2JPC51 9000 Year d18O, Mg/Ca SST, and d18Osw Data",
+  "doi" : null,
+  "dataPublisher" : "NOAA",
+  "contactInfo" : {
+    "type" : "CONTACT INFORMATION",
+    "shortName" : "DOC/NOAA/NESDIS/NCEI",
+    "longName" : "National Centers for Environmental Information, NESDIS, NOAA, U.S. Department of Commerce ",
+    "address" : "325 Broadway, E/NE31",
+    "city" : "Boulder",
+    "state" : "CO",
+    "postalCode" : "80305-3328",
+    "country" : "USA",
+    "dataCenterUrl" : "https://www.ncdc.noaa.gov/data-access/paleoclimatology-data",
+    "email" : "paleo@noaa.gov",
+    "phone" : "303-497-6280",
+    "fax" : "303-497-6513",
+    "constraints" : "Please cite original publication, online resource, dataset and publication DOIs (where available), and date accessed when using downloaded data. If there is no publication information, please cite investigator, title, online resource, and date accessed. The appearance of external links associated with a dataset does not constitute endorsement by the Department of Commerce/National Oceanic and Atmospheric Administration of external Web sites or the information, products or services contained therein. For other than authorized activities, the Department of Commerce/NOAA does not exercise any editorial control over the information you may find at these locations. These links are provided consistent with the stated purpose of this Department of Commerce/NOAA Web site."
+  },
+  "dataType" : "PALEOCEANOGRAPHY",
+  "investigators" : "Schmidt, M.W.; Weinlein, W.A.; Marcantonio, F.; Lynch-Stieglitz, J.",
+  "version" : "1.0",
+  "funding" : [ {
+    "fundingAgency" : "US National Science Foundation",
+    "fundingGrant" : "OCE-0823498"
+  } ],
+  "studyNotes" : "High resolution (~25 year) Holocene d18O, Mg/Ca-paleothermometry, and reconstructed d18OSW measurements on the planktonic foraminifera Globigerinoides ruber (white variety) from Florida Straits. ",
+  "onlineResourceLink" : "https://www.ncdc.noaa.gov/paleo/study/13608",
+  "difMetadataLink" : "http://www1.ncdc.noaa.gov/pub/data/metadata/published/paleo/dif/xml/noaa-ocean-13608.xml",
+  "originalSource" : null,
+  "dataTypeInformation" : "https://www.ncdc.noaa.gov/data-access/paleoclimatology-data/datasets/paleoceanography",
+  "studyCode" : null,
+  "scienceKeywords" : null,
+  "reconstruction" : "Y",
+  "contributionDate" : "2012-12-12",
+  "entryId" : "noaa-ocean-13608",
+  "earliestYearBP" : 9149,
+  "mostRecentYearBP" : 1488,
+  "earliestYearCE" : -7199,
+  "mostRecentYearCE" : 462,
+  "publication" : [ {
+    "author" : null,
+    "pubYear" : 2012,
+    "title" : "Solar forcing of Florida Straits surface salinity during the early Holocene",
+    "journal" : "Paleoceanography",
+    "volume" : null,
+    "edition" : null,
+    "issue" : null,
+    "pages" : null,
+    "reportNumber" : null,
+    "citation" : "Matthew W. Schmidt, William A. Weinlein, Franco Marcantonio, and Jean Lynch-Stieglitz. 2012.\r Solar forcing of Florida Straits surface salinity during the early Holocene.\r\nPaleoceanography, 27, PA3204. \rDOI: 10.1029/2012PA002284",
+    "type" : "publication",
+    "identifier" : {
+      "type" : "doi",
+      "id" : "10.1029/2012PA002284",
+      "url" : "http://dx.doi.org/10.1029/2012PA002284"
+    },
+    "abstract" : "Previous studies showed that sea surface salinity (SSS) in the Florida Straits as well as Florida Current transport covaried with changes in North Atlantic climate over the past two millennia. However, little is known about earlier Holocene hydrographic variability in the Florida Straits. Here, we combine Mg/Ca-paleothermometry and stable oxygen isotope measurements on the planktonic foraminifera Globigerinoides ruber (white variety) from Florida Straits sediment core KNR166-2 JPC 51 (24 deg 24.70'N, 83 deg 13.14'W, 198 m deep) to reconstruct a high-resolution (~25 yr/sample) early to mid Holocene record of sea surface temperature and d18OSW (a proxy for SSS) variability. After removing the influence of global d18OSW change due to continental ice volume variability, we find that early Holocene SSS enrichments are associated with increased evaporation/precipitation ratios in the Florida Straits during periods of reduced solar forcing, increased ice rafted debris in the North Atlantic and the development of more permanent El Niño-like conditions in the eastern equatorial Pacific. When considered with previous high-resolution reconstructions of Holocene tropical atmospheric circulation changes, our results provide evidence that variations in solar forcing over the early Holocene had a significant impact on the global tropical hydrologic cycle. ",
+    "pubRank" : "1"
+  } ],
+  "site" : [ {
+    "NOAASiteId" : "54269",
+    "siteName" : "KNR166-2-51JPC",
+    "mappable" : "Y",
+    "locationName" : "Ocean>Atlantic Ocean>North Atlantic Ocean>Gulf Of Mexico",
+    "geo" : {
+      "geoType" : "Feature",
+      "geometry" : {
+        "type" : "POINT",
+        "coordinates" : [ "24.4117", "-83.219" ]
+      },
+      "properties" : {
+        "southernmostLatitude" : "24.4117",
+        "northernmostLatitude" : "24.4117",
+        "westernmostLongitude" : "-83.219",
+        "easternmostLongitude" : "-83.219",
+        "minElevationMeters" : "-198",
+        "maxElevationMeters" : "-198"
+      }
+    },
+    "paleoData" : [ {
+      "dataTableName" : "KNR166-2JPC51schmidt2012",
+      "NOAADataTableId" : "23297",
+      "earliestYear" : 9149,
+      "mostRecentYear" : 1488,
+      "timeUnit" : "cal yr BP",
+      "earliestYearBP" : 9149,
+      "mostRecentYearBP" : 1488,
+      "earliestYearCE" : -7199,
+      "mostRecentYearCE" : 462,
+      "coreLengthMeters" : 6,
+      "dataTableNotes" : null,
+      "species" : [ ],
+      "dataFile" : [ {
+        "fileUrl" : "https://www1.ncdc.noaa.gov/pub/data/paleo/contributions_by_author/schmidt2012/schmidt2012.txt",
+        "urlDescription" : "Original Data and Full Metadata",
+        "linkText" : "schmidt2012.txt",
+        "variables" : [ {
+          "cvDataType" : "PALEOCEANOGRAPHY",
+          "cvWhat" : "chemical composition>element or compound ratio>magnesium/calcium",
+          "cvMaterial" : "biological material>organism>foraminifer>planktic foraminifer>Globigerinoides sp.>Globigerinoides ruber>Globigerinoides ruber white",
+          "cvError" : null,
+          "cvUnit" : "millimole per mole",
+          "cvSeasonality" : null,
+          "cvDetail" : null,
+          "cvMethod" : null,
+          "cvAdditionalInfo" : null,
+          "cvFormat" : "Numeric",
+          "cvShortName" : null
+        }, {
+          "cvDataType" : "PALEOCEANOGRAPHY",
+          "cvWhat" : "chemical composition>isotope>isotope ratio>delta 18O",
+          "cvMaterial" : "biological material>organism>foraminifer>planktic foraminifer>Globigerinoides sp.>Globigerinoides ruber>Globigerinoides ruber white",
+          "cvError" : null,
+          "cvUnit" : "per mil VPDB",
+          "cvSeasonality" : null,
+          "cvDetail" : null,
+          "cvMethod" : null,
+          "cvAdditionalInfo" : "250-355 micron",
+          "cvFormat" : "Numeric",
+          "cvShortName" : null
+        }, {
+          "cvDataType" : "PALEOCEANOGRAPHY",
+          "cvWhat" : "age variable>age",
+          "cvMaterial" : null,
+          "cvError" : null,
+          "cvUnit" : "calendar kiloyear before present",
+          "cvSeasonality" : null,
+          "cvDetail" : null,
+          "cvMethod" : null,
+          "cvAdditionalInfo" : null,
+          "cvFormat" : "Numeric",
+          "cvShortName" : null
+        }, {
+          "cvDataType" : "CLIMATE RECONSTRUCTIONS|PALEOCEANOGRAPHY",
+          "cvWhat" : "chemical composition>isotope>isotope ratio>delta 18O",
+          "cvMaterial" : "hydrologic material>sea water|reconstruction material>element or compound ratio>magnesium/calcium|reconstruction material>isotope ratio>delta 18O",
+          "cvError" : null,
+          "cvUnit" : "per mil SMOW",
+          "cvSeasonality" : null,
+          "cvDetail" : null,
+          "cvMethod" : null,
+          "cvAdditionalInfo" : "using G. ruber white",
+          "cvFormat" : "Numeric",
+          "cvShortName" : null
+        }, {
+          "cvDataType" : "CLIMATE RECONSTRUCTIONS|PALEOCEANOGRAPHY",
+          "cvWhat" : "earth system variable>temperature variable>temperature>sea water temperature>sea surface temperature",
+          "cvMaterial" : "reconstruction material>element or compound ratio>magnesium/calcium",
+          "cvError" : null,
+          "cvUnit" : "degree Celsius",
+          "cvSeasonality" : null,
+          "cvDetail" : null,
+          "cvMethod" : null,
+          "cvAdditionalInfo" : "using G. ruber white",
+          "cvFormat" : "Numeric",
+          "cvShortName" : null
+        }, {
+          "cvDataType" : "PALEOCEANOGRAPHY",
+          "cvWhat" : "depth variable>depth",
+          "cvMaterial" : null,
+          "cvError" : null,
+          "cvUnit" : "centimeter",
+          "cvSeasonality" : null,
+          "cvDetail" : null,
+          "cvMethod" : null,
+          "cvAdditionalInfo" : null,
+          "cvFormat" : "Numeric",
+          "cvShortName" : null
+        }, {
+          "cvDataType" : "CLIMATE RECONSTRUCTIONS|PALEOCEANOGRAPHY",
+          "cvWhat" : "chemical composition>isotope>isotope ratio>delta 18O",
+          "cvMaterial" : "hydrologic material>sea water|reconstruction material>element or compound ratio>magnesium/calcium|reconstruction material>isotope ratio>delta 18O",
+          "cvError" : null,
+          "cvUnit" : "per mil SMOW",
+          "cvSeasonality" : null,
+          "cvDetail" : "corrected",
+          "cvMethod" : null,
+          "cvAdditionalInfo" : "using G. ruber white; corrected for ice volume",
+          "cvFormat" : "Numeric",
+          "cvShortName" : null
+        } ],
+        "NOAAKeywords" : [ "earth science>paleoclimate>paleocean>oxygen isotopes", "earth science>paleoclimate>paleocean>geochemistry", "earth science>paleoclimate>paleocean>reconstruction" ]
+      } ]
+    } ]
+  } ]
+}

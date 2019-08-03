@@ -1,0 +1,251 @@
+{
+  "xmlId" : "9156",
+  "NOAAStudyId" : "10492",
+  "studyName" : "Gulf of Mexico 600 Year Mg/Ca SST Reconstructions",
+  "doi" : null,
+  "dataPublisher" : "NOAA",
+  "contactInfo" : {
+    "type" : "CONTACT INFORMATION",
+    "shortName" : "DOC/NOAA/NESDIS/NCEI",
+    "longName" : "National Centers for Environmental Information, NESDIS, NOAA, U.S. Department of Commerce ",
+    "address" : "325 Broadway, E/NE31",
+    "city" : "Boulder",
+    "state" : "CO",
+    "postalCode" : "80305-3328",
+    "country" : "USA",
+    "dataCenterUrl" : "https://www.ncdc.noaa.gov/data-access/paleoclimatology-data",
+    "email" : "paleo@noaa.gov",
+    "phone" : "303-497-6280",
+    "fax" : "303-497-6513",
+    "constraints" : "Please cite original publication, online resource, dataset and publication DOIs (where available), and date accessed when using downloaded data. If there is no publication information, please cite investigator, title, online resource, and date accessed. The appearance of external links associated with a dataset does not constitute endorsement by the Department of Commerce/National Oceanic and Atmospheric Administration of external Web sites or the information, products or services contained therein. For other than authorized activities, the Department of Commerce/NOAA does not exercise any editorial control over the information you may find at these locations. These links are provided consistent with the stated purpose of this Department of Commerce/NOAA Web site."
+  },
+  "dataType" : "PALEOCEANOGRAPHY",
+  "investigators" : "Richey, J.N.; Poore, R.Z.; Flower, B.P.; Quinn, T.M.; Hollander, D.J.",
+  "version" : "1.0",
+  "funding" : [ ],
+  "studyNotes" : "Foraminiferal Mg/Ca SST reconstructions from the Fisk and Garrison \nBasins in the northern Gulf of Mexico covering the last 600 years \nat decadal resolution.  Mg/Ca measurements are on the 250-300 micron \nsize fraction of Globigerinoides ruber (white). \nMg/Ca is converted to SST using the equation:  Mg/Ca=0.449exp(0.09*SST). \n\n",
+  "onlineResourceLink" : "https://www.ncdc.noaa.gov/paleo/study/10492",
+  "difMetadataLink" : "http://www1.ncdc.noaa.gov/pub/data/metadata/published/paleo/dif/xml/noaa-ocean-10492.xml",
+  "originalSource" : null,
+  "dataTypeInformation" : "https://www.ncdc.noaa.gov/data-access/paleoclimatology-data/datasets/paleoceanography",
+  "studyCode" : null,
+  "scienceKeywords" : [ "Little Ice Age (LIA)", "Sea Surface Temperature Reconstruction" ],
+  "reconstruction" : "Y",
+  "contributionDate" : "2010-06-11",
+  "entryId" : "noaa-ocean-10492",
+  "earliestYearBP" : 752,
+  "mostRecentYearBP" : 0,
+  "earliestYearCE" : 1198,
+  "mostRecentYearCE" : 1950,
+  "publication" : [ {
+    "author" : null,
+    "pubYear" : 2009,
+    "title" : "Regionally coherent Little Ice Age cooling in the Atlantic Warm Pool",
+    "journal" : "Geophysical Research Letters",
+    "volume" : null,
+    "edition" : null,
+    "issue" : null,
+    "pages" : null,
+    "reportNumber" : null,
+    "citation" : "Richey, J.N., R.Z. Poore, B.P. Flower, T.M. Quinn, and D.J. Hollander. 2009. \nRegionally coherent Little Ice Age cooling in the Atlantic Warm Pool.  \nGeophys. Res. Lett., 36, L21703, doi:10.1029/2009GL040445\n\n",
+    "type" : "publication",
+    "identifier" : {
+      "type" : "doi",
+      "id" : "10.1029/2009GL040445",
+      "url" : "http://dx.doi.org/10.1029/2009GL040445"
+    },
+    "abstract" : "We present 2 new decadal-resolution foraminiferal Mg/Ca-SST records \ncovering the past 6-8 centuries from the northern Gulf of Mexico (GOM). \nThese records provide evidence for a Little Ice Age (LIA) cooling of 2°C,\nconsistent with a published Mg/Ca record from Pigmy Basin. Comparison \nof these 3 records with existing SST proxy records from the GOM-Caribbean \nregion show that the magnitude of LIA cooling in the Atlantic Warm Pool \n(AWP) was significantly larger than the mean hemispheric cooling of <1°C. \nWe propose that a reduction in the intensity and spatial extent of the \nAWP during the LIA, combined with associated changes in atmospheric\ncirculation may account for the regional SST patterns observed in the \nGOM-Caribbean region during the LIA.\n\n",
+    "pubRank" : "1"
+  } ],
+  "site" : [ {
+    "NOAASiteId" : "37143",
+    "siteName" : "PE07-2",
+    "mappable" : "Y",
+    "locationName" : "Ocean>Atlantic Ocean>North Atlantic Ocean>Gulf Of Mexico",
+    "geo" : {
+      "geoType" : "Feature",
+      "geometry" : {
+        "type" : "POINT",
+        "coordinates" : [ "26.675", "-93.925" ]
+      },
+      "properties" : {
+        "southernmostLatitude" : "26.675",
+        "northernmostLatitude" : "26.675",
+        "westernmostLongitude" : "-93.925",
+        "easternmostLongitude" : "-93.925",
+        "minElevationMeters" : "-1570",
+        "maxElevationMeters" : "-1570"
+      }
+    },
+    "paleoData" : [ {
+      "dataTableName" : "PE07-2",
+      "NOAADataTableId" : "19292",
+      "earliestYear" : 579,
+      "mostRecentYear" : 0,
+      "timeUnit" : "cal yr BP",
+      "earliestYearBP" : 579,
+      "mostRecentYearBP" : 0,
+      "earliestYearCE" : 1371,
+      "mostRecentYearCE" : 1950,
+      "coreLengthMeters" : null,
+      "dataTableNotes" : null,
+      "species" : [ ],
+      "dataFile" : [ {
+        "fileUrl" : "https://www1.ncdc.noaa.gov/pub/data/paleo/contributions_by_author/richey2009/richey2009.xls",
+        "urlDescription" : "Original Data and Full Metadata",
+        "linkText" : "richey2009.xls",
+        "variables" : [ ],
+        "NOAAKeywords" : [ "earth science>paleoclimate>paleocean>reconstruction", "earth science>paleoclimate>paleocean>geochemistry" ]
+      }, {
+        "fileUrl" : "https://www1.ncdc.noaa.gov/pub/data/paleo/contributions_by_author/richey2009/richey2009.txt",
+        "urlDescription" : "Original Data and Full Metadata",
+        "linkText" : "richey2009.txt",
+        "variables" : [ {
+          "cvDataType" : "PALEOCEANOGRAPHY",
+          "cvWhat" : "chemical composition>element or compound ratio>magnesium/calcium",
+          "cvMaterial" : "biological material>organism>foraminifer>planktic foraminifer>Globigerinoides sp.>Globigerinoides ruber>Globigerinoides ruber white",
+          "cvError" : null,
+          "cvUnit" : "dimensionless",
+          "cvSeasonality" : null,
+          "cvDetail" : null,
+          "cvMethod" : null,
+          "cvAdditionalInfo" : null,
+          "cvFormat" : "Numeric",
+          "cvShortName" : null
+        }, {
+          "cvDataType" : "PALEOCEANOGRAPHY",
+          "cvWhat" : "age variable>age",
+          "cvMaterial" : null,
+          "cvError" : null,
+          "cvUnit" : "calendar year before present",
+          "cvSeasonality" : null,
+          "cvDetail" : null,
+          "cvMethod" : null,
+          "cvAdditionalInfo" : null,
+          "cvFormat" : "Numeric",
+          "cvShortName" : null
+        }, {
+          "cvDataType" : "PALEOCEANOGRAPHY",
+          "cvWhat" : "depth variable>depth",
+          "cvMaterial" : null,
+          "cvError" : null,
+          "cvUnit" : "meter",
+          "cvSeasonality" : null,
+          "cvDetail" : null,
+          "cvMethod" : null,
+          "cvAdditionalInfo" : null,
+          "cvFormat" : "Numeric",
+          "cvShortName" : null
+        }, {
+          "cvDataType" : "CLIMATE RECONSTRUCTIONS|PALEOCEANOGRAPHY",
+          "cvWhat" : "earth system variable>temperature variable>temperature>sea water temperature>sea surface temperature",
+          "cvMaterial" : "reconstruction material>element or compound ratio>magnesium/calcium",
+          "cvError" : null,
+          "cvUnit" : "degree Celsius",
+          "cvSeasonality" : null,
+          "cvDetail" : null,
+          "cvMethod" : null,
+          "cvAdditionalInfo" : "G. ruber white",
+          "cvFormat" : "Numeric",
+          "cvShortName" : null
+        } ],
+        "NOAAKeywords" : [ "earth science>paleoclimate>paleocean>geochemistry", "earth science>paleoclimate>paleocean>reconstruction" ]
+      } ]
+    } ]
+  }, {
+    "NOAASiteId" : "37142",
+    "siteName" : "PE07-5I",
+    "mappable" : "Y",
+    "locationName" : "Ocean>Atlantic Ocean>North Atlantic Ocean>Gulf Of Mexico",
+    "geo" : {
+      "geoType" : "Feature",
+      "geometry" : {
+        "type" : "POINT",
+        "coordinates" : [ "27.55", "-92.1683" ]
+      },
+      "properties" : {
+        "southernmostLatitude" : "27.55",
+        "northernmostLatitude" : "27.55",
+        "westernmostLongitude" : "-92.1683",
+        "easternmostLongitude" : "-92.1683",
+        "minElevationMeters" : "-817",
+        "maxElevationMeters" : "-817"
+      }
+    },
+    "paleoData" : [ {
+      "dataTableName" : "PE07-5I",
+      "NOAADataTableId" : "19293",
+      "earliestYear" : 752,
+      "mostRecentYear" : 0,
+      "timeUnit" : "cal yr BP",
+      "earliestYearBP" : 752,
+      "mostRecentYearBP" : 0,
+      "earliestYearCE" : 1198,
+      "mostRecentYearCE" : 1950,
+      "coreLengthMeters" : null,
+      "dataTableNotes" : null,
+      "species" : [ ],
+      "dataFile" : [ {
+        "fileUrl" : "https://www1.ncdc.noaa.gov/pub/data/paleo/contributions_by_author/richey2009/richey2009.xls",
+        "urlDescription" : "Original Data and Full Metadata",
+        "linkText" : "richey2009.xls",
+        "variables" : [ ],
+        "NOAAKeywords" : [ "earth science>paleoclimate>paleocean>geochemistry", "earth science>paleoclimate>paleocean>reconstruction" ]
+      }, {
+        "fileUrl" : "https://www1.ncdc.noaa.gov/pub/data/paleo/contributions_by_author/richey2009/richey2009.txt",
+        "urlDescription" : "Original Data and Full Metadata",
+        "linkText" : "richey2009.txt",
+        "variables" : [ {
+          "cvDataType" : "PALEOCEANOGRAPHY",
+          "cvWhat" : "chemical composition>element or compound ratio>magnesium/calcium",
+          "cvMaterial" : "biological material>organism>foraminifer>planktic foraminifer>Globigerinoides sp.>Globigerinoides ruber>Globigerinoides ruber white",
+          "cvError" : null,
+          "cvUnit" : "dimensionless",
+          "cvSeasonality" : null,
+          "cvDetail" : null,
+          "cvMethod" : null,
+          "cvAdditionalInfo" : null,
+          "cvFormat" : "Numeric",
+          "cvShortName" : null
+        }, {
+          "cvDataType" : "PALEOCEANOGRAPHY",
+          "cvWhat" : "age variable>age",
+          "cvMaterial" : null,
+          "cvError" : null,
+          "cvUnit" : "calendar year before present",
+          "cvSeasonality" : null,
+          "cvDetail" : null,
+          "cvMethod" : null,
+          "cvAdditionalInfo" : null,
+          "cvFormat" : "Numeric",
+          "cvShortName" : null
+        }, {
+          "cvDataType" : "PALEOCEANOGRAPHY",
+          "cvWhat" : "depth variable>depth",
+          "cvMaterial" : null,
+          "cvError" : null,
+          "cvUnit" : "meter",
+          "cvSeasonality" : null,
+          "cvDetail" : null,
+          "cvMethod" : null,
+          "cvAdditionalInfo" : null,
+          "cvFormat" : "Numeric",
+          "cvShortName" : null
+        }, {
+          "cvDataType" : "CLIMATE RECONSTRUCTIONS|PALEOCEANOGRAPHY",
+          "cvWhat" : "earth system variable>temperature variable>temperature>sea water temperature>sea surface temperature",
+          "cvMaterial" : "reconstruction material>element or compound ratio>magnesium/calcium",
+          "cvError" : null,
+          "cvUnit" : "degree Celsius",
+          "cvSeasonality" : null,
+          "cvDetail" : null,
+          "cvMethod" : null,
+          "cvAdditionalInfo" : "G. ruber white",
+          "cvFormat" : "Numeric",
+          "cvShortName" : null
+        } ],
+        "NOAAKeywords" : [ "earth science>paleoclimate>paleocean>geochemistry", "earth science>paleoclimate>paleocean>reconstruction" ]
+      } ]
+    } ]
+  } ]
+}

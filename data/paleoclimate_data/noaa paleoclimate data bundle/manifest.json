@@ -1,0 +1,273 @@
+{
+  "files" : [ {
+    "path" : "data/pub/data/paleo/coral/atlantic/delong2014/delong2014-masterSrCa.txt",
+    "filesize" : "169502",
+    "MD5" : "7a0a9e25a863f7c86cdbbe388100eb90"
+  }, {
+    "path" : "data/pub/data/paleo/coral/atlantic/delong2014/delong2014-tortugas.xlsx",
+    "filesize" : "1381622",
+    "MD5" : "04bc85df927dd72eb693186563d7f88c"
+  }, {
+    "path" : "data/pub/data/paleo/coral/atlantic/delong2014/delong2014-08ps-a-ext.txt",
+    "filesize" : "26136",
+    "MD5" : "c851a8839a56fcf54bedb0b1c58c4947"
+  }, {
+    "path" : "data/pub/data/paleo/coral/atlantic/delong2014/delong2014-08ps-a-SrCa.txt",
+    "filesize" : "157382",
+    "MD5" : "a303af0d10fa0d8c0b9591c0e8bdb3bc"
+  }, {
+    "path" : "data/pub/data/paleo/coral/atlantic/delong2014/delong2014-08ps-a1-SrCa.txt",
+    "filesize" : "45384",
+    "MD5" : "218c03c8d1815f8407199072467e3340"
+  }, {
+    "path" : "data/pub/data/paleo/coral/atlantic/delong2014/delong2014-08ps-a1-ext.txt",
+    "filesize" : "21084",
+    "MD5" : "696b9df2f819dfeee5c85aad2b71eb20"
+  }, {
+    "path" : "data/pub/data/paleo/coral/atlantic/delong2014/delong2014-08ps-a2-SrCa.txt",
+    "filesize" : "96418",
+    "MD5" : "7bccbb1813889e5c86af6dc03a4599c0"
+  }, {
+    "path" : "data/pub/data/paleo/coral/atlantic/delong2014/delong2014-08ps-a2-ext.txt",
+    "filesize" : "24844",
+    "MD5" : "0009232560a209f5e1a7bba68aaddadf"
+  }, {
+    "path" : "data/pub/data/paleo/coral/atlantic/delong2014/delong2014-93dryss2-SrCa.txt",
+    "filesize" : "110114",
+    "MD5" : "8ea7202b79052ef2ac5900c8584d2d30"
+  }, {
+    "path" : "data/pub/data/paleo/coral/atlantic/delong2014/delong2014-93dryss2-ext.txt",
+    "filesize" : "24294",
+    "MD5" : "94f8958b5bd57b98209a7bc7319b09f0"
+  }, {
+    "path" : "data/pub/data/paleo/coral/atlantic/delong2014/delong2014-08ps-f1-SrCa.txt",
+    "filesize" : "80462",
+    "MD5" : "2535b94a8188f7dd0ac3f0a70105f977"
+  }, {
+    "path" : "data/pub/data/paleo/coral/atlantic/delong2014/delong2014-08ps-f1-ext.txt",
+    "filesize" : "22530",
+    "MD5" : "a8dd3d7348742c78e325d441efd5cc3f"
+  }, {
+    "path" : "data/pub/data/paleo/coral/atlantic/delong2014/delong2014-drto-sst.txt",
+    "filesize" : "24534",
+    "MD5" : "7c9a150bac562eb3e4c2f4714a04bad6"
+  }, {
+    "path" : "data/pub/data/paleo/coral/atlantic/delong2014/delong2014-dtlight.txt",
+    "filesize" : "29080",
+    "MD5" : "964eb1827fdd54e6ec6e6b9ac4fb1c71"
+  }, {
+    "path" : "data/pub/data/paleo/coral/atlantic/delong2014/delong2014-masterSST.txt",
+    "filesize" : "241202",
+    "MD5" : "96323ccea94716ee936f1c2c6036db66"
+  }, {
+    "path" : "data/pub/data/paleo/coral/atlantic/delong2014/delong2014-keyw-temp.txt",
+    "filesize" : "60246",
+    "MD5" : "1a83bd4fe428ea035a850b772c7183f4"
+  }, {
+    "path" : "data/pub/data/paleo/coral/atlantic/delong2014/delong2014-san-sst.txt",
+    "filesize" : "26654",
+    "MD5" : "c30a3f3d4ebd47471ced5d9bfec2b503"
+  }, {
+    "path" : "data/pub/data/paleo/contributions_by_author/schmidt2012/schmidt2012.txt",
+    "filesize" : "11607",
+    "MD5" : "0f93ca045585cfcb2f978e857aaba08f"
+  }, {
+    "path" : "data/pub/data/paleo/contributions_by_author/thirumalai2018/thirumalai2018-mca.txt",
+    "filesize" : "13433",
+    "MD5" : "d486e8a52efd37ef3c66dfe97eef5f16"
+  }, {
+    "path" : "data/pub/data/paleo/contributions_by_author/thirumalai2018/thirumalai2018-mcb.txt",
+    "filesize" : "10806",
+    "MD5" : "fac7522686245d11903120f57f7ea19c"
+  }, {
+    "path" : "data/pub/data/paleo/contributions_by_author/thirumalai2018/thirumalai2018-mcc.txt",
+    "filesize" : "13213",
+    "MD5" : "eb6ceed87542611dac8038cbe0b32f05"
+  }, {
+    "path" : "data/pub/data/paleo/contributions_by_author/thirumalai2018/thirumalai2018-stack.txt",
+    "filesize" : "19507",
+    "MD5" : "a07a23ad00c0f2fe4a48643b1884cc25"
+  }, {
+    "path" : "data/pub/data/paleo/contributions_by_author/richey2009/richey2009.txt",
+    "filesize" : "6500",
+    "MD5" : "352168d1d950c17124356ba49bae7c2b"
+  }, {
+    "path" : "data/pub/data/paleo/contributions_by_author/richey2009/richey2009.xls",
+    "filesize" : "40448",
+    "MD5" : "ea6f8884f4738587cb1ca64e6b365a63"
+  } ],
+  "params" : {
+    "minLon" : "-99.8437",
+    "maxLat" : "29.4587",
+    "minLat" : "18.3962",
+    "dataPublisher" : "NOAA",
+    "maxLon" : "-79.4531",
+    "xmlId" : "9156|11629|13945|21537"
+  },
+  "matches" : [ {
+    "metadataFile" : "metadata/noaa-coral-16217.json",
+    "studyName" : "Dry Tortugas National Park Coral Sr/Ca data for 1734 to 2008",
+    "sites" : [ {
+      "siteName" : "Key West Int'l Airport",
+      "files" : [ {
+        "fileName" : "Key West Int'l Airport Air Temp Data",
+        "description" : "Formatted Text File",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/coral/atlantic/delong2014/delong2014-keyw-temp.txt"
+      }, {
+        "fileName" : "All Dry Tortugas Data",
+        "description" : "Originally Contributed Excel File",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/coral/atlantic/delong2014/delong2014-tortugas.xlsx"
+      } ]
+    }, {
+      "siteName" : "Sand Key, FL",
+      "files" : [ {
+        "fileName" : "All Dry Tortugas Data",
+        "description" : "Originally Contributed Excel File",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/coral/atlantic/delong2014/delong2014-tortugas.xlsx"
+      }, {
+        "fileName" : "Sand Key Buoy SST Data",
+        "description" : "Formatted Text File",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/coral/atlantic/delong2014/delong2014-san-sst.txt"
+      } ]
+    }, {
+      "siteName" : "Dry Tortugas National Park",
+      "files" : [ {
+        "fileName" : "Master Chronology Average Sr/Ca Data",
+        "description" : "Formatted Text File",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/coral/atlantic/delong2014/delong2014-masterSrCa.txt"
+      }, {
+        "fileName" : "All Dry Tortugas Data",
+        "description" : "Originally Contributed Excel File",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/coral/atlantic/delong2014/delong2014-tortugas.xlsx"
+      }, {
+        "fileName" : "O8PS-A Extension Data",
+        "description" : "Formatted Text File",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/coral/atlantic/delong2014/delong2014-08ps-a-ext.txt"
+      }, {
+        "fileName" : "O8PS-A Sr/Ca Data",
+        "description" : "Formatted Text File",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/coral/atlantic/delong2014/delong2014-08ps-a-SrCa.txt"
+      }, {
+        "fileName" : "O8PS-A1 Sr/Ca Data",
+        "description" : "Formatted Text File",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/coral/atlantic/delong2014/delong2014-08ps-a1-SrCa.txt"
+      }, {
+        "fileName" : "O8PS-A1 Extension Data",
+        "description" : "Formatted Text File",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/coral/atlantic/delong2014/delong2014-08ps-a1-ext.txt"
+      }, {
+        "fileName" : "O8PS-A2 Sr/Ca Data",
+        "description" : "Formatted Text File",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/coral/atlantic/delong2014/delong2014-08ps-a2-SrCa.txt"
+      }, {
+        "fileName" : "O8PS-A2 Extension Data",
+        "description" : "Formatted Text File",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/coral/atlantic/delong2014/delong2014-08ps-a2-ext.txt"
+      }, {
+        "fileName" : "93DRYSS2 Sr/Ca Data",
+        "description" : "Formatted Text File",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/coral/atlantic/delong2014/delong2014-93dryss2-SrCa.txt"
+      }, {
+        "fileName" : "93DRYSS2 Extension Data",
+        "description" : "Formatted Text File",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/coral/atlantic/delong2014/delong2014-93dryss2-ext.txt"
+      }, {
+        "fileName" : "O8PS-F1 Sr/Ca Data",
+        "description" : "Formatted Text File",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/coral/atlantic/delong2014/delong2014-08ps-f1-SrCa.txt"
+      }, {
+        "fileName" : "O8PS-F1 Extension Data",
+        "description" : "Formatted Text File",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/coral/atlantic/delong2014/delong2014-08ps-f1-ext.txt"
+      }, {
+        "fileName" : "Bouy SST Data",
+        "description" : "Formatted Text File",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/coral/atlantic/delong2014/delong2014-drto-sst.txt"
+      }, {
+        "fileName" : "Dry Tortugas Lighthouse SST Data",
+        "description" : "Formatted Text File",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/coral/atlantic/delong2014/delong2014-dtlight.txt"
+      }, {
+        "fileName" : "Master SST Reconstruction Data",
+        "description" : "Formatted Text File",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/coral/atlantic/delong2014/delong2014-masterSST.txt"
+      } ]
+    } ],
+    "bundle" : "Y"
+  }, {
+    "metadataFile" : "metadata/noaa-ocean-13608.json",
+    "studyName" : "Florida Straits KNR166-2JPC51 9000 Year d18O, Mg/Ca SST, and d18Osw Data",
+    "sites" : [ {
+      "siteName" : "KNR166-2-51JPC",
+      "files" : [ {
+        "fileName" : "schmidt2012.txt",
+        "description" : "Original Data and Full Metadata",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/contributions_by_author/schmidt2012/schmidt2012.txt"
+      } ]
+    } ],
+    "bundle" : "Y"
+  }, {
+    "metadataFile" : "metadata/noaa-ocean-23373.json",
+    "studyName" : "Garrison Basin, Gulf of Mexico d18O and Mg/Ca in three multicores, and stacked SST/d18Osw/SSS reconstructions spanning the past 4.4 kyrs",
+    "sites" : [ {
+      "siteName" : "Garrison Basin",
+      "files" : [ {
+        "fileName" : "2010-GB2-MCA Data",
+        "description" : "NOAA Template File",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/contributions_by_author/thirumalai2018/thirumalai2018-mca.txt"
+      }, {
+        "fileName" : "2010-GB2-MCB Data",
+        "description" : "NOAA Template File",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/contributions_by_author/thirumalai2018/thirumalai2018-mca.txt"
+      }, {
+        "fileName" : "2010-GB2-MCA Data",
+        "description" : "NOAA Template File",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/contributions_by_author/thirumalai2018/thirumalai2018-mcb.txt"
+      }, {
+        "fileName" : "2010-GB2-MCB Data",
+        "description" : "NOAA Template File",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/contributions_by_author/thirumalai2018/thirumalai2018-mcb.txt"
+      }, {
+        "fileName" : "2010-GB2-MCC Data",
+        "description" : "NOAA Template File",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/contributions_by_author/thirumalai2018/thirumalai2018-mcc.txt"
+      }, {
+        "fileName" : "Garrison Basin Stack SST, SSS, and d18O-sw Data",
+        "description" : "NOAA Template File",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/contributions_by_author/thirumalai2018/thirumalai2018-stack.txt"
+      } ]
+    } ],
+    "bundle" : "Y"
+  }, {
+    "metadataFile" : "metadata/noaa-ocean-10492.json",
+    "studyName" : "Gulf of Mexico 600 Year Mg/Ca SST Reconstructions",
+    "sites" : [ {
+      "siteName" : "PE07-2",
+      "files" : [ {
+        "fileName" : "richey2009.xls",
+        "description" : "Original Data and Full Metadata",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/contributions_by_author/richey2009/richey2009.xls"
+      }, {
+        "fileName" : "richey2009.txt",
+        "description" : "Original Data and Full Metadata",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/contributions_by_author/richey2009/richey2009.txt"
+      } ]
+    }, {
+      "siteName" : "PE07-5I",
+      "files" : [ {
+        "fileName" : "richey2009.txt",
+        "description" : "Original Data and Full Metadata",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/contributions_by_author/richey2009/richey2009.txt"
+      }, {
+        "fileName" : "richey2009.xls",
+        "description" : "Original Data and Full Metadata",
+        "URL" : "https://www1.ncdc.noaa.gov/pub/data/paleo/contributions_by_author/richey2009/richey2009.xls"
+      } ]
+    } ],
+    "bundle" : "Y"
+  } ],
+  "info" : {
+    "bundleCreateDate" : "2019-02-11T15:26:42.746Z",
+    "details" : "See the included README.txt for details of the sections in this manifest."
+  }
+}

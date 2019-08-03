@@ -1,0 +1,6 @@
+Coral,ID 1,ID 2,Sample,Distance (um),Fraction modern,error,D14C,D14C,d13C,14C Age,error,Year analyzed,calib median age,calib 2sigma min,calib 2sigma max,deltaR Lighty et. al. 1982,clam 2sigma min,clam 2sigma max,prob,median
+stet-4904-bc1,Beta-233770,080907SB-1B,,0,1.08,,80,72.6,-16.7,-618,,2007,,,,,,,,
+stet-4904-bc1,Beta-233771,080907SB-2B,,2750,0.9303,,-69.7,-76,-16,580,40,2007,212,,,,93,300,95,197
+stet-4904-bc1,Beta-233772,080907SB-3B,,5500,0.8464,,-153.6,-159.5,-15.7,1340,40,2007,883,,,,779,966,95,873
+stet-4904-bc1,Beta-233773,080907SB-4B,,8250,0.8255,,-174.5,-180.1,-15,1540,40,2007,1099,,,,983,1204,95,1094
+stet-4904-bc1,Beta-233774,080907SB-5B,,11000,0.7884,,-211.6,-217,-16.6,1910,40,2007,1456,,,,1352,1550,95,1451

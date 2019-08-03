@@ -1,0 +1,168 @@
+Gulf of Mexico 600 Year Mg/Ca SST Reconstructions  
+-----------------------------------------------------------------------
+               World Data Center for Paleoclimatology, Boulder
+                                  and
+                     NOAA Paleoclimatology Program
+-----------------------------------------------------------------------
+NOTE: PLEASE CITE ORIGINAL REFERENCE WHEN USING THIS DATA!!!!!
+
+
+NAME OF DATA SET: 
+Gulf of Mexico 600 Year Mg/Ca SST Reconstructions  
+
+LAST UPDATE: 6/2010 (Original Receipt by WDC Paleo)
+CONTRIBUTORS: Richey, J.N., R.Z. Poore, B.P. Flower, T.M. Quinn,
+and D.J. Hollander. 
+IGBP PAGES/WDCA CONTRIBUTION SERIES NUMBER: 2010-050 
+
+WDC PALEO CONTRIBUTION SERIES CITATION: 
+Richey, J. N.,  et al. 2010.
+Gulf of Mexico 600 Year Mg/Ca SST Reconstructions.   
+IGBP PAGES/World Data Center for Paleoclimatology 
+Data Contribution Series # 2010-050. 
+NOAA/NCDC Paleoclimatology Program, Boulder CO, USA.
+
+
+ORIGINAL REFERENCE: 
+Richey, J.N., R.Z. Poore, B.P. Flower, T.M. Quinn, and D.J. Hollander. 2009. 
+Regionally coherent Little Ice Age cooling in the Atlantic Warm Pool.  
+Geophys. Res. Lett., 36, L21703, doi:10.1029/2009GL040445
+
+ABSTRACT: 
+We present 2 new decadal-resolution foraminiferal Mg/Ca-SST records 
+covering the past 6-8 centuries from the northern Gulf of Mexico (GOM). 
+These records provide evidence for a Little Ice Age (LIA) cooling of 2°C,
+consistent with a published Mg/Ca record from Pigmy Basin. Comparison 
+of these 3 records with existing SST proxy records from the GOM-Caribbean 
+region show that the magnitude of LIA cooling in the Atlantic Warm Pool 
+(AWP) was significantly larger than the mean hemispheric cooling of <1°C. 
+We propose that a reduction in the intensity and spatial extent of the 
+AWP during the LIA, combined with associated changes in atmospheric
+circulation may account for the regional SST patterns observed in the 
+GOM-Caribbean region during the LIA.
+
+
+GEOGRAPHIC REGION: Gulf of Mexico  
+PERIOD OF RECORD: 600 YrBP - present 
+
+
+DESCRIPTION: 
+Foraminiferal Mg/Ca SST reconstructions from the Fisk and Garrison 
+Basins in the northern Gulf of Mexico covering the last 600 years 
+at decadal resolution.  Mg/Ca measurements are on the 250-300 micron 
+size fraction of Globigerinoides ruber (white). 
+Mg/Ca is converted to SST using the equation:  Mg/Ca=0.449exp(0.09*SST). 
+
+Fisk Basin box core PE07-5I:  27°33.0'N, 92°10.1'W, 817 m depth 
+Garrison Basin box core PE07-2:  26°40.5'N, 93°55.5'W, 1570 m depth  
+
+
+
+
+
+DATA: 
+1. c14 Ages 
+Garrison Basin CoreDepth(mm)    14Cage(yrs)   error(yrs)     CalYrsBP
+               0-5                     140           35             0
+               0-5                     455           25            41
+               70-75                   935           35           186
+               120-125                1435           45           604
+               200-205                2080           20          1248
+               270-275                2495           35          1666
+               340-345                3300           35          2695
+               390-395                3640           30          3064
+
+
+Fisk Basin     CoreDepth(mm)    14Cage(yrs)   error(yrs)     CalYrsBP
+               0-5                    -215           30             0
+               150-155                 925           35           523
+               160-165                1090           30           652
+               200-205                1210           30           743
+
+
+
+
+
+
+2. Garrison Basin Mg/Ca SST estimates
+
+CoreDepth  CalYrsBP     Mg/Ca       SST(ºC)
+     0         0.0       4.43       25.44
+     5        11.8       4.29       25.08
+    10        24.7       4.42       25.40
+    15        38.6       4.26       25.00
+    20        53.6       4.13       24.65
+    25        69.6       4.06       24.47
+    30        86.6       4.21       24.87
+    35        104.5      3.81       23.76
+    40        123.5      3.96       24.20
+    45        143.3      4.33       25.19
+    50        164.2      3.95       24.17
+    55        185.9      4.00       24.30
+    60        208.6      3.80       23.72
+    65        232.1      4.01       24.32
+    70        256.6      3.73       23.53
+    75        281.9      3.78       23.68
+    80        308.0      4.02       24.35
+    85        335.0      3.91       24.05
+    90        362.8      3.90       24.02
+    95        391.4      4.51       25.63
+    100       420.8      4.19       24.83
+    105       451.0      3.79       23.70
+    110       482.0      4.07       24.49
+    115       513.6      3.77       23.66
+    120       546.0      3.76       23.61
+    125       579.2      3.88       23.96
+
+
+
+
+
+3. Fisk Basin Mg/Ca SST estimates 
+
+CoreDepth  CalYrsBP     Mg/Ca       SST(ºC)
+     0          0        4.75       26.21
+     5        18.8       4.37       25.28
+    10        37.6       4.13       24.66
+    15        56.4       4.16       24.75
+    20        75.2       4.29       25.09
+    25         94        4.28       25.05
+    30        112.8      3.72       23.49
+    35        131.6      3.77       23.64
+    40        150.4      3.88       23.95
+    45        169.2      3.60       23.14
+    50         188       3.75       23.58
+    55        206.8      3.69       23.40
+    60        225.6      3.60       23.12
+    65        244.4      3.69       23.41
+    70        263.2      3.82       23.78
+    75         282       3.89       24.00
+    80        300.8      3.89       24.00
+    85        319.6      3.95       24.15
+    90        338.4      3.88       23.97
+    95        357.2      3.94       24.13
+    100        376       3.72       23.49
+    105       394.8      4.08       24.51
+    110       413.6      3.95       24.16
+    115       432.4      4.26       25.00
+    120       451.2      3.69       23.40
+    125        470       4.18       24.79
+    130       488.8      4.28       25.05
+    135       507.6      3.92       24.07
+    140       526.4      4.05       24.44
+    145       545.2      4.53       25.67
+    150        564       4.20       24.85
+    155       582.8      4.03       24.39
+    160       601.6      4.25       24.97
+    165       620.4      4.04       24.42
+    170       639.2      4.14       24.68
+    175        658       4.10       24.57
+    180       676.8      4.24       24.95
+    185       695.6      4.09       24.54
+    190       714.4      4.22       24.89
+    195       733.2      4.48       25.55
+    200        752       4.63       25.93
+
+
+
+

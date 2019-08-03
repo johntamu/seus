@@ -1,0 +1,233 @@
+# Garrison Basin, Gulf of Mexico d18O and Mg/Ca in three multicores and stacked SST/d18Osw/SSS reconstructions spanning the past 4.4 kyrs
+#-----------------------------------------------------------------------
+#               World Data Service for Paleoclimatology, Boulder
+#                                   and
+#                      NOAA Paleoclimatology Program
+#-----------------------------------------------------------------------
+# NOTE: Please cite original publication, online resource and date accessed when using this data.
+# If there is no publication information, please cite Investigator, title, online resource and date accessed.
+#
+# Description/Documentation lines begin with #
+# Data lines have no #
+#
+# Online_Resource: https://www.ncdc.noaa.gov/paleo/study/23373
+#      Description: NOAA Landing Page
+# Online_Resource: http://www1.ncdc.noaa.gov/pub/data/paleo/paleocean/by_contributor/thirumalai2018/thirumalai2018-mcc.txt
+#      Description: NOAA location of the template
+#
+# Archive: Paleoceanography
+#
+# Dataset_DOI:
+#
+# Parameter_Keywords: oxygen isotopes, trace metals in carbonates, age control, geochemistry
+#---------------------------------------
+# Contribution_Date
+#    Date: 2018-02-05
+#---------------------------------------
+# File_Last_Modified_Date
+#    Date: 2018-02-05
+#---------------------------------------
+# Title
+#    Study_Name: Garrison Basin, Gulf of Mexico d18O and Mg/Ca in three multicores and stacked SST/d18Osw/SSS reconstructions spanning the past 4.4 kyrs
+#---------------------------------------
+# Investigators
+#      Investigators: Thirumalai, Kaustubh; Quinn, Terrence M.; Okumura, Yuko; Richey, Julie N.; Partin, Judson W.; Poore, Richard Z.; Moreno-Chamarro, Eduardo;
+#---------------------------------------
+# Description_Notes_and_Keywords
+#        Description: Sea-surface temperature, d18Osw, and sea-surface salinity reconstructions from the northern Gulf of Mexico generated from paired Mg/Ca-d¹8O measurements in G. ruber (White) from three Garrison Basin sediment cores spanning the last 4,400 years
+#         Provided Keywords: Gulf of Mexico, sea-surface temperature, sea-surface salinity, G. ruber, foraminifera, late Holocene
+#---------------------------------------
+# Publication
+# Authors: Thirumalai, K., T.M. Quinn, Y. Okumura, J.N. Richey, J.W. Partin, R.Z. Poore, and E. Moreno-Chamarro
+# Published_Date_or_Year: 2018
+# Published_Title: Pronounced centennial-scale Atlantic Ocean climate variability correlated with Western Hemisphere hydroclimate
+# Journal_Name: Nature Communications
+# Volume: 9
+# Edition: 
+# Issue: 1
+# Pages: 1-11
+# Report Number: 392
+# DOI: 10.1038/s41467-018-02846-4
+# Online_Resource: 
+# Full_Citation: 
+# Abstract: Surface-ocean circulation in the northern Atlantic Ocean influences Northern Hemisphere climate. Century-scale circulation variability in the Atlantic Ocean, however, is poorly con- strained due to insufficiently-resolved paleoceanographic records. Here we present a repli- cated reconstruction of sea-surface temperature and salinity from a site sensitive to North Atlantic circulation in the Gulf of Mexico which reveals pronounced centennial-scale varia- bility over the late Holocene. We find significant correlations on these timescales between salinity changes in the Atlantic, a diagnostic parameter of circulation, and widespread pre- cipitation anomalies using three approaches: multiproxy synthesis, observational datasets, and a transient simulation. Our results demonstrate links between centennial changes in northern Atlantic surface-circulation and hydroclimate changes in the adjacent continents over the late Holocene. Notably, our findings reveal that weakened surface-circulation in the Atlantic Ocean was concomitant with well-documented rainfall anomalies in the Western Hemisphere during the Little Ice Age.
+#---------------------------------------
+# Funding_Agency
+#    Funding_Agency_Name: 
+#    Grant: 
+#---------------------------------------
+# Site Information
+# Site_Name: Garrison Basin
+# Location: Gulf of Mexico
+# Country: USA
+# Northernmost_Latitude: 26.66
+# Southernmost_Latitude: 26.66
+# Easternmost_Longitude: -93.92
+# Westernmost_Longitude: -93.92
+# Elevation: -1776
+#---------------------------------------
+# Data_Collection
+#   Collection_Name: 2010-GB2-MCC Thirumalai2018
+#   First_Year: 
+#   Last_Year: 
+#   Time_Unit: 
+#   Core_Length: 0.58
+#   Notes: 
+#---------------------------------------
+# Chronology_Information 
+# Chronology: 
+# 
+# core	ID name of multicore dated	
+# core.sample	Interval of sampling in core	
+# depth_top	Top depth of sample interval (cm)	
+# depth_bottom	Bottom depth of sample interval (cm)	
+# depth_mid	Middle depth of sampled interval (cm)	
+# mat.dated 	Material dated	
+# 14C.raw	Conventional radiocarbon age, years before 1950AD  	
+# 14C.raw_err 	Radiocarbon age, standard error 	
+# 
+# core	core.sample	depth_bottom	depth_top	depth_mid	mat.dated	14C.raw	14C.raw_err	
+# 2010-GB2-MCA	2010-GB2-MCA 0.0-0.5	0.5	0	0.25	Mixed Planktics	>Modern	30	
+# 2010-GB2-MCA	2010-GB2-MCA 9.5-10.0	10	9.5	9.75	Mixed Planktics	855	30	
+# 2010-GB2-MCA	2010-GB2-MCA 19.5-20.0	20	19.5	19.75	Mixed Planktics	1450	30	
+# 2010-GB2-MCA	2010-GB2-MCA 34.5-35	35	34.5	34.75	Mixed Planktics	2405	30	
+# 2010-GB2-MCA	2010-GB2-MCA 49.5-50	50	49.5	49.75	Mixed Planktics	3560	35	
+# 2010-GB2-MCA	2010-GB2-MCA 59.5-60	60	59.5	59.75	Mixed Planktics	4250	30	
+# 2010-GB2-MCB	2010-GB2-MCB 0-0.25	0.25	0	0.125	Mixed Planktics	>Modern	30	
+# 2010-GB2-MCB	2010-GB2-MCB 11-11.25	11.25	11	11.125	Mixed Planktics	910	30	
+# 2010-GB2-MCB	2010 GB2 MCB 34-34.25	34.25	34	34.125	Mixed Planktics	2280	30	
+# 2010-GB2-MCC	2010 GB2 MCC 0-0.5	0.5	0	0.25	Mixed Planktics	>Modern	30	
+# 2010-GB2-MCC	2010 GB2 MCC 9.5-10	10	9.5	9.75	Mixed Planktics	950	30	
+# 2010-GB2-MCC	2010 GB2 MCC 29.5-30	30	29.5	29.75	Mixed Planktics	2065	30	
+# 
+#---------------------------------------
+# Variables
+# Data variables follow that are preceded by "##" in columns one and two.
+# Variables list, one per line, shortname-tab-longname components (9 components: what, material, error, units, seasonality, archive, detail, method, C or N for Character or Numeric data)
+## core	core ID,,,,,paleoceanography,,,C,
+## sample	sample ID,,,,,paleoceanography,,,C,
+## mid_depth	depth,,,cm,,paleoceanography,,,N,
+## Mg-Ca	magnesium/calcium,Globigerinoides ruber white,,mmol/mol,,paleoceanography,,inductively coupled plasma optical emission spectrophotometry,N,
+## d18O-ruber	delta 18O,Globigerinoides ruber white,,per mil VPDB,,paleoceanography,,isotope ratio mass spectrometry,N,
+#------------------------
+# Data
+# Data lines follow (have no #)
+# Data line format - tab-delimited text, variable short name as header
+# Missing Value: NA
+core	sample	mid_depth	Mg-Ca	d18O-ruber	
+2010-GB2-MCC	2010-GB2-MCC 0.0-0.5	0.25	4.66	-1.24	
+2010-GB2-MCC	2010-GB2-MCC 0.5-1.0	0.75	4.63	-1.13	
+2010-GB2-MCC	2010-GB2-MCC 1.0-1.5	1.25	4.58	-1.06	
+2010-GB2-MCC	2010-GB2-MCC 1.5-2.0	1.75	4.49	-1.18	
+2010-GB2-MCC	2010-GB2-MCC 2.0-2.5	2.25	4.46	-1.21	
+2010-GB2-MCC	2010-GB2-MCC 2.5-3.0	2.75	4.38	-1.25	
+2010-GB2-MCC	2010-GB2-MCC 3.0-3.5	3.25	4.08	-1.13	
+2010-GB2-MCC	2010-GB2-MCC 3.5-4.0	3.75	3.75	-1.01	
+2010-GB2-MCC	2010-GB2-MCC 4.0-4.5	4.25	4.35	-1.07	
+2010-GB2-MCC	2010-GB2-MCC 4.5-5.0	4.75	4.45	-1.17	
+2010-GB2-MCC	2010-GB2-MCC 5.0-5.5	5.25	3.85	-0.92	
+2010-GB2-MCC	2010-GB2-MCC 5.5-6.0	5.75	3.96	-1.13	
+2010-GB2-MCC	2010-GB2-MCC 6.0-6.5	6.25	4.04	-1.28	
+2010-GB2-MCC	2010-GB2-MCC 6.5-7.0	6.75	4.31	-1.35	
+2010-GB2-MCC	2010-GB2-MCC 7.0-7.5	7.25	4.41	-1.33	
+2010-GB2-MCC	2010-GB2-MCC 7.5-8.0	7.75	4.01	-1.20	
+2010-GB2-MCC	2010-GB2-MCC 8.0-8.5	8.25	3.67	-1.06	
+2010-GB2-MCC	2010-GB2-MCC 8.5-9.0	8.75	3.52	-1.04	
+2010-GB2-MCC	2010-GB2-MCC 9.0-9.5	9.25	3.26	-1.27	
+2010-GB2-MCC	2010-GB2-MCC 9.5-10.0	9.75	3.85	-1.09	
+2010-GB2-MCC	2010-GB2-MCC 10.0-10.5	10.25	3.33	-1.35	
+2010-GB2-MCC	2010-GB2-MCC 10.5-11.0	10.75	4.24	-1.27	
+2010-GB2-MCC	2010-GB2-MCC 11.0-11.5	11.25	3.50	-1.30	
+2010-GB2-MCC	2010-GB2-MCC 11.5-12.0	11.75	3.55	-1.12	
+2010-GB2-MCC	2010-GB2-MCC 12.0-12.5	12.25	3.60	-0.65	
+2010-GB2-MCC	2010-GB2-MCC 12.5-13.0	12.75	3.84	-1.07	
+2010-GB2-MCC	2010-GB2-MCC 13.0-13.5	13.25	4.16	-1.00	
+2010-GB2-MCC	2010-GB2-MCC 13.5-14.0	13.75	4.20	-1.17	
+2010-GB2-MCC	2010-GB2-MCC 14.0-14.5	14.25	4.55	-1.29	
+2010-GB2-MCC	2010-GB2-MCC 14.5-15.0	14.75	3.91	-1.11	
+2010-GB2-MCC	2010-GB2-MCC 15.0-15.5	15.25	4.02	-1.21	
+2010-GB2-MCC	2010-GB2-MCC 15.5-16.0	15.75	3.44	-1.10	
+2010-GB2-MCC	2010-GB2-MCC 16.0-16.5	16.25	4.44	-1.35	
+2010-GB2-MCC	2010-GB2-MCC 16.5-17.0	16.75	3.25	-1.08	
+2010-GB2-MCC	2010-GB2-MCC 17.0-17.5	17.25	3.94	-0.92	
+2010-GB2-MCC	2010-GB2-MCC 17.5-18.0	17.75	3.75	-0.82	
+2010-GB2-MCC	2010-GB2-MCC 18.0-18.5	18.25	4.11	-1.26	
+2010-GB2-MCC	2010-GB2-MCC 18.5-19.0	18.75	4.16	-1.13	
+2010-GB2-MCC	2010-GB2-MCC 19.0-19.5	19.25	4.54	-1.03	
+2010-GB2-MCC	2010-GB2-MCC 19.5-20.0	19.75	4.20	-0.91	
+2010-GB2-MCC	2010-GB2-MCC 20.0-20.5	20.25	3.81	-1.05	
+2010-GB2-MCC	2010-GB2-MCC 20.5-21.0	20.75	4.50	-1.21	
+2010-GB2-MCC	2010-GB2-MCC 21.0-21.5	21.25	3.62	-0.84	
+2010-GB2-MCC	2010-GB2-MCC 21.5-22.0	21.75	4.04	-0.95	
+2010-GB2-MCC	2010-GB2-MCC 22.0-22.5	22.25	3.58	-0.92	
+2010-GB2-MCC	2010-GB2-MCC 22.5-23.0	22.75	3.97	-1.09	
+2010-GB2-MCC	2010-GB2-MCC 23.0-23.5	23.25	4.09	-1.03	
+2010-GB2-MCC	2010-GB2-MCC 23.5-24.0	23.75	4.48	-1.12	
+2010-GB2-MCC	2010-GB2-MCC 24.0-24.5	24.25	3.96	-1.04	
+2010-GB2-MCC	2010-GB2-MCC 24.5-25.0	24.75	3.87	-1.12	
+2010-GB2-MCC	2010-GB2-MCC 25.0-25.5	25.25	3.81	-1.02	
+2010-GB2-MCC	2010-GB2-MCC 25.5-26.0	25.75	3.88	-1.04	
+2010-GB2-MCC	2010-GB2-MCC 26.0-26.5	26.25	4.10	-1.21	
+2010-GB2-MCC	2010-GB2-MCC 26.5-27.0	26.75	4.01	-1.04	
+2010-GB2-MCC	2010-GB2-MCC 27.0-27.5	27.25	4.45	-1.08	
+2010-GB2-MCC	2010-GB2-MCC 27.5-28.0	27.75	4.01	-0.53	
+2010-GB2-MCC	2010-GB2-MCC 28.0-28.5	28.25	4.02	-0.90	
+2010-GB2-MCC	2010-GB2-MCC 28.5-29.0	28.75	3.86	-0.93	
+2010-GB2-MCC	2010-GB2-MCC 29.0-29.5	29.25	4.04	-1.06	
+2010-GB2-MCC	2010-GB2-MCC 29.5-30.0	29.75	4.45	-0.97	
+2010-GB2-MCC	2010-GB2-MCC 30.0-30.5	30.25	3.86	-1.16	
+2010-GB2-MCC	2010-GB2-MCC 30.5-31.0	30.75	4.06	-1.18	
+2010-GB2-MCC	2010-GB2-MCC 31.0-31.5	31.25	3.91	-1.39	
+2010-GB2-MCC	2010-GB2-MCC 31.5-32.0	31.75	4.42	-1.04	
+2010-GB2-MCC	2010-GB2-MCC 32.0-32.5	32.25	3.92	-1.24	
+2010-GB2-MCC	2010-GB2-MCC 32.5-33.0	32.75	3.93	-1.16	
+2010-GB2-MCC	2010-GB2-MCC 33.0-33.5	33.25	3.86	-1.16	
+2010-GB2-MCC	2010-GB2-MCC 33.5-34.0	33.75	4.06	-1.22	
+2010-GB2-MCC	2010-GB2-MCC 34.0-34.5	34.25	3.99	-0.86	
+2010-GB2-MCC	2010-GB2-MCC 34.5-35.0	34.75	4.14	-1.37	
+2010-GB2-MCC	2010-GB2-MCC 35.0-35.5	35.25	3.99	-0.92	
+2010-GB2-MCC	2010-GB2-MCC 35.5-36.0	35.75	3.90	-1.01	
+2010-GB2-MCC	2010-GB2-MCC 36.0-36.5	36.25	4.08	-1.18	
+2010-GB2-MCC	2010-GB2-MCC 36.5-37.0	36.75	3.35	-1.16	
+2010-GB2-MCC	2010-GB2-MCC 37.0-37.5	37.25	3.76	-1.38	
+2010-GB2-MCC	2010-GB2-MCC 37.5-38.0	37.75	3.92	-1.19	
+2010-GB2-MCC	2010-GB2-MCC 38.0-38.5	38.25	3.90	-1.22	
+2010-GB2-MCC	2010-GB2-MCC 38.5-39.0	38.75	4.05	-1.10	
+2010-GB2-MCC	2010-GB2-MCC 39.0-39.5	39.25	3.87	-1.26	
+2010-GB2-MCC	2010-GB2-MCC 39.5-40.0	39.75	4.25	-1.23	
+2010-GB2-MCC	2010-GB2-MCC 40.0-40.5	40.25	4.41	-1.32	
+2010-GB2-MCC	2010-GB2-MCC 40.5-41.0	40.75	4.28	-0.98	
+2010-GB2-MCC	2010-GB2-MCC 41.0-41.5	41.25	4.42	-1.33	
+2010-GB2-MCC	2010-GB2-MCC 41.5-42.0	41.75	4.67	-1.17	
+2010-GB2-MCC	2010-GB2-MCC 42.0-42.5	42.25	4.09	-1.32	
+2010-GB2-MCC	2010-GB2-MCC 42.5-43.0	42.75	4.02	-1.48	
+2010-GB2-MCC	2010-GB2-MCC 43.0-43.5	43.25	4.55	-1.11	
+2010-GB2-MCC	2010-GB2-MCC 43.5-44.0	43.75	3.98	-1.02	
+2010-GB2-MCC	2010-GB2-MCC 44.0-44.5	44.25	4.25	-1.56	
+2010-GB2-MCC	2010-GB2-MCC 44.5-45.0	44.75	3.98	-1.30	
+2010-GB2-MCC	2010-GB2-MCC 45.0-45.5	45.25	4.09	-1.54	
+2010-GB2-MCC	2010-GB2-MCC 45.5-46.0	45.75	4.09	-1.44	
+2010-GB2-MCC	2010-GB2-MCC 46.0-46.5	46.25	3.81	-0.99	
+2010-GB2-MCC	2010-GB2-MCC 46.5-47.0	46.75	3.84	-0.95	
+2010-GB2-MCC	2010-GB2-MCC 47.0-47.5	47.25	4.07	-1.32	
+2010-GB2-MCC	2010-GB2-MCC 47.5-48.0	47.75	4.49	-1.06	
+2010-GB2-MCC	2010-GB2-MCC 48.0-48.5	48.25	3.96	-1.18	
+2010-GB2-MCC	2010-GB2-MCC 48.5-49.0	48.75	3.87	-1.27	
+2010-GB2-MCC	2010-GB2-MCC 49.0-49.5	49.25	3.55	-0.88	
+2010-GB2-MCC	2010-GB2-MCC 49.5-50.0	49.75	3.59	-0.97	
+2010-GB2-MCC	2010-GB2-MCC 50.0-50.5	50.25	3.95	-0.89	
+2010-GB2-MCC	2010-GB2-MCC 50.5-51.0	50.75	3.48	-1.00	
+2010-GB2-MCC	2010-GB2-MCC 51.0-51.5	51.25	3.32	-0.88	
+2010-GB2-MCC	2010-GB2-MCC 51.5-52.0	51.75	3.71	-1.24	
+2010-GB2-MCC	2010-GB2-MCC 52.0-52.5	52.25	4.37	-1.14	
+2010-GB2-MCC	2010-GB2-MCC 52.5-53.0	52.75	3.38	-0.99	
+2010-GB2-MCC	2010-GB2-MCC 53.0-53.5	53.25	3.56	-1.08	
+2010-GB2-MCC	2010-GB2-MCC 53.5-54.0	53.75	3.66	-0.72	
+2010-GB2-MCC	2010-GB2-MCC 54.0-54.5	54.25	3.55	-1.12	
+2010-GB2-MCC	2010-GB2-MCC 54.5-55.0	54.75	3.79	-0.90	
+2010-GB2-MCC	2010-GB2-MCC 55.0-55.5	55.25	4.44	-1.00	
+2010-GB2-MCC	2010-GB2-MCC 55.5-56.0	55.75	4.14	-1.04	
+2010-GB2-MCC	2010-GB2-MCC 56.0-56.5	56.25	3.95	-1.12	
+2010-GB2-MCC	2010-GB2-MCC 56.5-57.0	56.75	4.45	-1.17	
+2010-GB2-MCC	2010-GB2-MCC 57.0-57.5	57.25	3.90	-0.93	
+2010-GB2-MCC	2010-GB2-MCC 57.5-58.0	57.75	4.03	-1.05	

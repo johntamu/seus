@@ -1,0 +1,248 @@
+# Garrison Basin, Gulf of Mexico d18O and Mg/Ca in three multicores and stacked SST/d18Osw/SSS reconstructions spanning the past 4.4 kyrs
+#-----------------------------------------------------------------------
+#               World Data Service for Paleoclimatology, Boulder
+#                                   and
+#                      NOAA Paleoclimatology Program
+#-----------------------------------------------------------------------
+# NOTE: Please cite original publication, online resource and date accessed when using this data.
+# If there is no publication information, please cite Investigator, title, online resource and date accessed.
+#
+# Description/Documentation lines begin with #
+# Data lines have no #
+#
+# Online_Resource: https://www.ncdc.noaa.gov/paleo/study/23373
+#      Description: NOAA Landing Page
+# Online_Resource: http://www1.ncdc.noaa.gov/pub/data/paleo/paleocean/by_contributor/thirumalai2018/thirumalai2018-stack.txt
+#      Description: NOAA location of the template
+#
+# Archive: Paleoceanography
+#
+# Dataset_DOI:
+#
+# Parameter_Keywords: oxygen isotopes, trace metals in carbonates, age control, geochemistry
+#---------------------------------------
+# Contribution_Date
+#    Date: 2018-02-05
+#---------------------------------------
+# File_Last_Modified_Date
+#    Date: 2018-02-05
+#---------------------------------------
+# Title
+#    Study_Name: Garrison Basin, Gulf of Mexico d18O and Mg/Ca in three multicores and stacked SST/d18Osw/SSS reconstructions spanning the past 4.4 kyrs
+#---------------------------------------
+# Investigators
+#      Investigators: Thirumalai, Kaustubh; Quinn, Terrence M.; Okumura, Yuko; Richey, Julie N.; Partin, Judson W.; Poore, Richard Z.; Moreno-Chamarro, Eduardo;
+#---------------------------------------
+# Description_Notes_and_Keywords
+#        Description: Sea-surface temperature, d18Osw, and sea-surface salinity reconstructions from the northern Gulf of Mexico generated from paired Mg/Ca-d¹8O measurements in G. ruber (White) from three Garrison Basin sediment cores spanning the last 4,400 years
+#         Provided Keywords: Gulf of Mexico, sea-surface temperature, sea-surface salinity, G. ruber, foraminifera, late Holocene
+#---------------------------------------
+# Publication
+# Authors: Thirumalai, K., T.M. Quinn, Y. Okumura, J.N. Richey, J.W. Partin, R.Z. Poore, and E. Moreno-Chamarro
+# Published_Date_or_Year: 2018
+# Published_Title: Pronounced centennial-scale Atlantic Ocean climate variability correlated with Western Hemisphere hydroclimate
+# Journal_Name: Nature Communications
+# Volume: 9
+# Edition: 
+# Issue: 1
+# Pages: 1-11
+# Report Number: 392
+# DOI: 10.1038/s41467-018-02846-4
+# Online_Resource: 
+# Full_Citation: 
+# Abstract: Surface-ocean circulation in the northern Atlantic Ocean influences Northern Hemisphere climate. Century-scale circulation variability in the Atlantic Ocean, however, is poorly con- strained due to insufficiently-resolved paleoceanographic records. Here we present a repli- cated reconstruction of sea-surface temperature and salinity from a site sensitive to North Atlantic circulation in the Gulf of Mexico which reveals pronounced centennial-scale varia- bility over the late Holocene. We find significant correlations on these timescales between salinity changes in the Atlantic, a diagnostic parameter of circulation, and widespread pre- cipitation anomalies using three approaches: multiproxy synthesis, observational datasets, and a transient simulation. Our results demonstrate links between centennial changes in northern Atlantic surface-circulation and hydroclimate changes in the adjacent continents over the late Holocene. Notably, our findings reveal that weakened surface-circulation in the Atlantic Ocean was concomitant with well-documented rainfall anomalies in the Western Hemisphere during the Little Ice Age.
+#---------------------------------------
+# Funding_Agency
+#    Funding_Agency_Name: 
+#    Grant: 
+#---------------------------------------
+# Site Information
+# Site_Name: Garrison Basin
+# Location: Gulf of Mexico
+# Country: USA
+# Northernmost_Latitude: 26.66
+# Southernmost_Latitude: 26.66
+# Easternmost_Longitude: -93.92
+# Westernmost_Longitude: -93.92
+# Elevation: -1776
+#---------------------------------------
+# Data_Collection
+#   Collection_Name: Garrison Stack Thirumalai2018
+#   First_Year: -2403
+#   Last_Year: 1999
+#   Time_Unit: AD
+#   Core_Length: 0.6
+#   Notes: Most recent year is -49 yr BP and oldest is 4353 yr BP
+#---------------------------------------
+# Chronology_Information 
+# Chronology: 
+# 
+# core	ID name of multicore dated	
+# core.sample	Interval of sampling in core	
+# depth_top	Top depth of sample interval (cm)	
+# depth_bottom	Bottom depth of sample interval (cm)	
+# depth_mid	Middle depth of sampled interval (cm)	
+# mat.dated 	Material dated	
+# 14C.raw	Conventional radiocarbon age, years before 1950AD  	
+# 14C.raw_err 	Radiocarbon age, standard error 	
+# 
+# core	core.sample	depth_bottom	depth_top	depth_mid	mat.dated	14C.raw	14C.raw_err	
+# 2010-GB2-MCA	2010-GB2-MCA 0.0-0.5	0.5	0	0.25	Mixed Planktics	>Modern	30	
+# 2010-GB2-MCA	2010-GB2-MCA 9.5-10.0	10	9.5	9.75	Mixed Planktics	855	30	
+# 2010-GB2-MCA	2010-GB2-MCA 19.5-20.0	20	19.5	19.75	Mixed Planktics	1450	30	
+# 2010-GB2-MCA	2010-GB2-MCA 34.5-35	35	34.5	34.75	Mixed Planktics	2405	30	
+# 2010-GB2-MCA	2010-GB2-MCA 49.5-50	50	49.5	49.75	Mixed Planktics	3560	35	
+# 2010-GB2-MCA	2010-GB2-MCA 59.5-60	60	59.5	59.75	Mixed Planktics	4250	30	
+# 2010-GB2-MCB	2010-GB2-MCB 0-0.25	0.25	0	0.125	Mixed Planktics	>Modern	30	
+# 2010-GB2-MCB	2010-GB2-MCB 11-11.25	11.25	11	11.125	Mixed Planktics	910	30	
+# 2010-GB2-MCB	2010 GB2 MCB 34-34.25	34.25	34	34.125	Mixed Planktics	2280	30	
+# 2010-GB2-MCC	2010 GB2 MCC 0-0.5	0.5	0	0.25	Mixed Planktics	>Modern	30	
+# 2010-GB2-MCC	2010 GB2 MCC 9.5-10	10	9.5	9.75	Mixed Planktics	950	30	
+# 2010-GB2-MCC	2010 GB2 MCC 29.5-30	30	29.5	29.75	Mixed Planktics	2065	30	
+# 
+#---------------------------------------
+# Variables
+# Data variables follow that are preceded by "##" in columns one and two.
+# Variables list, one per line, shortname-tab-longname components (9 components: what, material, error, units, seasonality, archive, detail, method, C or N for Character or Numeric data)
+## age	age,,,calendar year before present,,,,,N,
+## stack_sst	sea surface temperature,Globigerinoides ruber white,,degree Celsius,annual,climate reconstruction;paleoceanography,,,N,See Thirumalai et al. 2018 for inversion equations and details; stacked record
+## e32_sst	sea surface temperature,Globigerinoides ruber white,percentile,degree Celsius,annual,climate reconstruction;paleoceanography,,,N,32nd percentile; See Thirumalai et al. 2018 for error details (uncertainty accounts for analytical, sampling, and dating uncertainty)
+## e68_sst	sea surface temperature,Globigerinoides ruber white,percentile,degree Celsius,annual,climate reconstruction;paleoceanography,,,N,68th percentile; See Thirumalai et al. 2018 for error details (uncertainty accounts for analytical, sampling, and dating uncertainty)
+## e5_sst	sea surface temperature,Globigerinoides ruber white,percentile,degree Celsius,annual,climate reconstruction;paleoceanography,,,N,5th percentile; See Thirumalai et al. 2018 for error details (uncertainty accounts for analytical, sampling, and dating uncertainty)
+## e95_sst	sea surface temperature,Globigerinoides ruber white,percentile,degree Celsius,annual,climate reconstruction;paleoceanography,,,N,95th percentile; See Thirumalai et al. 2018 for error details (uncertainty accounts for analytical, sampling, and dating uncertainty)
+## stack_d18O-sw	seawater delta 18O,Globigerinoides ruber white,,per mil VSMOW,annual,climate reconstruction;paleoceanography,,,N,See Thirumalai et al. 2018 for inversion equations and details; stacked record
+## e32_d18O-sw	seawater delta 18O,Globigerinoides ruber white,percentile,per mil VSMOW,annual,climate reconstruction;paleoceanography,,,N,32nd percentile; See Thirumalai et al. 2018 for error details (uncertainty accounts for analytical, sampling, and dating uncertainty)
+## e68_d18O-sw	seawater delta 18O,Globigerinoides ruber white,percentile,per mil VSMOW,annual,climate reconstruction;paleoceanography,,,N,68th percentile; See Thirumalai et al. 2018 for error details (uncertainty accounts for analytical, sampling, and dating uncertainty)
+## e5_d18O-sw	seawater delta 18O,Globigerinoides ruber white,percentile,per mil VSMOW,annual,climate reconstruction;paleoceanography,,,N,5th percentile; See Thirumalai et al. 2018 for error details (uncertainty accounts for analytical, sampling, and dating uncertainty)
+## e95_d18O-sw	seawater delta 18O,Globigerinoides ruber white,percentile,per mil VSMOW,annual,climate reconstruction;paleoceanography,,,N,95th percentile; See Thirumalai et al. 2018 for error details (uncertainty accounts for analytical, sampling, and dating uncertainty)
+## stack_sss	sea surface salinity,Globigerinoides ruber white,,practical salinity unit,annual,climate reconstruction;paleoceanography,,,N,See Thirumalai et al. 2018 for inversion equations and details; stacked record
+## e32_sss	sea surface salinity,Globigerinoides ruber white,percentile,practical salinity unit,annual,climate reconstruction;paleoceanography,,,N,32nd percentile; See Thirumalai et al. 2018 for error details (uncertainty accounts for analytical, sampling, and dating uncertainty)
+## e68_sss	sea surface salinity,Globigerinoides ruber white,percentile,practical salinity unit,annual,climate reconstruction;paleoceanography,,,N,68th percentile; See Thirumalai et al. 2018 for error details (uncertainty accounts for analytical, sampling, and dating uncertainty)
+## e5_sss	sea surface salinity,Globigerinoides ruber white,percentile,practical salinity unit,annual,climate reconstruction;paleoceanography,,,N,5th percentile; See Thirumalai et al. 2018 for error details (uncertainty accounts for analytical, sampling, and dating uncertainty)
+## e95_sss	sea surface salinity,Globigerinoides ruber white,percentile,practical salinity unit,annual,climate reconstruction;paleoceanography,,,N,95th percentile; See Thirumalai et al. 2018 for error details (uncertainty accounts for analytical, sampling, and dating uncertainty)
+#------------------------
+# Data
+# Data lines follow (have no #)
+# Data line format - tab-delimited text, variable short name as header
+# Missing Value: NA
+age	stack_sst	e32_sst	e68_sst	e5_sst	e95_sst	stack_d18O-sw	e32_d18O-sw	e68_d18O-sw	e5_d18O-sw	e95_d18O-sw	stack_sss	e32_sss	e68_sss	e5_sss	e95_sss	
+-49	26.6	0.06	0.13	0.31	0.36	1.06	0.03	0.03	0.11	0.11	36.42	0.06	0.06	0.21	0.20	
+-14	26.0	0.1	0.1	0.3	0.3	1.34	0.04	0.02	0.13	0.10	36.9	0.1	0.0	0.2	0.2	
+21	26.0	0.1	0.1	0.4	0.3	1.10	0.07	0.00	0.16	0.08	36.5	0.1	0.0	0.3	0.1	
+55	25.5	0.1	0.0	0.3	0.3	1.09	0.04	0.01	0.12	0.08	36.4	0.1	0.0	0.2	0.2	
+88	25.7	0.2	0.0	0.5	0.2	1.06	0.02	0.04	0.11	0.13	36.5	0.1	0.0	0.2	0.2	
+121	25.4	0.2	0.1	0.5	0.2	1.08	0.03	0.02	0.11	0.10	36.5	0.1	0.0	0.2	0.2	
+153	25.1	0.1	0.1	0.4	0.4	0.98	0.03	0.04	0.11	0.12	36.3	0.0	0.1	0.2	0.2	
+184	25.0	0.1	0.0	0.4	0.3	0.92	0.03	0.03	0.10	0.10	36.2	0.1	0.1	0.2	0.2	
+216	25.3	0.1	0.1	0.3	0.3	0.97	0.03	0.03	0.10	0.10	36.3	0.0	0.1	0.2	0.2	
+246	25.7	0.2	0.0	0.4	0.2	1.00	0.03	0.02	0.09	0.09	36.3	0.1	0.0	0.2	0.2	
+276	25.0	0.1	0.0	0.3	0.3	0.91	0.04	0.02	0.11	0.10	36.2	0.1	0.0	0.2	0.2	
+306	24.8	0.0	0.1	0.3	0.3	0.85	0.03	0.02	0.10	0.09	36.1	0.1	0.0	0.2	0.2	
+335	25.1	0.1	0.0	0.4	0.3	0.88	0.01	0.05	0.08	0.13	36.3	0.0	0.1	0.2	0.2	
+364	25.7	0.2	0.1	0.4	0.1	0.91	0.02	0.03	0.09	0.09	36.1	0.1	0.0	0.2	0.1	
+392	25.3	0.1	0.1	0.3	0.3	0.85	0.04	0.01	0.11	0.08	36.1	0.1	0.0	0.2	0.1	
+420	25.4	0.1	0.1	0.4	0.3	0.90	0.03	0.03	0.10	0.10	36.1	0.1	0.1	0.2	0.2	
+448	24.2	0.1	0.1	0.4	0.3	0.70	0.07	0.01	0.14	0.07	35.8	0.1	0.0	0.3	0.1	
+475	24.2	0.1	0.1	0.4	0.3	0.69	0.04	0.10	0.04	0.18	35.8	0.1	0.2	0.1	0.3	
+502	23.7	0.1	0.1	0.4	0.4	0.55	0.04	0.02	0.12	0.10	35.5	0.1	0.0	0.2	0.2	
+529	24.1	0.2	0.0	0.4	0.3	0.70	0.03	0.03	0.11	0.11	35.8	0.1	0.1	0.2	0.2	
+556	23.9	0.1	0.1	0.3	0.3	0.69	0.05	0.00	0.12	0.07	35.8	0.1	0.0	0.2	0.1	
+582	24.6	0.1	0.1	0.4	0.3	0.83	0.06	0.00	0.14	0.08	36.0	0.1	0.0	0.3	0.1	
+608	24.7	0.1	0.1	0.3	0.3	0.80	0.02	0.03	0.09	0.10	36.0	0.0	0.1	0.2	0.2	
+634	23.9	0.2	0.3	0.1	0.6	0.64	0.03	0.02	0.10	0.10	35.7	0.0	0.0	0.2	0.2	
+659	23.9	0.0	0.2	0.2	0.4	1.07	0.08	0.03	0.15	0.04	36.4	0.1	0.0	0.2	0.1	
+685	24.5	0.1	0.1	0.3	0.3	0.95	0.02	0.07	0.05	0.14	36.4	0.1	0.0	0.2	0.2	
+710	25.1	0.1	0.1	0.3	0.3	0.94	0.02	0.03	0.08	0.09	36.2	0.0	0.0	0.2	0.2	
+736	25.4	0.2	0.0	0.4	0.2	0.76	0.01	0.04	0.09	0.12	35.9	0.0	0.1	0.2	0.2	
+761	24.8	0.1	0.1	0.3	0.3	0.87	0.03	0.03	0.10	0.11	36.1	0.0	0.1	0.2	0.2	
+786	25.3	0.1	0.1	0.3	0.3	0.94	0.02	0.04	0.10	0.11	36.2	0.0	0.1	0.2	0.2	
+811	24.4	0.1	0.1	0.4	0.3	0.87	0.05	0.01	0.13	0.08	36.1	0.1	0.0	0.2	0.2	
+836	25.7	0.4	0.2	0.6	0.1	0.85	0.03	0.03	0.12	0.11	36.0	0.1	0.1	0.2	0.2	
+861	23.4	0.1	0.3	0.3	0.6	0.66	0.05	0.03	0.14	0.12	35.7	0.1	0.1	0.2	0.2	
+887	24.9	0.2	0.0	0.4	0.2	0.88	0.03	0.03	0.11	0.10	36.1	0.1	0.0	0.2	0.2	
+912	23.8	0.2	0.1	0.5	0.5	0.88	0.04	0.04	0.16	0.15	36.1	0.1	0.1	0.3	0.3	
+937	25.3	0.1	0.1	0.5	0.4	1.05	0.04	0.04	0.15	0.14	36.4	0.1	0.1	0.3	0.2	
+963	25.2	0.1	0.1	0.5	0.4	1.03	0.04	0.04	0.15	0.14	36.4	0.1	0.1	0.3	0.3	
+989	26.1	0.1	0.1	0.4	0.4	1.31	0.04	0.04	0.14	0.14	36.9	0.1	0.1	0.3	0.3	
+1014	25.7	0.1	0.1	0.4	0.4	1.19	0.04	0.04	0.15	0.14	36.7	0.1	0.1	0.3	0.3	
+1040	25.0	0.1	0.1	0.5	0.4	0.98	0.05	0.04	0.15	0.14	36.3	0.1	0.1	0.3	0.3	
+1067	25.4	0.2	0.1	0.5	0.4	1.00	0.04	0.04	0.15	0.14	36.3	0.1	0.1	0.3	0.3	
+1093	24.8	0.2	0.1	0.6	0.4	0.96	0.05	0.04	0.15	0.14	36.2	0.1	0.1	0.3	0.3	
+1119	24.6	0.1	0.1	0.5	0.5	0.87	0.04	0.04	0.15	0.15	36.1	0.1	0.1	0.3	0.3	
+1146	23.4	0.2	0.1	0.6	0.5	0.74	0.05	0.04	0.16	0.15	35.9	0.1	0.1	0.3	0.3	
+1173	24.9	0.1	0.1	0.5	0.4	0.93	0.04	0.04	0.15	0.14	36.2	0.1	0.1	0.3	0.3	
+1201	24.9	0.1	0.1	0.5	0.5	0.89	0.04	0.04	0.15	0.15	36.1	0.1	0.1	0.3	0.3	
+1229	25.9	0.1	0.1	0.4	0.4	1.13	0.04	0.04	0.14	0.14	36.6	0.1	0.1	0.3	0.2	
+1257	25.3	0.1	0.1	0.5	0.4	1.07	0.04	0.04	0.14	0.14	36.5	0.1	0.1	0.3	0.2	
+1286	24.4	0.1	0.1	0.5	0.5	0.75	0.04	0.04	0.16	0.14	35.9	0.1	0.1	0.3	0.3	
+1315	24.3	0.1	0.1	0.5	0.5	0.83	0.04	0.04	0.15	0.15	36.0	0.1	0.1	0.3	0.3	
+1344	24.6	0.1	0.1	0.5	0.5	0.88	0.04	0.04	0.15	0.15	36.1	0.1	0.1	0.3	0.3	
+1374	25.2	0.1	0.1	0.5	0.4	0.96	0.04	0.04	0.15	0.14	36.3	0.1	0.1	0.3	0.3	
+1404	24.9	0.1	0.1	0.5	0.4	0.96	0.04	0.04	0.15	0.15	36.3	0.1	0.1	0.3	0.3	
+1435	25.6	0.1	0.1	0.4	0.4	1.13	0.04	0.04	0.14	0.13	36.6	0.1	0.1	0.3	0.3	
+1465	24.4	0.1	0.1	0.5	0.5	1.18	0.04	0.04	0.15	0.15	36.7	0.1	0.1	0.3	0.3	
+1497	24.7	0.1	0.1	0.5	0.4	1.42	0.00	0.00	0.00	0.00	37.1	0.0	0.0	0.0	0.0	
+1529	24.6	0.1	0.1	0.5	0.4	1.12	0.04	0.04	0.15	0.14	36.6	0.1	0.1	0.3	0.3	
+1561	24.4	0.0	0.0	0.0	0.0	0.97	0.04	0.04	0.15	0.15	36.3	0.1	0.1	0.3	0.3	
+1594	24.9	0.1	0.1	0.5	0.4	1.01	0.04	0.04	0.15	0.15	36.3	0.1	0.1	0.3	0.3	
+1627	25.3	0.1	0.1	0.5	0.4	1.07	0.04	0.04	0.14	0.14	36.5	0.1	0.1	0.3	0.3	
+1661	24.9	0.1	0.1	0.5	0.4	0.90	0.05	0.04	0.15	0.14	36.1	0.1	0.1	0.3	0.3	
+1695	25.0	0.1	0.1	0.5	0.4	0.94	0.04	0.04	0.15	0.15	36.2	0.1	0.1	0.3	0.3	
+1730	25.3	0.1	0.1	0.5	0.4	0.82	0.05	0.04	0.15	0.14	36.0	0.1	0.1	0.3	0.3	
+1765	25.1	0.2	0.1	0.5	0.4	1.01	0.05	0.04	0.15	0.14	36.3	0.1	0.1	0.3	0.3	
+1801	24.7	0.1	0.1	0.5	0.5	0.80	0.04	0.04	0.14	0.15	36.0	0.1	0.1	0.3	0.3	
+1837	24.9	0.1	0.1	0.5	0.4	0.91	0.04	0.04	0.15	0.14	36.2	0.1	0.1	0.3	0.3	
+1873	24.5	0.1	0.1	0.5	0.5	0.98	0.04	0.04	0.14	0.15	36.3	0.1	0.1	0.3	0.3	
+1911	25.1	0.1	0.1	0.5	0.5	0.87	0.04	0.04	0.15	0.14	36.1	0.1	0.1	0.3	0.3	
+1948	24.8	0.1	0.1	0.5	0.4	1.11	0.04	0.04	0.15	0.14	36.5	0.1	0.1	0.3	0.3	
+1987	25.2	0.1	0.1	0.5	0.5	0.76	0.04	0.04	0.14	0.14	35.9	0.1	0.1	0.3	0.3	
+2026	24.5	0.1	0.1	0.5	0.5	0.98	0.04	0.04	0.15	0.15	36.3	0.1	0.1	0.3	0.3	
+2066	24.3	0.2	0.1	0.5	0.5	0.78	0.05	0.04	0.15	0.15	35.9	0.1	0.1	0.3	0.3	
+2106	24.8	0.1	0.1	0.5	0.5	0.88	0.04	0.04	0.14	0.15	36.1	0.1	0.1	0.3	0.3	
+2147	23.5	0.2	0.1	0.5	0.5	0.52	0.04	0.04	0.16	0.16	35.5	0.1	0.1	0.3	0.3	
+2189	24.4	0.2	0.1	0.5	0.5	0.48	0.04	0.04	0.15	0.15	35.4	0.1	0.1	0.3	0.3	
+2231	25.0	0.1	0.1	0.5	0.4	0.73	0.04	0.04	0.15	0.14	35.8	0.1	0.1	0.3	0.3	
+2274	24.8	0.1	0.1	0.5	0.5	0.94	0.04	0.04	0.15	0.15	36.2	0.1	0.1	0.3	0.3	
+2317	25.3	0.1	0.1	0.5	0.4	0.96	0.04	0.04	0.14	0.14	36.3	0.1	0.1	0.3	0.3	
+2361	25.1	0.1	0.1	0.5	0.5	0.79	0.04	0.04	0.15	0.14	35.9	0.1	0.1	0.3	0.3	
+2405	25.5	0.1	0.1	0.4	0.4	0.89	0.04	0.04	0.14	0.15	36.1	0.1	0.1	0.3	0.3	
+2450	25.5	0.1	0.1	0.5	0.4	0.97	0.04	0.04	0.15	0.15	36.3	0.1	0.1	0.3	0.3	
+2495	25.5	0.1	0.1	0.4	0.4	1.12	0.04	0.04	0.14	0.15	36.5	0.1	0.1	0.3	0.3	
+2540	25.9	0.1	0.1	0.4	0.4	1.08	0.04	0.02	0.13	0.10	36.4	0.1	0.1	0.3	0.3	
+2586	25.7	0.1	0.1	0.4	0.4	0.90	0.04	0.04	0.15	0.15	36.4	0.1	0.0	0.3	0.2	
+2632	25.4	0.1	0.1	0.3	0.4	0.88	0.04	0.04	0.14	0.14	36.1	0.1	0.1	0.3	0.3	
+2679	25.6	0.1	0.1	0.5	0.4	0.86	0.05	0.04	0.15	0.14	36.1	0.1	0.1	0.3	0.3	
+2726	25.2	0.1	0.1	0.5	0.4	0.95	0.04	0.04	0.15	0.14	36.2	0.1	0.1	0.3	0.3	
+2773	25.5	0.1	0.1	0.4	0.4	0.79	0.04	0.05	0.15	0.15	36.0	0.1	0.1	0.3	0.3	
+2821	25.0	0.1	0.1	0.5	0.4	0.78	0.04	0.04	0.15	0.14	35.9	0.1	0.1	0.3	0.3	
+2869	25.6	0.1	0.1	0.5	0.4	0.70	0.05	0.04	0.15	0.14	35.8	0.1	0.1	0.3	0.3	
+2917	24.7	0.1	0.1	0.5	0.5	0.58	0.04	0.04	0.15	0.15	35.6	0.1	0.1	0.3	0.3	
+2965	24.6	0.1	0.1	0.5	0.5	0.78	0.04	0.04	0.15	0.14	35.9	0.1	0.1	0.3	0.3	
+3014	24.5	0.1	0.1	0.5	0.4	1.08	0.04	0.04	0.15	0.15	36.5	0.1	0.1	0.3	0.3	
+3062	24.3	0.2	0.1	0.5	0.4	0.70	0.05	0.04	0.15	0.15	35.8	0.1	0.1	0.3	0.3	
+3112	25.7	0.1	0.1	0.5	0.4	0.98	0.04	0.04	0.14	0.14	36.3	0.1	0.1	0.3	0.3	
+3161	24.8	0.1	0.1	0.5	0.4	1.01	0.04	0.04	0.15	0.14	36.3	0.1	0.1	0.3	0.3	
+3210	24.7	0.1	0.1	0.5	0.5	0.84	0.04	0.04	0.15	0.14	36.0	0.1	0.1	0.3	0.3	
+3259	24.0	0.1	0.1	0.5	0.5	0.77	0.04	0.04	0.15	0.16	35.9	0.1	0.1	0.3	0.3	
+3309	24.5	0.2	0.1	0.5	0.4	1.04	0.05	0.03	0.16	0.14	36.4	0.1	0.1	0.3	0.2	
+3359	24.7	0.1	0.1	0.5	0.5	1.08	0.04	0.04	0.16	0.14	36.5	0.1	0.1	0.3	0.3	
+3410	24.1	0.2	0.1	0.6	0.5	0.75	0.05	0.04	0.16	0.15	35.9	0.1	0.1	0.3	0.3	
+3460	23.5	0.2	0.1	0.6	0.5	0.78	0.05	0.04	0.16	0.15	35.9	0.1	0.1	0.3	0.3	
+3510	23.9	0.2	0.1	0.5	0.5	0.73	0.04	0.04	0.15	0.16	35.8	0.1	0.1	0.3	0.3	
+3561	25.3	0.1	0.1	0.5	0.4	0.88	0.05	0.04	0.15	0.14	36.1	0.1	0.1	0.3	0.3	
+3611	24.2	0.2	0.1	0.6	0.4	0.76	0.05	0.04	0.16	0.15	35.9	0.1	0.1	0.3	0.3	
+3661	24.2	0.2	0.1	0.5	0.5	0.66	0.00	0.00	0.00	0.00	35.7	0.1	0.1	0.3	0.3	
+3712	24.2	0.0	0.0	0.0	0.0	0.75	0.04	0.04	0.15	0.16	36.0	0.0	0.0	0.0	0.0	
+3762	24.2	0.1	0.1	0.5	0.5	1.13	0.04	0.04	0.15	0.14	36.6	0.1	0.1	0.3	0.3	
+3812	23.7	0.2	0.1	0.5	0.5	0.62	0.04	0.04	0.15	0.15	35.6	0.1	0.1	0.3	0.3	
+3862	24.3	0.1	0.1	0.5	0.5	0.93	0.04	0.04	0.15	0.15	36.2	0.1	0.1	0.3	0.3	
+3912	25.3	0.1	0.1	0.5	0.4	1.16	0.04	0.04	0.14	0.14	36.6	0.1	0.1	0.3	0.3	
+3962	25.0	0.1	0.1	0.5	0.4	0.95	0.04	0.04	0.14	0.15	36.2	0.1	0.1	0.3	0.3	
+4011	24.9	0.1	0.1	0.5	0.5	0.93	0.04	0.04	0.14	0.15	36.2	0.1	0.1	0.3	0.3	
+4061	25.6	0.1	0.1	0.4	0.4	1.06	0.04	0.04	0.14	0.14	36.4	0.1	0.1	0.3	0.3	
+4110	24.5	0.1	0.1	0.5	0.5	0.85	0.04	0.04	0.15	0.15	36.1	0.1	0.1	0.3	0.3	
+4159	24.4	0.2	0.1	0.5	0.5	1.01	0.04	0.04	0.15	0.15	36.3	0.1	0.1	0.3	0.3	
+4209	26.4	0.4	0.4	0.6	0.6	1.19	0.10	0.10	0.18	0.18	36.7	0.2	0.2	0.3	0.3	
+4258	25.2	0.4	0.4	0.6	0.6	1.10	0.10	0.10	0.18	0.18	36.5	0.2	0.2	0.3	0.3	
+4305	25.1	0.4	0.4	0.6	0.6	0.93	0.10	0.10	0.18	0.18	36.2	0.2	0.2	0.3	0.3	
+4353	25.5	0.4	0.4	0.6	0.6	1.11	0.10	0.10	0.18	0.18	36.5	0.2	0.2	0.3	0.3	

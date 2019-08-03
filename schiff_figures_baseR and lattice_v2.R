@@ -15,11 +15,11 @@ library(grid)
 ## Load df.bulk from timeseries ##
 ## script file                  ##
 ##################################
-path1 <- '~/Google Drive/projects/rproj/seus/data/schiff_bulk_years_06-18-2019.csv'
+path1 <- '~/Documents/GitHub/rstudio/data/schiff_bulk_years_06-18-2019.csv'
 path2 <- 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/schiff_bulk_years_06-18-2019.csv'
 path3 <- '/home/john/Desktop/data/schiff_bulk_years_06-18-2019.csv'
   
-path <- read.csv(path3)
+path <- read.csv(path1)
 
 df.bulk <- path
 View(df.bulk)
