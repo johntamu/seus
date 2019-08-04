@@ -75,10 +75,14 @@ r.stet$range <- r.stet$yrmax - r.stet$yrmin
 r.jack$range <- r.jack$yrmax - r.jack$yrmin
 
 
-##############################
-## Create LINEAR MODELS for ##
-## radiocarbon data sets    ##
-##############################
+##################################
+##
+##
+## CALCULATE LINEAR MODELS for  ##
+## radiocarbon data sets        ##
+##
+##
+##################################
 
 # Jacksonville-4907
 lm.jack <- lm(r.jack$mean ~ r.jack$Distance..um.) # The is the OVERALL linear model, not split into two
@@ -104,6 +108,9 @@ jlm2 <- lm(mean ~ Distance..um., jsplit2)
 summary(jlm1)
 summary(jlm2)
 
+
+
+
 # Stetson-4904
 # Note: leaving some points out because of variability. Argue that it agrees with other Stetson radiocarbon set
 # Update: 06/18/2019, deciding to leave those points in.
@@ -121,9 +128,9 @@ summary(lm.stet.all)
 # Stetson-4904 
 # Note: 07/12/2019, splitting the Stetson record into two grwoth rates like with Jacksonville to see how it varies
 r.stet %>% 
-  filter(Distance..um. < 6200) -> stet.split1
+  filter(Distance..um. <= 6021) -> stet.split1
 r.stet %>%
-  filter(Distance..um. > 4900) -> stet.split2
+  filter(Distance..um. >= 6021) -> stet.split2
 
 View(stet.split1)
 View(stet.split2)
@@ -137,6 +144,9 @@ s2 <- lm(mean ~ Distance..um., stet.split2)
 summary(s1)
 summary(s2)
 
+
+
+
 # Savannah-4902
 lm.sav <- lm(r.sav$mean ~ r.sav$Distance..um.) # linear model for Savannah
 lm.sav <- lm(r.sav$X14C.Age ~ r.sav$Distance..um.) # linear model for Savannah
@@ -145,7 +155,7 @@ summary(lm.sav)
 
 ################################
 ##                            ##
-## Plotting linear age models ##
+## PLOTTING linear age models ##
 ##                            ##
 ################################
 
@@ -180,6 +190,7 @@ plot(mean ~ Distance..um., r.stet, type = "o",
 # abline(lm.stet, col = "#000000", lty = "dashed", lwd = 1.25)
 r2 <- summary(lm.stet.all)$adj.r.squared
 abline(lm.stet.all, col = "black", lwd = 1.25)
+abline(lm.stet, col = "black", lty = "dashed")
 mylabel <- bquote(italic(R)^2 == .(format(r2, digits = 3)))
 text(x = 6000, y = 400, labels = mylabel)
 legend("bottomright", bty = "n", legend = paste("R2 is", format(summary(lm.stet.all)$adj.r.squared, digits = 3)))
@@ -194,7 +205,7 @@ plot(D14C ~ Distance..um., r.stet, type = "o",
      cex = 1.5,
      bg = "#bdbdbd")
 
-plot(mean ~ Distance..um., r.stet2, type = "o",
+plot(D14C ~ Distance..um., r.stet2, type = "o",
      xlab = expression(paste("Distance", " (",mu,"m)")),
      ylab = "Median Age (Yrs BP)",
      pch = 21,
@@ -202,6 +213,19 @@ plot(mean ~ Distance..um., r.stet2, type = "o",
      bg = "#bdbdbd")
 abline(lm(r.stet2$mean ~ r.stet2$Distance..um.), col = "#41b6c4", lty = "dashed", lwd = 2)
 
+plot(D14C ~ Distance..um., r.jack, type = "o",
+     xlab = expression(paste("Distance", " (",mu,"m)")),
+     ylab = "D14C",
+     pch = 21,
+     cex = 1.5,
+     bg = "#bdbdbd")
+
+plot(D14C ~ Distance..um., r.jack2, type = "o",
+     xlab = expression(paste("Distance", " (",mu,"m)")),
+     ylab = "D14C",
+     pch = 21,
+     cex = 1.5,
+     bg = "#bdbdbd")
 
 plot(mean ~ Distance..um., r.stet, type = "o",
      xlab = expression(paste("Distance", " (",mu,"m)")),
@@ -212,9 +236,13 @@ plot(mean ~ Distance..um., r.stet, type = "o",
 abline(s1, col = "black", lwd = 1.25)
 abline(s2, col = "black", lwd = 1.25)
 
-##################
-# Savannah Banks #
-##################
+######################
+#                 
+#
+# Savannah Banks    #
+#
+#
+######################
 
 plot(mean ~ Distance..um., r.sav, type = "o",
      xlab = expression(paste("Distance", " (",mu,"m)")),
@@ -225,12 +253,22 @@ plot(mean ~ Distance..um., r.sav, type = "o",
 abline(lm.sav, col = "#41b6c4", lty = "dashed", lwd = 2)
 
 ######################################
+##                                  ##
+##                                  ##
+##                                  ##
 ## Calculating linear growth rates  ##
 ## Part 1                           ##
+##                                  ##
+##                                  ##
+##                                  ##
 ######################################
 
 #####################
+#                   #
+#                   #
 # Jacksonville-4907 #
+#                   #
+#                   #
 #####################
 
 growth1 <- as.numeric(1/jlm1$coefficients[2]) # Slower growth rate
@@ -260,7 +298,11 @@ length(binded$distance)
 yrs <- (1950-min(r.jack$mean)) - (distance/5)
 test <- (1950-max(r.jack$mean)) + (distance/6.5)
 #####################
+#                   #
+#                   #
 # Jacksonville-4907 # Now do the same thing again with the other Jackonsville-4907 disk (Disk 1, at USGS in California)
+#                   #
+#                   #
 #####################
 
 distance2 <- jack2$distance..mm.*1000
@@ -281,12 +323,17 @@ names(second)[2] <- paste("yrs")
 binded2 <- rbind(first, second)
 length(binded2$distance)
 
-################
-# Stetson-4904 #
-################
+#####################
+#                   #
+#                   #
+# Stetson-4904      #
+#                   #
+#                   #
+#####################
 
 growth.stet1 <- as.numeric(1/lm.stet$coefficients[2]) # Rsquared = 0.94, residual standard error 94 years
 growth.stet2 <- as.numeric(1/lm.stet.all$coefficients[2]) # Rsquared = 0.86, residual standard error 156 years
+
 stet.linear.ad1 <- 2005 - ((stetson$distance..mm.*1000)/growth.stet1) # 'stetson' from timeseries script file
 stet.linear.ad2 <- 2005 - ((stetson$distance..mm.*1000)/growth.stet2)
 
@@ -305,12 +352,29 @@ s2.growth <- as.numeric(1/s2$coefficients[2])
 print(s1.growth)
 print(s2.growth)
 
-# yrs2 <- (1950-1380) - (distance/growth2) this is for Jacksonville for reference
+lin1 <- 2005 - ((df.stet$distance*1000)/s1.growth)
+# lin2 <- 2005 - ((stetson$distance..mm.*1000)/s2.growth)
+lin2 <- (2005 - 800) - (df.stet$distance*1000/s2.growth)
 
-lin1 <- 2005 - ((stetson$distance..mm.*1000)/s1.growth)
-lin2 <- 2005 - ((stetson$distance..mm.*1000)/s2.growth)
+f <- cbind(stetson$distance..mm.*1000,lin1, lin2)
+f <- as.data.frame(f)
+f$diff <- f$lin1 - f$lin2 # this identifies the inflection point more easily, at distance = 8500 microns
 
-f <- cbind(lin1, lin2)
+
+first <- f[1:293,]
+second <- f[294:nrow(f),]
+
+first <- first[, -c(3)]
+second <- second[,-c(2)]
+
+names(first)[2] <- paste("yrs")
+names(second)[2] <- paste("yrs")
+
+stet.binded <- rbind(first, second)
+length(stet.binded[,1])
+
+stet.linear.ad3 <- stet.binded$yrs
+
 #################
 # Savannah-4902 #
 #################
@@ -319,24 +383,37 @@ growth.sav <- as.numeric(1/lm.sav$coefficients[2])
 linear.ad2 <- (1950 - min(r.sav$mean)) - ((sav$distance..mm.*1000)/growth.sav)
 
 ######################################
+##                                  ##
+##                                  ##
+##                                  ##
 ## Calculating linear growth rates  ##
 ## Part 2                           ##
+##                                  ##
+##                                  ##
+##                                  ##
 ######################################
+
 ####################################
+##                                ##
+##                                ##
 ##                                ##
 ## BOMB SPIKE linear growth rates ##
 ## for Jacksonville-4684 coral    ##
+##                                ##
+##                                ##
 ##                                ##
 ####################################
 
 rising <- r.jack2 %>% filter(Distance..um. < 700 & Distance..um. > 269)
 descending <- r.jack2 %>% filter(Distance..um. < 300)
 overall <- r.jack2 %>% filter(Distance..um. < 700)
+whole <- r.jack2 %>% filter(Distance..um. > 545)
 
 # Three linear models: rising, descending and overall
 lm.rising <- lm(D14C ~ Distance..um., data = rising)
 lm.desc <- lm(D14C ~ Distance..um., data = descending)
 lm.overall <- lm(D14C ~ Distance..um., data = overall)
+lm.whole <- lm(X14C.Age ~ Distance..um., data = whole)
 
 # Use predict() function to create a line, NOTE: You don't need to do it this way, so I am commenting it out
 # rise <- predict(lm.rising, newdata = rising)
@@ -431,17 +508,25 @@ legend("bottomright", bty = "n", legend = bquote(italic(R)^2 == .(format(r2s, di
 gr1 <- 270/(2004-1975)
 gr2 <- (682-270)/(1975-1957) # 23 microns per year
 gr3 <- 682/(2004-1957) # 15 microns per year
+gr4 <- as.numeric(1/lm.whole$coefficients[2])
+
 print(gr1)
 print(gr2)
 print(gr3)
+print(gr4)
+
 m <- mean(c(gr1, gr2, gr3))
 sd(c(gr1, gr2, gr3))
 
 ad1 <- 2004 - ((jack4684$distance..mm.*1000)/gr3) # 15 microns per year, from rounding up average overall growth rate
-ad2 <- 2004 - ((jack4684$distance..mm.*1000)/gr2) # 23 microns per year
+ad2 <- 2004 - ((jack4684$distance..mm.*1000)/gr2) # 23 microns per year, this also fits with overall linear trend
 ad3 <- 2004 - ((jack4684$distance..mm.*1000)/gr1) # 9 microns per year
 ad4 <- 2004 - ((jack4684$distance..mm.*1000)/20) # Test, based on sheet from Nancy
 ad5 <- 2004 - ((jack4684$distance..mm.*1000)/16) # from 'm'
+
+t.df <- cbind(ad1, ad2, ad3, ad4, ad5)
+t.df <- as.data.frame(t.df)
+
 ########################################
 ##                                    ##
 ## SECTION 2: calibrations using the  ##

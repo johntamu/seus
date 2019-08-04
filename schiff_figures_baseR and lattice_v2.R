@@ -15,9 +15,9 @@ library(grid)
 ## Load df.bulk from timeseries ##
 ## script file                  ##
 ##################################
-path1 <- '~/Documents/GitHub/rstudio/data/schiff_bulk_years_06-18-2019.csv'
-path2 <- 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/schiff_bulk_years_06-18-2019.csv'
-path3 <- '/home/john/Desktop/data/schiff_bulk_years_06-18-2019.csv'
+path1 <- '~/Documents/GitHub/rstudio/data/schiff_bulk_years_08-04-2019.csv'
+path2 <- 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/schiff_bulk_years_08-04-2019.csv'
+path3 <- '/home/john/Desktop/data/schiff_bulk_years_08-04-2019.csv'
   
 path <- read.csv(path1)
 
@@ -173,12 +173,12 @@ lines(d13c.5pt ~ linear.ad2, df.stet,
 
 
 # with ggplot, focus on LIA and forward
-s1 <- ggplot(df.stet, aes(x=linear.ad4, y=d15n))
+s1 <- ggplot(df.stet, aes(x=linear.ad, y=d15n))
 s1 + geom_line(color = alpha("#009E73", 0.01)) +
   coord_fixed(ratio = 160) +
-  geom_line(data=df.stet, aes(x=linear.ad2, y=d15n.3pt), color = "#009E73", size = 1.15) +
+  geom_line(data=df.stet, aes(x=linear.ad2, y=d15n), color = "#009E73", size = 1.15) +
   geom_line(data=df.jack4684, aes(x=linear.ad, y=d15n), color = alpha("#D55E00", 0.01)) +
-  geom_line(data=df.jack4684, aes(x=linear.ad, y=d15n.3pt), color = "#D55E00", size = 1.15) +
+  geom_line(data=df.jack4684, aes(x=linear.ad, y=d15n), color = "#D55E00", size = 1.15) +
   # theme_bw() +
   # theme_classic() +
   # geom_point() +
@@ -533,7 +533,7 @@ grid.draw(rbind(ggplotGrob(plots1), ggplotGrob(plots2), size = "last"))
 # Jacksonville-4684 #
 #####################
 par(pty = "s")
-plot(d15n.3pt ~ linear.ad4, df.stet,
+plot(d15n.3pt ~ linear.ad2, df.stet,
      xlab = "Calendar Years (C.E.)",
      ylab = n,
      xlim=c(1300, 2005),
