@@ -412,7 +412,7 @@ plot(d15n ~ linear.ad, df.jack,
      col = alpha("black", 0.4),
      lwd = 2)
 lines(d15n.3pt ~ linear.ad, df.jack2, col = "blue", lwd = 2)
-points(d15n.3pt ~ linear.ad, df.jack2, col = "blue")
+points(d15n.3pt ~ binded2$yrs, df.jack2, col = "blue", type = "o")
 
 plot(d13c ~ linear.ad, df.jack,
      xlab = x,

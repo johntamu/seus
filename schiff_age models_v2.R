@@ -16,11 +16,11 @@ library(clam)
 library(dplyr)
 
 # Create pathnames
-path1 <- '~/Google Drive/projects/rproj/seus/data/schiff radiocarbon 02-05-2019.csv'
+path1 <- '~/Documents/GitHub/rstudio/data/schiff radiocarbon 02-05-2019.csv'
 path2 <- 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/schiff radiocarbon 02-05-2019.csv'
 path3 <- '/home/john/Desktop/data/schiff radiocarbon 02-05-2019.csv'
 
-df <- read.csv(path3)
+df <- read.csv(path1)
 
 radiocarbon <- df
 
@@ -96,8 +96,8 @@ lm.jack <- lm(r.jack$X14C.Age ~ r.jack$Distance..um.)
 # Split into two dataframes. 
 # jsplit1 <- r.jack %>% filter(Distance..um. < 2500)
 # jsplit2 <- r.jack %>% filter(Distance..um. > 2500)
-jsplit1 <- r.jack %>% filter(Distance..um. < 890)
-jsplit2 <- r.jack %>% filter(Distance..um. >= 890)
+jsplit1 <- r.jack %>% filter(Distance..um. < 520)
+jsplit2 <- r.jack %>% filter(Distance..um. >= 512)
 # Linear models for split data
 jlm1 <- lm(mean ~ Distance..um., jsplit1)
 jlm2 <- lm(mean ~ Distance..um., jsplit2)
@@ -165,7 +165,7 @@ axis(side = 4, labels = FALSE, tck = -0.015)
 abline(jlm2, col = "#41b6c4", lty = "dashed", lwd = 2)
 # clip(0,2500,500,2200)
 abline(jlm1, col = "#253494", lty = "dashed", lwd = 2)
-abline(lm.jack, col = "#253494", lty = "dashed", lwd = 2)
+# abline(lm.jack, col = "#253494", lty = "dashed", lwd = 2)
 
 #################
 # Stetson Banks #
@@ -265,19 +265,20 @@ test <- (1950-max(r.jack$mean)) + (distance/6.5)
 
 distance2 <- jack2$distance..mm.*1000
 yrs1 <- (1950-min(r.jack$mean)) - (distance2/growth1) # 588 is median year AD for the edge of the coral, g2 from linear_age_models.R script file
-yrs2 <- (1950-2062) - (distance2/growth2) # 2062 is median year for the coral at distance 2558 microns from edge
+yrs2 <- (1950-1380) - (distance2/growth2) # 2062 is median year for the coral at distance 2558 microns from edge
 t.dat <- cbind(distance2,yrs1,yrs2)
 t.dat <- as.data.frame(t.dat)
 
-first <- t.dat[1:34,]
+first <- t.dat[1:3,]
 first <- first[,-c(3)]
-second <- t.dat[36:nrow(t.dat),]
+second <- t.dat[4:nrow(t.dat),]
 second <- second[,-c(2)]
 names(first)[2] <- paste("yrs")
 names(second)[2] <- paste("yrs")
 
-k <- data.frame(distance2 = 2850, yrs = ((-304 + -449)/2)) # Slightly alter the method
-binded2 <- rbind(first, k, second)
+# k <- data.frame(distance2 = 540, yrs = ((480 + 303)/2)) # Slightly alter the method; this is the inflection point
+# binded2 <- rbind(first, k, second)
+binded2 <- rbind(first, second)
 length(binded2$distance)
 
 ################

@@ -186,12 +186,12 @@ mapContour(bathyLon,bathyLat,bathyZ,
         # lty = c(3, 1, 3, 1, 3),
         col = 'darkgray')
 
-# add depth legend
-legend("bottomright", seg.len = 3, cex = 0.7,
-       lwd = c(1, 1, 2, 2, 3),
-       lty = c(3, 1, 3, 1, 3),
-       legend = c("50", "100", "150", "200", "250"),
-       col = 'darkgray', title = "Depth [m]", bg = "white")
+# # add depth legend
+# legend("bottomright", seg.len = 3, cex = 0.7,
+#        lwd = c(1, 1, 2, 2, 3),
+#        lty = c(3, 1, 3, 1, 3),
+#        legend = c("50", "100", "150", "200", "250"),
+#        col = 'darkgray', title = "Depth [m]", bg = "white")
 
 # add map data
 mapPoints(longitude = pts$lon, latitude = pts$lat, pch = 21, col = 'black', bg = 'red')
