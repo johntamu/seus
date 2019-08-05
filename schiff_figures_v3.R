@@ -24,9 +24,9 @@ library(forecast)
 ## Load df.bulk from timeseries ##
 ## script file                  ##
 ##################################
-path1 <- '~/Documents/GitHub/data/schiff_bulk_years_08-04-2019.csv'
-path2 <- 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/schiff_bulk_years_08-04-2019.csv'
-path3 <- '/home/john/Desktop/data/schiff_bulk_years_08-04-2019.csv'
+path1 <- '~/Documents/GitHub/data/schiff_bulk_years_08-05-2019.csv'
+path2 <- 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/schiff_bulk_years_08-05-2019.csv'
+path3 <- '/home/john/Desktop/data/schiff_bulk_years_08-05-2019.csv'
 
 path <- path1
 
@@ -203,6 +203,8 @@ lines(forecast::ma(df.jack$d15n, order = 3, centre = TRUE) ~ linear.ad, df.jack,
       col = alpha("black", 0.4), lwd = 1.5)
 lines(forecast::ma(df.jack2$d15n, order = 3, centre = TRUE) ~ linear.ad, df.jack2,
       col = "#1f78b4", lwd = 1.5)
+points(forecast::ma(df.jack2$d15n, order = 3, centre = TRUE) ~ linear.ad, df.jack2,
+      col = "#1f78b4", lwd = 1.5)
 
 par(pty = "s")
 plot(d13c ~ linear.ad, df.jack,
@@ -213,7 +215,9 @@ plot(d13c ~ linear.ad, df.jack,
      col = alpha("black", 0.0))
 lines(forecast::ma(df.jack$d13c, order = 3, centre = TRUE) ~ linear.ad, df.jack,
       col = alpha("black", 0.4), lwd = 1.5)
-lines(forecast::ma(df.jack2$d13c, order = 3, centre = TRUE) ~ linear.ad, df.jack2,
+lines(forecast::ma(df.jack2$d13c, order = 2, centre = TRUE) ~ linear.ad, df.jack2,
+      col = "#1f78b4", lwd = 1.5)
+points(forecast::ma(df.jack2$d13c, order = 2, centre = TRUE) ~ linear.ad, df.jack2,
       col = "#1f78b4", lwd = 1.5)
 
 # For now, use the figure already generated and copy paste that into the file
@@ -231,7 +235,7 @@ plot(d15n ~ linear.ad, df.stet,
      cex = 0.5,
      xlim = c(1500,2005),
      col = alpha("black", 0.0))
-lines(forecast::ma(df.stet$d15n, order = 3, centre = TRUE) ~ linear.ad, df.stet,
+points(forecast::ma(df.stet$d15n, order = 1, centre = TRUE) ~ linear.ad, df.stet,
       col = "#33a02c", lwd = 1.5)
 lines(forecast::ma(df.jack4684$d15n, order = 3, centre = TRUE) ~ linear.ad, df.jack4684,
       col = "#1f78b4", lwd = 1.5)
@@ -271,7 +275,7 @@ obj1 <- xyplot(forecast::ma(df.stet$d13c, order = 3, centre = TRUE) ~ linear.ad,
 doubleYScale(obj2, obj1, add.ylab2 = TRUE, style1= NULL, style2 = NULL)
 
 splot1 <- df.stet %>%
-  select(linear.ad, d15n) %>%
+  dplyr::select(linear.ad, d15n) %>%
   na.omit() %>%
   ggplot(aes(x = linear.ad, y = d15n), size = 0.5, alpha = 0.75) +
   geom_line(color = "gray", alpha = 0.4, size = 0.75) +
@@ -298,7 +302,7 @@ splot1 <- df.stet %>%
         panel.grid.minor = element_blank())
 
 splot2 <- df.stet %>%
-  select(linear.ad, d13c) %>%
+  dplyr::select(linear.ad, d13c) %>%
   na.omit() %>%
   ggplot(aes(x = linear.ad, y = d13c), size = 0.5, alpha = 0.75) +
   geom_line(color = "gray", alpha = 0.4, size = 0.75) +
@@ -461,7 +465,7 @@ plot(d15n ~ linear.ad, df.sav,
 abline(v = 950, col = "black", lty = 'dashed')
 abline(v = 1250, col = "black", lty = 'dashed')
 abline(v = 400, col = alpha("black", 0.75), lty = "longdash")
-lines(forecast::ma(df.jack$d15n, order = 3, centre = TRUE) ~ linear.ad, df.jack,
+lines(forecast::ma(df.jack$d15n, order = 2, centre = TRUE) ~ linear.ad, df.jack,
       col = "#4575b4", lwd = 1.5)
 lines(forecast::ma(df.sav$d15n, order = 3, centre = TRUE) ~ linear.ad, df.sav,
       col = "#f46d43", lwd = 1.5)
@@ -505,5 +509,151 @@ lines(d15n ~ linear.ad, df.sav,
 #' 
 #' -----------------------------------------------------
 
+################################
+##                            ##
+##                            ##
+## N-CSIAA Data visualization ##
+##                            ##
+##                            ##
+################################
+ndata <- read.csv("~/Google Drive/projects/rproj/seus/cleaned_ndata.csv") # Contains SEUS black coral data, GOM black corals, and some POM data from elsewhere
+
+######################
+## Overall AA plots ##
+######################
+# Helpful link: https://stackoverflow.com/questions/21982987/mean-per-group-in-a-data-frame
+
+bwtheme <- standard.theme("pdf", color=FALSE)
+
+myColours <- brewer.pal(9,'Greys')
+
+my.settings <- list(
+  superpose.symbol=list(fill=myColours[2:5],col = "black", border="transparent", pch=c(21,23,22,24,25,8)),
+  strip.background=list(col=myColours[6]),
+  strip.border=list(col='black'))
+
+ndata %>%
+  melt(., "Type") %>%
+  filter(variable %in% tr.srcaa) %>% # Success! 03-04-2019
+  xyplot(value ~ variable,
+         .,
+         panel = function(x,  y, ...){
+           panel.xyplot(x, y, ...)
+           panel.abline(h = 9, lty = 1)
+           panel.abline(h = 9.25, lty = 2)
+           panel.abline(h = 8.75, lty = 2)
+         },
+         cex=1.5,
+         ylim=c(-20, 40), # ylim and xlim are "first class" parameters and don't need to be in scales=list()
+         group = Type,
+         xlab = NULL,
+         ylab = expression({delta}^15*"N (\u2030)"),
+         auto.key=list(columns=2, cex = 0.75),
+         par.settings = my.settings)
 
 
+ndata.melt <- melt(ndata[1:45,], "Sample.ID2")
+ndata.melt$variable1 <- factor(ndata.melt$variable, 
+                               levels=tr.srcaa)
+
+bwtheme <- standard.theme("pdf", color = FALSE) # Figure for black and white overall plot, using myColors above
+xyplot(value ~ variable1,
+       ndata.melt,
+       panel = function(x,  y, ...){
+         panel.xyplot(x, y, ...)
+         panel.abline(h = 9, lty = 1)
+         panel.abline(h = 9.25, lty = 2)
+         panel.abline(h = 8.75, lty = 2)
+       },
+       cex=1.5,
+       ylim=c(-20, 40), # ylim and xlim are "first class" parameters and don't need to be in scales=list()
+       group = Sample.ID2,
+       xlab = NULL,
+       ylab = expression({delta}^15*"N (\u2030)"),
+       auto.key=list(columns=2, cex = 0.75),
+       par.settings = my.settings)
+
+######################
+## Trophic Dynamics ## 
+######################
+ndata %>%
+  filter(Type == "Black Coral - GOM" | Type == "Black Coral - SEUS") -> bc.ndata
+
+p <- ggplot(bc.ndata, aes(x=Sum.V, y=TP, shape = Region, fill = Region), color = "black")
+p + geom_point(size = 3) +
+  facet_wrap(~Region, ncol = 1) +
+  scale_shape_manual(values = c(22, 23)) +
+  scale_color_manual(values = c("#D55E00", "#E69F00")) +
+  ylab("Trophic Position (Glu - Phe)") +
+  xlab(expression(paste(Sigma,"V"))) +
+  theme_bw() +
+  theme(axis.text=element_text(size=11, color = "black"))
+
+
+########################
+## SumV through time  ##
+########################
+ndata %>%
+  filter(Region == "SEUS") %>%
+  droplevels(.) %>%
+  xyplot(Sum.V ~ Year.CE,
+         data = .,
+         group = Sample.ID2,
+         cex = 1.5,
+         # xlim = c(1500,2010),
+         par.settings = my.settings,
+         auto.key = list(columns=c(2), cex = 0.95),
+         xlab = x,
+         ylab = expression(paste(Sigma,"V")))
+
+########################
+## TP through time    ##
+########################
+ndata %>%
+  # filter(Region == "SEUS") %>%
+  # droplevels(.) %>%
+  xyplot(TP ~ Year.CE,
+         data = .,
+         group = Sample.ID2,
+         cex = 1.5,
+         # xlim = c(750, 1500),
+         par.settings = my.settings,
+         auto.key = list(columns=c(2), cex = 0.95),
+         xlab = x,
+         ylab = "Trophic Position (Glu - Phe)")
+
+######################
+## Phe through time ##
+######################
+
+ndata %>% # Showing Phe through time, but only for select specimens (modify code as needed)
+  filter(Phe > 1) %>%
+  filter(Phe < 13) %>%
+  filter(Sample.ID2 == "Jacksonville-4907" | Sample.ID2 == "Savannah Banks-4902" | Sample.ID2 == "Jacksonville-4684") -> t.ndata
+
+par(mfrow=c(1,2))
+xyplot(Phe ~ Year.CE,
+       data = t.ndata,
+       groups = Sample.ID2,
+       # xlim =c(1500,1900),
+       xlab = x,
+       # xlim = c(-250,1500),
+       ylab = phe,
+       cex = 3,
+       ylim = c(4, 14))
+
+
+################################
+##                            ##
+##                            ##
+## C-CSIAA Data visualization ##
+##                            ##
+##                            ##
+################################
+seus_carbon <- read.csv("C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/schiff c-csiaa stetson_cleaned.csv")
+seus_carbon <- read.csv("~/Google Drive/projects/rproj/seus/data/schiff c-csiaa stetson_cleaned.csv")
+
+######################
+## Overall AA Plots ##
+######################
+# Helpful link: https://stackoverflow.com/questions/21982987/mean-per-group-in-a-data-frame

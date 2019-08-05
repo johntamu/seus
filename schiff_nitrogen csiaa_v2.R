@@ -220,13 +220,29 @@ src <- 4.5 # d15N of source nitrate or Phe depending on test you want to do
 enrichment <- 3 # How much d15N enriches with each trophic transfer, in permil
 corals$d15N.pred <- (corals$TP * enrichment) + nitrate
 
-ggplot(corals, aes(Year.AD, d15N.pred)) +
+ggplot(corals, aes(Year.CE, d15N.pred)) +
   geom_point() +
   theme_classic() +
   ylab(n) +
   xlab(x)
 
-ggplot(corals, aes(Year.AD, TP)) +
+ggplot(corals, aes(Year.CE, Bulk)) +
+  geom_point() +
+  theme_classic() +
+  ylab(n) +
+  xlab(x)
+
+ggplot(corals, aes(Year.CE, Phe)) +
+  geom_point() +
+  theme_classic() +
+  geom_vline(xintercept = 950, lty = 'dashed') +
+  geom_vline(xintercept = 1250, lty = 'dashed') +
+  geom_vline(xintercept = 1550, lty = 'dotted') +
+  geom_vline(xintercept = 1850, lty = 'dotted') +
+  ylab(n) +
+  xlab(x)
+
+ggplot(corals, aes(Year.CE, TP)) +
   geom_point() +
   theme_classic() +
   ylab("Trophic Position (Glu - Phe)") +

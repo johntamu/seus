@@ -68,7 +68,7 @@ jack4907.usgs.ad <- binded2$yrs
 jack4686.ad <- NA
 jack4684.ad <- ad2
 stet4904.ad <- stet.linear.ad3 # Stetson age model with split chronologies
-sav4902.ad <- linear.ad2
+sav4902.ad <- sav.predict.ad
 
 jack$linear.ad <- jack4907.ad
 stetson$linear.ad <- stet4904.ad
@@ -77,7 +77,7 @@ jack2$linear.ad <- jack4907.usgs.ad
 jack4684$linear.ad <- jack4684.ad
 jack4686$linear.ad <- jack4686.ad
 
-string <- '~/Documents/GitHub/data/schiff_bulk_years_08-04-2019.csv'
+string <- '~/Documents/GitHub/data/schiff_bulk_years_08-05-2019.csv'
   
 df.bulk <- rbind(jack, jack2, jack4684, jack4686, stetson, sav)
 write.csv(df.bulk, string)

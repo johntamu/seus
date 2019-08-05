@@ -100,13 +100,29 @@ lm.jack <- lm(r.jack$X14C.Age ~ r.jack$Distance..um.)
 # Split into two dataframes. 
 # jsplit1 <- r.jack %>% filter(Distance..um. < 2500)
 # jsplit2 <- r.jack %>% filter(Distance..um. > 2500)
-jsplit1 <- r.jack %>% filter(Distance..um. < 520)
-jsplit2 <- r.jack %>% filter(Distance..um. >= 512)
+jsplit1 <- r.jack %>% filter(Distance..um. <= 1890)
+jsplit2 <- r.jack %>% filter(Distance..um. >= 1890)
 # Linear models for split data
 jlm1 <- lm(mean ~ Distance..um., jsplit1)
 jlm2 <- lm(mean ~ Distance..um., jsplit2)
 summary(jlm1)
 summary(jlm2)
+summary(lm.jack)
+
+plot(mean ~ Distance..um., r.jack, type = "o",
+     xlab = expression(paste("Distance", " (",mu,"m)")),
+     ylab = "Median Age (Yrs BP)",
+     pch = 21,
+     cex = 1.5,
+     bg = "#bdbdbd")
+axis(side = 3, labels = FALSE, tck = -0.015)
+axis(side = 4, labels = FALSE, tck = -0.015)
+# clip(2000,8200,1750,3000)
+abline(jlm2, col = "#41b6c4", lty = "dashed", lwd = 2)
+# clip(0,2500,500,2200)
+abline(jlm1, col = "#253494", lty = "dashed", lwd = 2)
+# abline(lm.jack, col = "#253494", lty = "dashed", lwd = 2)
+abline(lm.jack, col = "black", lty = "dashed", lwd = 1.5)
 
 
 
@@ -148,7 +164,7 @@ summary(s2)
 
 
 # Savannah-4902
-lm.sav <- lm(r.sav$mean ~ r.sav$Distance..um.) # linear model for Savannah
+lm.sav <- lm(mean ~ Distance..um., r.sav) # linear model for Savannah
 lm.sav <- lm(r.sav$X14C.Age ~ r.sav$Distance..um.) # linear model for Savannah
 
 summary(lm.sav)
@@ -280,14 +296,15 @@ print(growth3)
 
 # Create a column of ages to attach to bulk record dataframe in separate script file
 distance <- jack$distance..mm.*1000
-yrs1 <- (1950-min(r.jack$mean)) - (distance/1) # 588 (minimum) is median year AD for the edge of the coral
-yrs2 <- (1950-1380) - (distance/growth2) # 1380 is median year for the coral at distance 512 microns from edge
+yrs1 <- (1950-min(r.jack$mean)) - (distance/growth1) # 588 (minimum) is median year AD for the edge of the coral
+yrs2 <- (1950-max(r.jack$mean)) - (distance/growth2) # 1380 is median year for the coral at distance 512 microns from edge
 t.dat <- cbind(distance,yrs1,yrs2)
 t.dat <- as.data.frame(t.dat)
+t.dat$diff <- t.dat$yrs1 - t.dat$yrs2
 
-first <- t.dat[1:30,]
+first <- t.dat[1:67,]
 first <- first[,-c(3)]
-second <- t.dat[31:nrow(t.dat),]
+second <- t.dat[68:nrow(t.dat),]
 second <- second[,-c(2)]
 names(first)[2] <- paste("yrs")
 names(second)[2] <- paste("yrs")
@@ -297,6 +314,29 @@ length(binded$distance)
 # Vector of linear ages from overall growth rate
 yrs <- (1950-min(r.jack$mean)) - (distance/5)
 test <- (1950-max(r.jack$mean)) + (distance/6.5)
+
+# Below I am using the predict function to predict the age of the coral
+t.data <- jack
+t.data$Distance..um. <- t.data$distance..mm.*1000
+t.data$predict1 <- predict(jlm1, t.data)
+t.data$predict2 <- predict(jlm2, t.data)
+
+t.data$predict1 <- 1950 - t.data$predict1
+t.data$predict2 <- 1950 - t.data$predict2
+t.data$diff <- t.data$predict1 - t.data$predict2 # find the inflection point, in thise case between 58 and 59
+
+t.data %>%
+  select(Distance..um., predict1, predict2) -> t.data
+
+first <- t.data[1:58,]
+first <- first[,-c(3)]
+second <- t.data[59:nrow(t.data),]
+second <- second[,-c(2)]
+names(first)[2] <- paste("yrs")
+names(second)[2] <- paste("yrs")
+binded <- rbind(first,second)
+length(binded$Distance..um.)
+
 #####################
 #                   #
 #                   #
@@ -307,13 +347,14 @@ test <- (1950-max(r.jack$mean)) + (distance/6.5)
 
 distance2 <- jack2$distance..mm.*1000
 yrs1 <- (1950-min(r.jack$mean)) - (distance2/growth1) # 588 is median year AD for the edge of the coral, g2 from linear_age_models.R script file
-yrs2 <- (1950-1380) - (distance2/growth2) # 2062 is median year for the coral at distance 2558 microns from edge
+yrs2 <- (1950-1941) - (distance2/growth2) # 2062 is median year for the coral at distance 2558 microns from edge
 t.dat <- cbind(distance2,yrs1,yrs2)
 t.dat <- as.data.frame(t.dat)
+t.dat$diff <- t.dat$yrs1 - t.dat$yrs2
 
-first <- t.dat[1:3,]
+first <- t.dat[1:30,]
 first <- first[,-c(3)]
-second <- t.dat[4:nrow(t.dat),]
+second <- t.dat[31:nrow(t.data),]
 second <- second[,-c(2)]
 names(first)[2] <- paste("yrs")
 names(second)[2] <- paste("yrs")
@@ -322,6 +363,27 @@ names(second)[2] <- paste("yrs")
 # binded2 <- rbind(first, k, second)
 binded2 <- rbind(first, second)
 length(binded2$distance)
+
+t.data <- jack2
+t.data$Distance..um. <- t.data$distance..mm.*1000
+t.data$predict1 <- predict(jlm1, t.data)
+t.data$predict2 <- predict(jlm2, t.data)
+
+t.data$predict1 <- 1950 - t.data$predict1
+t.data$predict2 <- 1950 - t.data$predict2
+t.data$diff <- t.data$predict1 - t.data$predict2 # find the inflection point, in thise case between 23 and 24
+
+t.data %>%
+  select(Distance..um., predict1, predict2) -> t.data
+
+first <- t.data[1:23,]
+first <- first[,-c(3)]
+second <- t.data[24:nrow(t.data),]
+second <- second[,-c(2)]
+names(first)[2] <- paste("yrs")
+names(second)[2] <- paste("yrs")
+binded2 <- rbind(first,second)
+length(binded2$Distance..um.)
 
 #####################
 #                   #
@@ -381,6 +443,14 @@ stet.linear.ad3 <- stet.binded$yrs
 
 growth.sav <- as.numeric(1/lm.sav$coefficients[2])
 linear.ad2 <- (1950 - min(r.sav$mean)) - ((sav$distance..mm.*1000)/growth.sav)
+
+t.data <- sav
+t.data$Distance..um. <- t.data$distance..mm.*1000
+vector <- predict(lm.sav, t.data)
+
+sav$Distance..um. <- sav$distance..mm.*1000
+sav$predict1 <- predict(lm.sav, sav)
+sav.predict.ad <- 1950- sav$predict1
 
 ######################################
 ##                                  ##

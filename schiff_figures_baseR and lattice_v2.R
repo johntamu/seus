@@ -860,7 +860,7 @@ ndata %>%
   filter(Phe < 13) %>%
   filter(Sample.ID2 == "Jacksonville-4907" | Sample.ID2 == "Savannah Banks-4902") %>%
   droplevels(.) %>%
-  xyplot(Phe ~ Year.AD,
+  xyplot(Phe ~ Year.CE,
        data = .,
        group = Sample.ID2,
        cex = 1.5,

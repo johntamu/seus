@@ -23,8 +23,8 @@ core.dir2 <- "C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/clam
 # Age model for Jacksonville-4907
 # ----------------------------------
 
-clam(core="4907usgs", type = 2, smooth = 0.6, prob = 0.95, its = 1000,
-     coredir = core.dir2, cc = 2, ignore = c(), BCAD = FALSE, depth = "mm")
+clam(core="4907bc1john", type = 4, smooth = 0.6, prob = 0.95, its = 1000,
+     coredir = core.dir1, cc = 2, ignore = c(), BCAD = FALSE, depth = "mm", proxies = TRUE)
 # Sherwood et al (2014) used 0.6 smoothing, though did not explain why
 
 # when proxies = TRUE, clam will look for a .csv file with the isotope values and their respective depths
