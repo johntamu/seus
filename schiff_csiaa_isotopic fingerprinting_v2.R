@@ -128,7 +128,7 @@ legend("bottomleft",
 ####################################
 ##                                ##
 ##                                ##
-## Principal Components Analysis  ## 03/08/2019
+## Principal Components Analysis  ## 03/08/2019; UPDATED 6/25/2019
 ## Part IV.                       ##
 ##                                ##
 ####################################

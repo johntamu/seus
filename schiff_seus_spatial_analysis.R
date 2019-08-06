@@ -172,13 +172,16 @@ dim(bathyZ) = dim(b)
 mlon = mean(pts$lon)
 mlat = mean(pts$lat)
 span = 1200
+span2 = 300
 lonlim = c(-90, -70)
 latlim = c(20, 35)
+# lonlim2 = c(-81, -77)
+# latlim2 = c(27, 33)
 
 # plot coastline (with projection)
+# par(mfrow = c(1,2))
 plot(coastlineWorldFine, clon = mlon, clat = mlat, span = span, 
-     projection="+proj=merc", col = 'lightgrey')
-
+     projection="+proj=merc", col = 'lightgrey', drawBox = TRUE)
 # plot bathymetry
 mapContour(bathyLon,bathyLat,bathyZ,
         levels = c(-500, -1000, -1500, -2000, -2500, -3000, -3500, -4000, -4500, -5000),
@@ -187,16 +190,22 @@ mapContour(bathyLon,bathyLat,bathyZ,
         col = 'darkgray')
 
 # # add depth legend
-# legend("bottomright", seg.len = 3, cex = 0.7,
-#        lwd = c(1, 1, 2, 2, 3),
-#        lty = c(3, 1, 3, 1, 3),
-#        legend = c("50", "100", "150", "200", "250"),
-#        col = 'darkgray', title = "Depth [m]", bg = "white")
+legend("topleft", 
+       # seg.len = 3,
+       pch = c(4,2,1,6,5),
+       cex = 0.4,
+       legend = c("Jacksonville-4907 BC1", "Jacksonville-4684 BC1", "Jacksonville-4686 BC1", "Savannah-4902 BC1", "Stetson-4904"),
+       col = 'black', 
+       # title = "Depth [m]",
+       bg = "white")
 
 # add map data
-mapPoints(longitude = pts$lon, latitude = pts$lat, pch = 21, col = 'black', bg = 'red')
-mapLines(longitude = lin$lon, latitude = lin$lat, col = 'blue')
-mapPolygon(longitude = ply$lon, latitude = ply$lat, lty = 2)
+mapPoints(longitude = pts$lon, latitude = pts$lat, pch = c(4,2,1,6,5), lwd = 1.5, col = "black", cex = 1.25)
+# mapLines(longitude = lin$lon, latitude = lin$lat, col = 'blue')
+# mapPolygon(longitude = ply$lon, latitude = ply$lat, lty = 2)
+
+
+
 
 
 

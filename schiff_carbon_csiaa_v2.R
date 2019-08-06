@@ -20,11 +20,13 @@ path3 <- '/home/john/Desktop/rproj/seus/data/schiff c-csiaa stetson.csv'
 
 # Stetson data plus Larsen (2013) and other data
 newpath1 <- 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/schiff c-csiaa data from schiff_larsen_in prog.csv'
-newpath2 <- '~/Google Drive/projects/rproj/seus/data/schiff c-csiaa data from schiff_larsen_in prog.csv'
+newpath2 <- '~/Documents/GitHub/data/schiff c-csiaa data from schiff_larsen_in prog.csv'
 newpath3 <- '/home/john/Desktop/rproj/seus/data/schiff c-csiaa data from schiff_larsen_in prog.csv'
 
+load.data <- newpath2
+
 # Load the data
-carbon <- read.csv(newpath2) # This dataset has Stetson and others in it, not just SEUS data
+carbon <- read.csv(load.data) # This dataset has Stetson and others in it, not just SEUS data
 
 ##############################
 ## SEUS C-CSIAA time series ## 

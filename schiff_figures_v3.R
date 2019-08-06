@@ -139,19 +139,43 @@ mapLines(longitude = lin$lon, latitude = lin$lat, col = 'blue')
 #' Linear age models (radiocarbon)
 #' --------------------------------------------------------------------------------------
 
-par(mfrow = c(1,3))
+par(pty = "s", mfrow = c(2,2), mar=c(4,5,1,1))
 plot(X14C.Age ~ Distance..um., r.jack,
      pch = 22, bg = '#ffeda0', col = "black", 
-     ylab = expression({Delta}^14*"C Age (CRA)", xlab = 'Distance from edge (um)'))
+     ylab = expression({Delta}^14*"C Age (CRA)"), xlab = 'Distance from edge (um)')
 # abline(mod1)
 plot(X14C.Age ~ Distance..um., r.sav,
      pch = 23, bg = '#feb24c', col = "black", 
-     ylab = expression({Delta}^14*"C Age (CRA)", xlab = 'Distance from edge (um)'))
+     ylab = expression({Delta}^14*"C Age (CRA)"), xlab = 'Distance from edge (um)')
 # abline(mod2)
 plot(X14C.Age ~ Distance..um., r.stet,
      pch = 21, bg = '#f03b20', col = "black",
-     ylab = expression({Delta}^14*"C Age (CRA)", xlab = 'Distance from edge (um)'))
+     ylab = expression({Delta}^14*"C Age (CRA)"), xlab = 'Distance from edge (um)')
 # abline(mod3)
+r.jack$mm <- r.jack$Distance..um./1000
+r.jack2$mm <- r.jack2$Distance..um./1000
+r.stet$mm <- r.stet$Distance..um./1000
+r.sav$mm <- r.sav$Distance..um./1000
+
+par(pty = "s", mfrow = c(2,2), mar=c(4,5,1,1))
+plot(mean ~ mm, r.jack,
+     type = "o", bg = 'gray', col = "black", 
+     ylab = "Years BP", xlab = 'Distance from edge (um)')
+abline(jlm1.mm, lty = "dashed")
+abline(jlm2.mm, lty = "dashed")
+plot(X14C.Age ~ mm, whole,
+     type = "o", bg = 'gray', col = "black", 
+     ylab = "Years BP", xlab = 'Distance from edge (um)')
+abline(lm.whole.mm, lty = "dashed")
+plot(mean ~ mm, r.sav,
+     type = "o", bg = 'gray', col = "black", 
+     ylab = "Years BP", xlab = 'Distance from edge (um)')
+abline(lm.sav.mm, lty = "dashed")
+plot(mean ~ mm, r.stet,
+     type = "o", bg = 'gray', col = "black",
+     ylab = "Years BP", xlab = 'Distance from edge (um)')
+abline(s1.mm, lty = "dashed")
+abline(s2.mm, lty = "dashed")
 
 #' Figure: 
 #' --------------------------------------------------------------------------------------
@@ -191,6 +215,27 @@ abline(mod3)
 #' --------------------------------------------------------------------------------------
 #' Bulk data - testing reproducibility
 #' --------------------------------------------------------------------------------------
+
+# Jack-4907 bulk data vs distance from edge
+
+par(pty = 's', mfrow = c(1,2), mar=c(5,6,4,1)+.05)
+plot(d15n ~ distance, df.jack,
+     xlab = 'Distance from edge (mm)',
+     ylab = expression(delta^{15}*"N"),
+     type = "l",
+     cex = 0.5,
+     col = alpha("black", 0.3))
+lines(d15n ~ distance, df.jack2,
+      col = alpha("black", 0.75), lwd = 1.5)
+
+plot(d13c ~ distance, df.jack,
+     xlab = 'Distance from edge (mm)',
+     ylab = expression(delta^{13}*"C"),
+     type = "l",
+     cex = 0.5,
+     col = alpha("black", 0.3))
+lines(d13c ~ distance, df.jack2,
+      col = alpha("black", 0.75), lwd = 1.5)
 
 par(pty = "s")
 plot(d15n ~ linear.ad, df.jack,
@@ -245,6 +290,78 @@ lines(forecast::ma(df.jack4684$d15n, order = 3, centre = TRUE) ~ linear.ad, df.j
 #' Bulk data - Stet-4904 entire record
 #' --------------------------------------------------------------------------------------
 
+# Nitrogen
+par(pty = "s", mfrow = c(2,2), mar=c(4,5,1,1))
+plot(d15n ~ distance, df.stet,
+     xlab = 'Distance from edge (mm)',
+     ylab = n,
+     type = "l",
+     cex = 0.75,
+     col = alpha("#0072B2", 0.99))
+# text(2,7, labels = "A", cex = 2.25)
+# legend(7,2, box.lty = 0, legend = "Stetson-4904-BC1 Disk 1", bg = NULL)
+plot(d15n ~ distance, df.jack,
+     xlab = 'Distance from edge (mm)',
+     ylab = n,
+     type = "l",
+     cex = 0.75,
+     col = alpha("#0072B2", 0.99))
+# text(2,7, labels = "A", cex = 2.25)
+# legend("bottomleft", box.lty = 0, legend = "Jacksonville-4907-BC1 Disk 3", bg = NULL)
+plot(d15n ~ distance, df.jack4684,
+     xlab = 'Distance from edge (mm)',
+     ylab = n,
+     type = "l",
+     cex = 0.75,
+     col = alpha("#0072B2", 0.99))
+# text(2,7, labels = "A", cex = 2.25)
+# legend("bottomleft", box.lty = 0, legend = "Jacksonville-4684-BC1 Disk 1", bg = NULL)
+plot(d15n ~ distance, df.sav,
+     xlab = 'Distance from edge (mm)',
+     ylab = n,
+     type = "l",
+     cex = 0.75,
+     col = alpha("#0072B2", 0.99))
+# text(2,7, labels = "A", cex = 2.25)
+# legend("bottomleft", box.lty = 0, legend = "Savannah Banks-BC1 Base 1", bg = NULL)
+
+# Carbon
+par(pty = "s", mfrow = c(2,2), mar=c(4,5,1,1))
+plot(d13c ~ distance, df.stet,
+     xlab = 'Distance from edge (mm)',
+     ylab = c,
+     type = "l",
+     cex = 0.75,
+     col = alpha("#0072B2", 0.99))
+# text(2,7, labels = "A", cex = 2.25)
+# legend(7,2, box.lty = 0, legend = "Stetson-4904-BC1 Disk 1", bg = NULL)
+plot(d13c ~ distance, df.jack,
+     xlab = 'Distance from edge (mm)',
+     ylab = c,
+     type = "l",
+     cex = 0.75,
+     col = alpha("#0072B2", 0.99))
+# text(2,7, labels = "A", cex = 2.25)
+# legend("bottomleft", box.lty = 0, legend = "Jacksonville-4907-BC1 Disk 3", bg = NULL)
+df.jack4684 %>%
+  filter(d13c )
+plot(d13c ~ distance, df.jack4684,
+     xlab = 'Distance from edge (mm)',
+     ylab = c,
+     type = "l",
+     cex = 0.75,
+     col = alpha("#0072B2", 0.99))
+# text(2,7, labels = "A", cex = 2.25)
+# legend("bottomleft", box.lty = 0, legend = "Jacksonville-4684-BC1 Disk 1", bg = NULL)
+plot(d13c ~ distance, df.sav,
+     xlab = 'Distance from edge (mm)',
+     ylab = c,
+     type = "l",
+     cex = 0.75,
+     col = alpha("#0072B2", 0.99))
+# text(2,7, labels = "A", cex = 2.25)
+# legend("bottomleft", box.lty = 0, legend = "Savannah Banks-BC1 Base 1", bg = NULL)
+
 plot(d13c ~ linear.ad, df.stet,
      xlab = x,
      ylab = c,
@@ -278,16 +395,16 @@ splot1 <- df.stet %>%
   dplyr::select(linear.ad, d15n) %>%
   na.omit() %>%
   ggplot(aes(x = linear.ad, y = d15n), size = 0.5, alpha = 0.75) +
-  geom_line(color = "gray", alpha = 0.4, size = 0.75) +
-  geom_line(aes(y=rollmean(d15n, 3, na.pad = TRUE)), size = 0.85, color = '#225ea8') +
+  geom_line(color = "gray", alpha = 0.4, size = 0.65) +
+  geom_line(aes(y=rollmean(d15n, 3, na.pad = TRUE)), size = 0.65, color = '#225ea8') +
   
-  geom_vline(xintercept = 950, lty = 'dashed') +
-  geom_vline(xintercept = 1250, lty = 'dashed') +
+  geom_vline(xintercept = 950, lty = 'dotted') +
+  geom_vline(xintercept = 1250, lty = 'dotted') +
   geom_vline(xintercept = 1550, lty = 'dotted') +
   geom_vline(xintercept = 1850, lty = 'dotted') +
   
-  annotate("text", x = 1100, y = 7, label = 'Medieval Warming', size = 3.75) +
-  annotate("text", x = 1700, y = 7, label = "Little Ice Age", size = 4) +
+  annotate("text", x = 1100, y = 7, label = 'Medieval Warming', size = 3) +
+  annotate("text", x = 1700, y = 7, label = "Little Ice Age", size = 3) +
   
   ylab(n) +
   xlab(NULL) +
@@ -297,6 +414,8 @@ splot1 <- df.stet %>%
         axis.text.x   = element_blank(),
         axis.title.y  = element_text(size=10),
         axis.title.x  = element_text(size=10),
+        axis.line.x = element_blank(),
+        axis.ticks.x = element_blank(),
         panel.background = element_blank(),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank())
@@ -305,11 +424,11 @@ splot2 <- df.stet %>%
   dplyr::select(linear.ad, d13c) %>%
   na.omit() %>%
   ggplot(aes(x = linear.ad, y = d13c), size = 0.5, alpha = 0.75) +
-  geom_line(color = "gray", alpha = 0.4, size = 0.75) +
-  geom_line(aes(y=rollmean(d13c, 3, na.pad = TRUE)), size = 0.85, color = '#081d58') +
+  geom_line(color = "gray", alpha = 0.4, size = 0.65) +
+  geom_line(aes(y=rollmean(d13c, 3, na.pad = TRUE)), size = 0.65, color = '#081d58') +
   
-  geom_vline(xintercept = 950, lty = 'dashed') +
-  geom_vline(xintercept = 1250, lty = 'dashed') +
+  geom_vline(xintercept = 950, lty = 'dotted') +
+  geom_vline(xintercept = 1250, lty = 'dotted') +
   geom_vline(xintercept = 1550, lty = 'dotted') +
   geom_vline(xintercept = 1850, lty = 'dotted') +
   
@@ -352,6 +471,78 @@ plot(d15n ~ distance, df.jack4686,
      cex = 0.5)
 # xlim = c(1500,2005),
 # col = alpha("black", 0.3))
+
+#' Figure: Ancient bulk values
+#' --------------------------------------------------------------------------------------
+#' Savannah-4902 by itself
+#' --------------------------------------------------------------------------------------
+
+savplot1 <- df.sav %>%
+  select(linear.ad, d15n) %>%
+  na.omit() %>%
+  ggplot(aes(x = linear.ad, y = d15n), size = 0.5, alpha = 0.75) +
+  geom_line(color = "gray", alpha = 0.4, size = 0.75) +
+  geom_line(aes(y=rollmean(d15n, 3, na.pad = TRUE)), size = 0.75, color = '#02818a') +
+  # geom_point(color = '#31a354', shape = 21) +
+  
+  geom_vline(xintercept = 950, lty = 'dashed') +
+  geom_vline(xintercept = 1250, lty = 'dashed') +
+  geom_vline(xintercept = -900, lty = 'longdash') +
+  geom_vline(xintercept = -300, lty = 'longdash') +
+  geom_vline(xintercept = -250, lty = "dotted") +
+  geom_vline(xintercept = 400, lty = "dotted") +
+  
+  annotate("text", x = 1100, y = 7, label = 'Medieval Warming', size = 2.5) +
+  annotate("text", x = -600, y = 7, label = "Iron Age Cold Epoch", size = 4) +
+  annotate("text", x = 75, y = 7, label = "Roman Warm Period", size = 3) +
+  
+  ylab(n) +
+  xlab(NULL) +
+  # xlim(-1200, 0) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10), limits = c(-300,1300)) +
+  theme_classic() +
+  theme(axis.text.y   = element_text(size=10, color = "black"),
+        axis.text.x   = element_blank(),
+        axis.title.y  = element_text(size=10),
+        axis.title.x  = element_text(size=10),
+        axis.line.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
+
+savplot2 <- df.sav %>%
+  select(linear.ad, d13c) %>%
+  na.omit() %>%
+  ggplot(aes(x = linear.ad, y = d13c), size = 0.5, alpha = 0.75) +
+  geom_line(color = "gray", alpha = 0.4, size = 0.75) +
+  geom_line(aes(y=rollmean(d13c, 3, na.pad = TRUE)), size = 0.75, color = '#3690c0') +
+  # geom_point(color = '#addd8e', shape = 21) +
+  
+  geom_vline(xintercept = 950, lty = 'dashed') +
+  geom_vline(xintercept = 1250, lty = 'dashed') +
+  geom_vline(xintercept = -900, lty = 'longdash') +
+  geom_vline(xintercept = -300, lty = 'longdash') +
+  geom_vline(xintercept = -250, lty = "dotted") +
+  geom_vline(xintercept = 400, lty = "dotted") +
+  
+  ylab(c) +
+  theme_classic() +
+  xlab(x) +
+  # xlim(-1200, 0) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10), limits = c(-300,1300)) +
+  theme(axis.text.y   = element_text(size=10, color = "black"),
+        axis.text.x   = element_text(size=10, color = "black"),
+        axis.title.y  = element_text(size=10),
+        axis.title.x  = element_text(size=10),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
+
+grid.newpage()
+grid.draw(rbind(ggplotGrob(savplot1), ggplotGrob(savplot2), size = "last"))
+
+
 
 
 #' Figure: Ancient bulk values
@@ -406,12 +597,13 @@ jplot1 <- df.jack %>%
   geom_vline(xintercept = 400, lty = "dotted") +
   
   annotate("text", x = 1100, y = 7, label = 'Medieval Warming', size = 2) +
-  annotate("text", x = -600, y = 7, label = "Iron Age Cold Epoch", size = 2) +
+  annotate("text", x = -600, y = 7, label = "Iron Age Cold Epoch", size = 4) +
   annotate("text", x = 75, y = 7, label = "Roman Warm Period", size = 2) +
   
   ylab(n) +
   xlab(NULL) +
-  scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
+  # xlim(-1200, 0) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10), limits = c(-1200,0)) +
   theme_classic() +
   theme(axis.text.y   = element_text(size=10, color = "black"),
         axis.text.x   = element_blank(),
@@ -438,7 +630,8 @@ jplot2 <- df.jack %>%
   ylab(c) +
   theme_classic() +
   xlab(x) +
-  scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
+  # xlim(-1200, 0) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10), limits = c(-1200,0)) +
   theme(axis.text.y   = element_text(size=10, color = "black"),
         axis.text.x   = element_text(size=10, color = "black"),
         axis.title.y  = element_text(size=10),
@@ -455,7 +648,7 @@ grid.draw(rbind(ggplotGrob(jplot1), ggplotGrob(jplot2), size = "last"))
 #' Jack-4907 vs Sav-4902
 #' --------------------------------------------------------------------------------------
 
-plot(d15n ~ linear.ad, df.sav,
+plot(d15n ~ linear.ad, df.sav, # With Base R
      xlab = x,
      ylab = n,
      type = "l",
@@ -469,6 +662,40 @@ lines(forecast::ma(df.jack$d15n, order = 2, centre = TRUE) ~ linear.ad, df.jack,
       col = "#4575b4", lwd = 1.5)
 lines(forecast::ma(df.sav$d15n, order = 3, centre = TRUE) ~ linear.ad, df.sav,
       col = "#f46d43", lwd = 1.5)
+
+p1 <- ggplot() + # With ggplot2
+  geom_line(data=df.jack, aes(x = linear.ad, y = d15n), color = "gray", alpha = 0.0, size = 0.5) +
+  geom_line(data=df.jack, aes(x = linear.ad,
+                              y = rollmean(d15n, 3, na.pad = TRUE)), color = "#4393c3", alpha = 0.85, size = 0.75) +
+  geom_line(data=df.sav, aes(x = linear.ad, y = d15n), color = "gray", alpha = 0.0, size = 0.5) +
+  geom_line(data=df.sav, aes(x = linear.ad,
+                             y = rollmean(d15n, 3, na.pad = TRUE)), color = "#d6604d", alpha = 0.85, size = 0.75) +
+  
+  annotate("text", x = 1100, y = 7, label = 'Medieval Warming', size = 3) +
+  # annotate("text", x = -600, y = 7, label = "Iron Age Cold Epoch", size = 4) +
+  annotate("text", x = 75, y = 7, label = "Roman Warm Period", size = 3) +
+  annotate("pointrange", y = 7.5, x = 650, xmin = (650-200), xmax = (650+200), color = "black") +
+  
+  geom_vline(xintercept = 950, lty = 'dotted') +
+  geom_vline(xintercept = 1250, lty = 'dotted') +
+  # geom_vline(xintercept = -900, lty = 'longdash') +
+  # geom_vline(xintercept = -300, lty = 'longdash') +
+  geom_vline(xintercept = -250, lty = "dotted") +
+  geom_vline(xintercept = 400, lty = "dotted") +
+  
+  ylab(c) +
+  theme_classic() +
+  xlab(x) +
+  # xlim(-1200, 0) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10), limits = c(-300,1300)) +
+  theme(axis.text.y   = element_text(size=10, color = "black"),
+        axis.text.x   = element_text(size=10, color = "black"),
+        axis.title.y  = element_text(size=10),
+        axis.title.x  = element_text(size=10),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
+p1
 
 plot(d13c ~ linear.ad, df.sav,
      xlab = x,

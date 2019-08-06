@@ -22,29 +22,29 @@ saenger.core2 <- '~/Google Drive/projects/rproj/seus/data/paleoclimate_data/saen
 core1 <- read.csv(saenger.core1)
 core2 <- read.csv(saenger.core2)
 
-t.stet <- bulk.stet %>% select(year.ad, d15n.ra)
-t.stet <- melt(t.stet, "year.ad")
+t.stet <- df.stet %>% select(linear.ad, d15n)
+t.stet <- melt(t.stet, "linear.ad")
 t.core1 <- core1 %>% select(Year.AD., SST.Anand.)
 t.core1 <- melt(t.core1, "Year.AD.")
 t.core2 <- core2 %>% select(Year.AD., SST.Anand.)
 t.core2 <- melt(t.core2, "Year.AD.")
 t.core2$variable <- factor(t.core2$variable, label = "SST.A")
-colnames(t.core1)[colnames(t.core1)=="Year.AD."] <- "year.ad"
-colnames(t.core2)[colnames(t.core2)=="Year.AD."] <- "year.ad"
-stet.core1 <- rbind(t.stet, t.core1, t.core2)
+colnames(t.core1)[colnames(t.core1)=="Year.AD."] <- "linear.ad"
+colnames(t.core2)[colnames(t.core2)=="Year.AD."] <- "linear.ad"
+stet.core1 <- rbind(t.stet, t.core1)
 # proxynames <- c("delta^{15}*N (\u2030)",
 #                `SST.Anand.` = "deg Celsius")
 stet.core1$variable <- factor(stet.core1$variable, labels = c(expression(paste(delta^{15}*'N (\u2030)')),
-                                                              expression("SST 59GGC " (degree~C)),
-                                                              expression("SST MC22 " (degree~C))))
-ggplot(data = stet.core1, aes(x = year.ad, y = value)) +
+                                                              expression("SST 59GGC " (degree~C))))
+                                                              #expression("SST MC22 " (degree~C))))
+ggplot(data = stet.core1, aes(x = linear.ad, y = value)) +
   geom_line() +
   facet_wrap(~ variable, scales = "free_y",
              strip.position = "left",
              nrow = 3,
              # labeller = as_labeller(proxynames)) +
              labeller = label_parsed) +
-  xlab("Calendar Year (C.E.)") +
+  xlab("Year CE") +
   ylab(NULL) +
   theme_classic() +
   theme(strip.background = element_blank(), strip.placement = "outside") +
@@ -53,21 +53,21 @@ ggplot(data = stet.core1, aes(x = year.ad, y = value)) +
 #' Throw in the d13C bulk data from Stetson as well
 #' Goal: Figure with 4 charts stacked on top of each other
 #' 
-t.stet <- bulk.stet %>% select(year.ad, d15n.ra, d13c.ra)
-t.stet <- melt(t.stet, "year.ad")
+t.stet <- bulk.stet %>% select(linear.ad, d15n, d13c)
+t.stet <- melt(t.stet, "linear.ad")
 stet.cores2 <- rbind(t.stet, t.core1, t.core2)
 
 stet.cores2$variable <- factor(stet.cores2$variable, labels = c(expression(paste(delta^{15}*'N (\u2030)')),
                                                                 expression(paste(delta^{13}*'C (\u2030)')),
-                                                                expression("SST 59GGC " (degree~C)),
-                                                                expression("SST MC22 " (degree~C))))
+                                                                expression("SST 59GGC " (degree~C))))
+                                                               # expression("SST MC22 " (degree~C))))
 
 #' -------------------------------------------------------------
 #' Figure comparing Stetson d13C and d15N to cores are below
 #' 
 #' -------------------------------------------------------------
 
-ggplot(data = stet.cores2, aes(x = year.ad, y = value)) +
+ggplot(data = stet.cores2, aes(x = linear.ad, y = value)) +
   annotate("rect",xmin=1600,xmax=1850,
            ymin=-Inf,ymax=Inf,fill="#9ecae1",color=NA,size=0.25,alpha=0.25) +
   annotate("rect",xmin=950,xmax=1250,
@@ -78,7 +78,7 @@ ggplot(data = stet.cores2, aes(x = year.ad, y = value)) +
              nrow = 4,
              # labeller = as_labeller(proxynames)) +
              labeller = label_parsed) +
-  xlab("Calendar Year (C.E.)") +
+  xlab("Year CE") +
   ylab(NULL) +
   theme_classic() +
   theme(strip.background = element_blank(), strip.placement = "outside") +
@@ -91,14 +91,14 @@ ggsave("stetson_sst_cores.pdf", width=8, height=9)
 #' 
 #' -------------------------------------------------------------
 #' 
-t.sav <- bulk.sav %>% select(year.ad, d15n.ra, d13c.ra)
-t.sav <- melt(t.sav, "year.ad")
+t.sav <- df.sav %>% select(linear.ad, d15n, d13c)
+t.sav <- melt(t.sav, "linear.ad")
 sav.cores <- rbind(t.sav, t.core1, t.core2)
 sav.cores$variable <- factor(sav.cores$variable, labels = c(expression(paste(delta^{15}*'N (\u2030)')),
                                                                 expression(paste(delta^{13}*'C (\u2030)')),
                                                                 expression("SST 59GGC " (degree~C)),
                                                                 expression("SST MC22 " (degree~C))))
-ggplot(data = sav.cores, aes(x = year.ad, y = value)) +
+ggplot(data = sav.cores, aes(x = linear.ad, y = value)) +
   annotate("rect",xmin=1600,xmax=1850,
            ymin=-Inf,ymax=Inf,fill="#9ecae1",color=NA,size=0.25,alpha=0.25) +
   annotate("rect",xmin=950,xmax=1250,
@@ -122,27 +122,93 @@ ggsave("sav_sst_cores.pdf", width=8, height=9)
 #' 
 #' -------------------------------------------------------------
 #'
-t.youngjack <- bulk.youngjack %>% select(year.ad, d15n.ra)
-t.youngjack <- melt(t.youngjack, "year.ad")
-youngjack.cores <- rbind(t.youngjack, t.core1, t.core2)
+t.jack <- df.jack %>% select(linear.ad, d15n)
+t.jack <- melt(t.jack, "linear.ad")
+youngjack.cores <- rbind(t.jack, t.core1)
 youngjack.cores$variable <- factor(youngjack.cores$variable, labels = c(expression(paste(delta^{15}*'N (\u2030)')),
-                                                                        expression("SST 59GGC " (degree~C)),
-                                                                        expression("SST MC22 " (degree~C))))
+                                                                        expression("SST 59GGC " (degree~C))))
+                                                                        #expression("SST MC22 " (degree~C))))
 
-ggplot(data = youngjack.cores, aes(x = year.ad, y = value)) +
+ggplot(data = youngjack.cores, aes(x = linear.ad, y = value)) +
   annotate("rect",xmin=1600,xmax=1850,
            ymin=-Inf,ymax=Inf,fill="#9ecae1",color=NA,size=0.25,alpha=0.25) +
   annotate("rect",xmin=950,xmax=1250,
            ymin=-Inf,ymax=Inf,fill="#e9a3c9",color=NA,size=0.25,alpha=0.25) +
-  geom_line() +
+  geom_line(color = 'gray') +
+  geom_line(aes(y=rollmean(value, 3, na.pad = TRUE)), color = 'black') +
+  # geom_point(color = '#1f78b4', shape = 21) +
   facet_wrap(~ variable, scales = "free_y",
              strip.position = "left",
              nrow = 4,
              # labeller = as_labeller(proxynames)) +
              labeller = label_parsed) +
-  xlab("Calendar Year (C.E.)") +
+  xlab("Year CE") +
   ylab(NULL) +
+  xlim(0,1300) +
   theme_classic() +
-  theme(strip.background = element_blank(), strip.placement = "outside") +
-  geom_vline(xintercept=600, color="black", linetype="dashed")
+  theme(strip.background = element_blank(), strip.placement = "outside")
 ggsave("sav_sst_cores.pdf", width=8, height=9)
+
+
+pl1 <- t.jack %>%
+  select(linear.ad, value) %>%
+  na.omit() %>%
+  ggplot(aes(x = linear.ad, y = value), size = 0.5, alpha = 0.75) +
+  geom_line(color = "gray", alpha = 0.4, size = 0.75) +
+  geom_line(aes(y=rollmean(value, 3, na.pad = TRUE)), size = 0.85, color = '#cc4c02') +
+  
+  geom_vline(xintercept = 950, lty = 'dashed') +
+  geom_vline(xintercept = 1250, lty = 'dashed') +
+  geom_vline(xintercept = -900, lty = 'longdash') +
+  geom_vline(xintercept = -300, lty = 'longdash') +
+  geom_vline(xintercept = -250, lty = "dotted") +
+  geom_vline(xintercept = 400, lty = "dotted") +
+  
+  annotate("text", x = 1100, y = 7, label = 'Medieval Warming', size = 2) +
+  annotate("text", x = -600, y = 7, label = "Iron Age Cold Epoch", size = 4) +
+  annotate("text", x = 75, y = 7, label = "Roman Warm Period", size = 2) +
+  
+  ylab(n) +
+  xlab(NULL) +
+  # xlim(-1200, 0) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10), limits = c(0,1300)) +
+  theme_classic() +
+  theme(axis.text.y   = element_text(size=10, color = "black"),
+        axis.text.x   = element_blank(),
+        axis.title.y  = element_text(size=10),
+        axis.title.x  = element_text(size=10),
+        axis.line.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
+
+pl2 <- t.core1 %>%
+  select(linear.ad, value) %>%
+  na.omit() %>%
+  ggplot(aes(x = linear.ad, y = value), size = 0.5, alpha = 0.75) +
+  geom_line(color = "gray", alpha = 0.4, size = 0.75) +
+  geom_line(aes(y=rollmean(value, 3, na.pad = TRUE)), size = 0.85, color = '#fe9929') +
+  
+  geom_vline(xintercept = 950, lty = 'dashed') +
+  geom_vline(xintercept = 1250, lty = 'dashed') +
+  geom_vline(xintercept = -900, lty = 'longdash') +
+  geom_vline(xintercept = -300, lty = 'longdash') +
+  geom_vline(xintercept = -250, lty = "dotted") +
+  geom_vline(xintercept = 400, lty = "dotted") +
+  
+  ylab(c) +
+  theme_classic() +
+  xlab(x) +
+  # xlim(-1200, 0) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10), limits = c(0,1300)) +
+  theme(axis.text.y   = element_text(size=10, color = "black"),
+        axis.text.x   = element_text(size=10, color = "black"),
+        axis.title.y  = element_text(size=10),
+        axis.title.x  = element_text(size=10),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
+
+grid.newpage()
+grid.draw(rbind(ggplotGrob(pl1), ggplotGrob(pl2), size = "last"))

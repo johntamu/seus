@@ -963,6 +963,15 @@ obj1 <- xyplot(d13c ~ linear.ad4, data = df.stet, type = "l", ylab = c, xlab = x
 doubleYScale(obj1, obj2, add.ylab2 = TRUE)
 
 
+df.bulk %>%
+  filter(coral.id == "jack-4907-bc1-d3" | coral.id == 'sav-4902-bc1-unk' | coral.id == 'stet-4904-bc1-d2'
+         | coral.id == 'jack-4684-bc-unk') -> bulk
+
+sd(bulk$d15n, na.rm = TRUE)
+sd(bulk$d13c, na.rm = TRUE)
+
+
+
 #' -----------------------------------------------------------
 #' This space below is test calculations for SSA outputs
 #' from SSA-MTM toolkit

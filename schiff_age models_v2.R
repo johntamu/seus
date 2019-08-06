@@ -105,10 +105,13 @@ jsplit2 <- r.jack %>% filter(Distance..um. >= 1890)
 # Linear models for split data
 jlm1 <- lm(mean ~ Distance..um., jsplit1)
 jlm2 <- lm(mean ~ Distance..um., jsplit2)
+jlm1.mm <- lm(mean ~ mm, jsplit1)
+jlm2.mm <- lm(mean ~ mm, jsplit2)
 summary(jlm1)
 summary(jlm2)
 summary(lm.jack)
 
+resid <- resid(lm.jack)
 plot(mean ~ Distance..um., r.jack, type = "o",
      xlab = expression(paste("Distance", " (",mu,"m)")),
      ylab = "Median Age (Yrs BP)",
@@ -156,7 +159,8 @@ plot(mean ~ Distance..um., stet.split2)
 
 s1 <- lm(mean ~ Distance..um., stet.split1)
 s2 <- lm(mean ~ Distance..um., stet.split2)
-
+s1.mm <- lm(mean ~ mm, stet.split1)
+s2.mm <- lm(mean ~ mm, stet.split2)
 summary(s1)
 summary(s2)
 
@@ -166,7 +170,7 @@ summary(s2)
 # Savannah-4902
 lm.sav <- lm(mean ~ Distance..um., r.sav) # linear model for Savannah
 lm.sav <- lm(r.sav$X14C.Age ~ r.sav$Distance..um.) # linear model for Savannah
-
+lm.sav.mm <- lm(mean ~ mm, r.sav)
 summary(lm.sav)
 
 ################################
@@ -483,7 +487,9 @@ whole <- r.jack2 %>% filter(Distance..um. > 545)
 lm.rising <- lm(D14C ~ Distance..um., data = rising)
 lm.desc <- lm(D14C ~ Distance..um., data = descending)
 lm.overall <- lm(D14C ~ Distance..um., data = overall)
+
 lm.whole <- lm(X14C.Age ~ Distance..um., data = whole)
+lm.whole.mm <- lm(X14C.Age ~ mm, data = whole)
 
 # Use predict() function to create a line, NOTE: You don't need to do it this way, so I am commenting it out
 # rise <- predict(lm.rising, newdata = rising)
