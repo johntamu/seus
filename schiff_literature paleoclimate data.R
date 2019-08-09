@@ -14,6 +14,19 @@
 #' NOAA paleoclimate database.
 #' 
 
+string <- '~/Documents/GitHub/data/paleoclimate_data/collated_data.csv'
+string <- '~/Documents/GitHub/data/paleoclimate_data/bc004a-tab.csv'
+  
+paleo.path <- string
+collated <- read.csv(paleo.path)
+
+collated %>%
+  filter(Region == "Florida Straits") -> t
+
+plot(d18Og.rub ~ yrBP, collated, type= "o")
+plot(d13c ~ bp, t.jack, type = "o", pch = 22)
+
+
 # Import Saenger et al (2011) data from Paleoceanography
 # Core 1: Core KNR140_2_59GGC
 # Core 2: Core CH07_98_MC22

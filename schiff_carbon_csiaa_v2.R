@@ -37,7 +37,7 @@ carbon <- read.csv(load.data) # This dataset has Stetson and others in it, not j
 df <- carbon %>% filter(Group.ID2 == "Leiopathes")
 # Filter out standard deviations. Don't need this for now
 seus_carbon <- df %>% 
-  dplyr::select(Group.ID, Bulk, Ala, Asx, Glx, Gly, Ser, Pro, Ile, Leu, Lys, Phe, Thr, Tyr, Val, Year.AD)
+  dplyr::select(Group.ID, Bulk, Ala, Asx, Glx, Gly, Ser, Pro, Ile, Leu, Lys, Phe, Thr, Tyr, Val, Year.CE)
 
 # Determine Average EAA and average NEAA
 EAA <- seus_carbon %>% dplyr::select(Phe, Thr, Ile, Leu, Val) # Not including Lys because its peaks weren't great (large SD)
@@ -62,7 +62,7 @@ seus_carbon$Sample <- c(7,8,22,25,40,46,103,109,135,170)
 df.stet %>%
   filter(sample.no. %in% seus_carbon$Sample) -> t.df
 seus_carbon$Year.AD <- t.df$linear.ad2
-write.csv(seus_carbon, "C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/schiff c-csiaa stetson_cleaned.csv")
+write.csv(seus_carbon, "~/Google Drive/projects/rproj/seus/data/schiff c-csiaa stetson_cleaned.csv")
 
 #'
 #' Some statistical analysis

@@ -51,90 +51,6 @@ c <- expression(delta^{13}*"C (\u2030)")
 eaa.neaa <- c('Phe', 'Thr', 'Ile', 'Leu', 'Val', 'Asx', 'Glx', 'Pro', 'Ala', 'Ser', 'Gly') # For Essential/Non-Essential ordering
 tr.srcaa <- c('Glu', 'Asp', 'Ala', 'Ile', 'Leu', 'Pro', 'Val', 'Gly', 'Ser', 'Lys', 'Tyr', 'Phe', 'Thr') # For Trophic/Source AA ordering
 
-# Below is a general function to generate a continuous color palette
-
-#' Figure: 
-#' --------------------------------------------------------------------------------------
-#' Bathymetric map of study area
-#' --------------------------------------------------------------------------------------
-
-# get bathymetry data
-b = getNOAA.bathy(lon1=-95, lon2=-65,
-                  lat1=15, lat2=40, 
-                  resolution=1)
-
-## Querying NOAA database ...
-## This may take seconds to minutes, depending on grid size
-## Building bathy matrix ...
-
-# make a simple track line
-# lin = data.frame(
-#   lon = c(-65.17536, -65.37423, -65.64541, -66.06122, -66.15161),  
-#   lat = c(43.30837, 42.94679, 42.87448, 42.92871, 42.72985)
-# )
-
-# make a few points
-pts = data.frame(
-  lon = c(-079.6616667, -079.6416667, -079.1271667, -077.609956, -079.6515000),
-  lat = c(30.51333333, 30.8012600, 31.7040000, 31.8441917, 30.5021667)
-)
-
-# # build a polygon (in this case the 'Roseway Basin Area To Be Avoided')
-# ply = data.frame(
-#   lon = c(-64.916667,-64.983333,-65.516667, -66.083333),
-#   lat = c(43.266667,  42.783333, 42.65, 42.866667)
-# )
-
-# Import and load libraries
-library(oce)
-library(ocedata)
-data("coastlineWorldFine")
-
-# convert bathymetry
-bathyLon = as.numeric(rownames(b))
-bathyLat = as.numeric(colnames(b))
-bathyZ = as.numeric(b)
-dim(bathyZ) = dim(b)
-
-# define plotting region
-mlon = mean(pts$lon)
-mlat = mean(pts$lat)
-span = 1200
-lonlim = c(-90, -70)
-latlim = c(20, 35)
-
-# plot coastline (with projection)
-plot(coastlineWorldFine, clon = mlon, clat = mlat, span = span, 
-     projection="+proj=merc", col = 'lightgrey')
-
-# plot bathymetry
-mapContour(bathyLon,bathyLat,bathyZ,
-           levels = c(-500, -1000, -1500, -2000, -2500, -3000, -3500, -4000, -4500, -5000),
-           # lwd = c(1, 1, 2, 2, 3),
-           # lty = c(3, 1, 3, 1, 3),
-           col = 'darkgray')
-
-# # add depth legend
-# legend("bottomright", seg.len = 3, cex = 0.7,
-#        lwd = c(1, 1, 2, 2, 3),
-#        lty = c(3, 1, 3, 1, 3),
-#        legend = c("50", "100", "150", "200", "250"),
-#        col = 'darkgray', title = "Depth [m]", bg = "white")
-
-# add map data
-mapPoints(longitude = pts$lon, latitude = pts$lat, pch = 21, col = 'black', bg = 'red')
-mapLines(longitude = lin$lon, latitude = lin$lat, col = 'blue')
-
-#' Figure: 
-#' --------------------------------------------------------------------------------------
-#' Chlorophyll map with gridded data
-#' --------------------------------------------------------------------------------------
-
-# I actually have the code to do this in Python with NetCDF data, so I do it there.
-
-
-
-#' Figure: 
 #' --------------------------------------------------------------------------------------
 #' Linear age models (radiocarbon)
 #' --------------------------------------------------------------------------------------
@@ -175,13 +91,12 @@ plot(mean ~ mm, r.stet,
      type = "o", bg = 'gray', col = "black",
      ylab = "Years BP", xlab = 'Distance from edge (um)')
 abline(s1.mm, lty = "dashed")
-abline(s2.mm, lty = "dashed")
+abline(s2.mm)
 
 #' Figure: 
 #' --------------------------------------------------------------------------------------
 #' Bomb spike age model for Jack-4684 BC1
 #' --------------------------------------------------------------------------------------
-
 
 
 #' Figure: 
@@ -276,10 +191,10 @@ par(pty = "s")
 plot(d15n ~ linear.ad, df.stet,
      xlab = x,
      ylab = n,
-     type = "l",
+     type = "o",
      cex = 0.5,
      xlim = c(1500,2005),
-     col = alpha("black", 0.0))
+     col = alpha("black", 0.9))
 points(forecast::ma(df.stet$d15n, order = 1, centre = TRUE) ~ linear.ad, df.stet,
       col = "#33a02c", lwd = 1.5)
 lines(forecast::ma(df.jack4684$d15n, order = 3, centre = TRUE) ~ linear.ad, df.jack4684,
@@ -287,7 +202,7 @@ lines(forecast::ma(df.jack4684$d15n, order = 3, centre = TRUE) ~ linear.ad, df.j
 
 #' Figure: Recent history, bulk
 #' --------------------------------------------------------------------------------------
-#' Bulk data - Stet-4904 entire record
+#' Bulk data - d15N and d13C plotted againt distance from the edge (mm)
 #' --------------------------------------------------------------------------------------
 
 # Nitrogen
@@ -362,6 +277,12 @@ plot(d13c ~ distance, df.sav,
 # text(2,7, labels = "A", cex = 2.25)
 # legend("bottomleft", box.lty = 0, legend = "Savannah Banks-BC1 Base 1", bg = NULL)
 
+
+#' Figure: Recent history, bulk
+#' --------------------------------------------------------------------------------------
+#' Bulk data - Stet4904
+#' --------------------------------------------------------------------------------------
+
 plot(d13c ~ linear.ad, df.stet,
      xlab = x,
      ylab = c,
@@ -395,37 +316,39 @@ splot1 <- df.stet %>%
   dplyr::select(linear.ad, d15n) %>%
   na.omit() %>%
   ggplot(aes(x = linear.ad, y = d15n), size = 0.5, alpha = 0.75) +
-  geom_line(color = "gray", alpha = 0.4, size = 0.65) +
-  geom_line(aes(y=rollmean(d15n, 3, na.pad = TRUE)), size = 0.65, color = '#225ea8') +
+  geom_line(color = "gray", alpha = 0.4, size = 0.45) +
+  geom_line(aes(y=rollmean(d15n, 3, na.pad = TRUE)), size = 0.45, color = '#225ea8') +
   
   geom_vline(xintercept = 950, lty = 'dotted') +
   geom_vline(xintercept = 1250, lty = 'dotted') +
   geom_vline(xintercept = 1550, lty = 'dotted') +
   geom_vline(xintercept = 1850, lty = 'dotted') +
   
-  annotate("text", x = 1100, y = 7, label = 'Medieval Warming', size = 3) +
-  annotate("text", x = 1700, y = 7, label = "Little Ice Age", size = 3) +
+  annotate("text", x = 1100, y = 7, label = 'Medieval Warming', size = 3.5) +
+  annotate("text", x = 1700, y = 7, label = "Little Ice Age", size = 3.5) +
   
   ylab(n) +
   xlab(NULL) +
-  scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
-  theme_classic() +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10), position = "top") +
+  theme_bw() +
   theme(axis.text.y   = element_text(size=10, color = "black"),
-        axis.text.x   = element_blank(),
+        axis.text.x   = element_text(size=10, color = "black"),
         axis.title.y  = element_text(size=10),
         axis.title.x  = element_text(size=10),
-        axis.line.x = element_blank(),
-        axis.ticks.x = element_blank(),
+        # axis.line.x = element_blank(),
+        axis.ticks.x = element_line(size = 0.25, color = "black"),
+        axis.ticks.y = element_line(size = 0.25),
         panel.background = element_blank(),
         panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank())
+        panel.grid.minor = element_blank(),
+        plot.background = element_rect(size =0.75))
 
 splot2 <- df.stet %>%
   dplyr::select(linear.ad, d13c) %>%
   na.omit() %>%
   ggplot(aes(x = linear.ad, y = d13c), size = 0.5, alpha = 0.75) +
-  geom_line(color = "gray", alpha = 0.4, size = 0.65) +
-  geom_line(aes(y=rollmean(d13c, 3, na.pad = TRUE)), size = 0.65, color = '#081d58') +
+  geom_line(color = "gray", alpha = 0.4, size = 0.45) +
+  geom_line(aes(y=rollmean(d13c, 3, na.pad = TRUE)), size = 0.45, color = '#081d58') +
   
   geom_vline(xintercept = 950, lty = 'dotted') +
   geom_vline(xintercept = 1250, lty = 'dotted') +
@@ -433,13 +356,15 @@ splot2 <- df.stet %>%
   geom_vline(xintercept = 1850, lty = 'dotted') +
   
   ylab(c) +
-  theme_classic() +
+  theme_bw() +
   xlab(x) +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
   theme(axis.text.y   = element_text(size=10, color = "black"),
         axis.text.x   = element_text(size=10, color = "black"),
         axis.title.y  = element_text(size=10),
         axis.title.x  = element_text(size=10),
+        axis.ticks.x = element_line(size = 0.25),
+        axis.ticks.y = element_line(size = 0.25),
         panel.background = element_blank(),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank())
@@ -478,7 +403,7 @@ plot(d15n ~ distance, df.jack4686,
 #' --------------------------------------------------------------------------------------
 
 savplot1 <- df.sav %>%
-  select(linear.ad, d15n) %>%
+  dplyr::select(linear.ad, d15n) %>%
   na.omit() %>%
   ggplot(aes(x = linear.ad, y = d15n), size = 0.5, alpha = 0.75) +
   geom_line(color = "gray", alpha = 0.4, size = 0.75) +
@@ -487,8 +412,6 @@ savplot1 <- df.sav %>%
   
   geom_vline(xintercept = 950, lty = 'dashed') +
   geom_vline(xintercept = 1250, lty = 'dashed') +
-  geom_vline(xintercept = -900, lty = 'longdash') +
-  geom_vline(xintercept = -300, lty = 'longdash') +
   geom_vline(xintercept = -250, lty = "dotted") +
   geom_vline(xintercept = 400, lty = "dotted") +
   
@@ -512,7 +435,7 @@ savplot1 <- df.sav %>%
         panel.grid.minor = element_blank())
 
 savplot2 <- df.sav %>%
-  select(linear.ad, d13c) %>%
+  dplyr::select(linear.ad, d13c) %>%
   na.omit() %>%
   ggplot(aes(x = linear.ad, y = d13c), size = 0.5, alpha = 0.75) +
   geom_line(color = "gray", alpha = 0.4, size = 0.75) +
@@ -521,8 +444,6 @@ savplot2 <- df.sav %>%
   
   geom_vline(xintercept = 950, lty = 'dashed') +
   geom_vline(xintercept = 1250, lty = 'dashed') +
-  geom_vline(xintercept = -900, lty = 'longdash') +
-  geom_vline(xintercept = -300, lty = 'longdash') +
   geom_vline(xintercept = -250, lty = "dotted") +
   geom_vline(xintercept = 400, lty = "dotted") +
   
@@ -576,34 +497,101 @@ abline(v = -300, col = alpha("black", 0.75), lty = "longdash")
 lines(forecast::ma(df.jack$d15n, order = 3, centre = TRUE) ~ linear.ad, df.jack,
       col = "#4575b4", lwd = 1.5)
 
-obj2 <- xyplot(forecast::ma(df.jack$d15n, order = 3, centre = TRUE) ~ linear.ad, data = df.jack, type = "l", lwd = 1.5,
-               ylab = n, xlab = x, col = 'red', ylim = c(5, 10))
-obj1 <- xyplot(forecast::ma(df.jack$d13c, order = 3, centre = TRUE) ~ linear.ad, data = df.jack, type = "l", lwd = 1.5,
-               xlab = x, ylab = c, col = 'blue', ylim = c(-18, -10))
+obj2 <- xyplot(forecast::ma(df.jack$d15n, order = 1, centre = TRUE) ~ distance, data = df.jack, type = "l", lwd = 1.5,
+               ylab = n, xlab = x, col = 'red')
+obj1 <- xyplot(forecast::ma(df.jack$d13c, order = 1, centre = TRUE) ~ distance, data = df.jack, type = "l", lwd = 1.5,
+               xlab = x, ylab = c, col = 'blue')
 doubleYScale(obj2, obj1, add.ylab2 = TRUE, style1= NULL, style2 = NULL)
 
-jplot1 <- df.jack %>%
-  select(linear.ad, d15n) %>%
+t.jack <- df.jack
+t.jack$bp <- 1950 - t.jack$linear.ad
+
+jplot1 <- t.jack %>%
+  dplyr::select(bp, d15n) %>%
   na.omit() %>%
-  ggplot(aes(x = linear.ad, y = d15n), size = 0.5, alpha = 0.75) +
+  ggplot(aes(x = bp, y = d15n), size = 0.5, alpha = 0.75) +
   geom_line(color = "gray", alpha = 0.4, size = 0.75) +
-  geom_line(aes(y=rollmean(d15n, 3, na.pad = TRUE)), size = 0.85, color = '#cc4c02') +
+  geom_line(aes(y=rollmean(d15n, 3, na.pad = TRUE)), size = 0.85, color = '#b30000') +
   
-  geom_vline(xintercept = 950, lty = 'dashed') +
-  geom_vline(xintercept = 1250, lty = 'dashed') +
-  geom_vline(xintercept = -900, lty = 'longdash') +
-  geom_vline(xintercept = -300, lty = 'longdash') +
-  geom_vline(xintercept = -250, lty = "dotted") +
-  geom_vline(xintercept = 400, lty = "dotted") +
+  geom_vline(xintercept = 1000, lty = 'dashed') +
+  geom_vline(xintercept = 700, lty = 'dashed') +
+  geom_vline(xintercept = 2850, lty = 'longdash') +
+  geom_vline(xintercept = 2250, lty = 'longdash') +
+  geom_vline(xintercept = 2200, lty = "dotted") +
+  geom_vline(xintercept = 1550, lty = "dotted") +
   
-  annotate("text", x = 1100, y = 7, label = 'Medieval Warming', size = 2) +
-  annotate("text", x = -600, y = 7, label = "Iron Age Cold Epoch", size = 4) +
-  annotate("text", x = 75, y = 7, label = "Roman Warm Period", size = 2) +
+  annotate("text", x = 825, y = 7, label = 'MCA', size = 3.4) +
+  annotate("text", x = 2550, y = 7, label = "Iron Age Cold Epoch", size = 3.4) +
+  annotate("text", x = 1875, y = 7, label = "Roman Warm Period", size = 3.4) +
   
   ylab(n) +
   xlab(NULL) +
   # xlim(-1200, 0) +
-  scale_x_continuous(breaks = scales::pretty_breaks(n = 10), limits = c(-1200,0)) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
+  theme_classic() +
+  theme(axis.text.y   = element_text(size=10, color = "black"),
+        axis.text.x   = element_blank(),
+        axis.line.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.title.y  = element_text(size=10),
+        axis.title.x  = element_text(size=10),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
+
+jplot2 <- t.jack %>%
+  dplyr::select(bp, d13c) %>%
+  na.omit() %>%
+  ggplot(aes(x = bp, y = d13c), size = 0.5, alpha = 0.75) +
+  geom_line(color = "gray", alpha = 0.4, size = 0.65) +
+  geom_line(aes(y=rollmean(d13c, 3, na.pad = TRUE)), size = 0.65, color = '#d7301f') +
+  
+  geom_vline(xintercept = 1000, lty = 'dashed') +
+  geom_vline(xintercept = 700, lty = 'dashed') +
+  geom_vline(xintercept = 2850, lty = 'longdash') +
+  geom_vline(xintercept = 2250, lty = 'longdash') +
+  geom_vline(xintercept = 2200, lty = "dotted") +
+  geom_vline(xintercept = 1550, lty = "dotted") +
+
+  ylab(c) +
+  theme_classic() +
+  xlab("Years BP") +
+  # xlim(-1200, 0) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
+  theme(axis.text.y   = element_text(size=10, color = "black"),
+        axis.text.x   = element_text(size=10, color = "black"),
+        axis.title.y  = element_text(size=10),
+        axis.title.x  = element_text(size=10),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
+
+grid.newpage()
+grid.draw(rbind(ggplotGrob(jplot1), ggplotGrob(jplot2), size = "last"))
+grid.draw(rbind(ggplotGrob(jplot1), ggplotGrob(jplot2), ggplotGrob(paleoplot1), size = "last"))
+
+jplot1 <- t.jack %>%
+  dplyr::select(bp, d15n) %>%
+  na.omit() %>%
+  ggplot(aes(x = bp, y = d15n), size = 0.5, alpha = 0.75) +
+  geom_line(color = "gray", alpha = 0.4, size = 0.65) +
+  geom_line(aes(y=rollmean(d15n, 3, na.pad = TRUE)), size = 0.65, color = '#cc4c02') +
+  
+  # geom_vline(xintercept = 950, lty = 'dashed') +
+  # geom_vline(xintercept = 1250, lty = 'dashed') +
+  # geom_vline(xintercept = -900, lty = 'longdash') +
+  # geom_vline(xintercept = -300, lty = 'longdash') +
+  # geom_vline(xintercept = -250, lty = "dotted") +
+  # geom_vline(xintercept = 400, lty = "dotted") +
+  # 
+  # annotate("text", x = 1100, y = 7, label = 'Medieval Warming', size = 2) +
+  # annotate("text", x = -600, y = 7, label = "Iron Age Cold Epoch", size = 4) +
+  # annotate("text", x = 75, y = 7, label = "Roman Warm Period", size = 2) +
+  
+  ylab(n) +
+  xlab(NULL) +
+  # xlim(-1200, 0) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
   theme_classic() +
   theme(axis.text.y   = element_text(size=10, color = "black"),
         axis.text.x   = element_blank(),
@@ -613,25 +601,25 @@ jplot1 <- df.jack %>%
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank())
 
-jplot2 <- df.jack %>%
-  select(linear.ad, d13c) %>%
+jplot2 <- t.jack %>%
+  dplyr::select(bp, d13c) %>%
   na.omit() %>%
-  ggplot(aes(x = linear.ad, y = d13c), size = 0.5, alpha = 0.75) +
+  ggplot(aes(x = bp, y = d13c), size = 0.5, alpha = 0.75) +
   geom_line(color = "gray", alpha = 0.4, size = 0.75) +
   geom_line(aes(y=rollmean(d13c, 3, na.pad = TRUE)), size = 0.85, color = '#fe9929') +
   
-  geom_vline(xintercept = 950, lty = 'dashed') +
-  geom_vline(xintercept = 1250, lty = 'dashed') +
-  geom_vline(xintercept = -900, lty = 'longdash') +
-  geom_vline(xintercept = -300, lty = 'longdash') +
-  geom_vline(xintercept = -250, lty = "dotted") +
-  geom_vline(xintercept = 400, lty = "dotted") +
-
+  # geom_vline(xintercept = 950, lty = 'dashed') +
+  # geom_vline(xintercept = 1250, lty = 'dashed') +
+  # geom_vline(xintercept = -900, lty = 'longdash') +
+  # geom_vline(xintercept = -300, lty = 'longdash') +
+  # geom_vline(xintercept = -250, lty = "dotted") +
+  # geom_vline(xintercept = 400, lty = "dotted") +
+  # 
   ylab(c) +
   theme_classic() +
-  xlab(x) +
+  xlab("Years BP") +
   # xlim(-1200, 0) +
-  scale_x_continuous(breaks = scales::pretty_breaks(n = 10), limits = c(-1200,0)) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
   theme(axis.text.y   = element_text(size=10, color = "black"),
         axis.text.x   = element_text(size=10, color = "black"),
         axis.title.y  = element_text(size=10),
@@ -666,15 +654,16 @@ lines(forecast::ma(df.sav$d15n, order = 3, centre = TRUE) ~ linear.ad, df.sav,
 p1 <- ggplot() + # With ggplot2
   geom_line(data=df.jack, aes(x = linear.ad, y = d15n), color = "gray", alpha = 0.0, size = 0.5) +
   geom_line(data=df.jack, aes(x = linear.ad,
-                              y = rollmean(d15n, 3, na.pad = TRUE)), color = "#4393c3", alpha = 0.85, size = 0.75) +
+                              y = rollmean(d15n, 3, na.pad = TRUE)), color = "#1f78b4", alpha = 0.99, size = 0.75) +
   geom_line(data=df.sav, aes(x = linear.ad, y = d15n), color = "gray", alpha = 0.0, size = 0.5) +
   geom_line(data=df.sav, aes(x = linear.ad,
-                             y = rollmean(d15n, 3, na.pad = TRUE)), color = "#d6604d", alpha = 0.85, size = 0.75) +
+                             y = rollmean(d15n, 3, na.pad = TRUE)), color = "#33a02c", alpha = 0.99, size = 0.75) +
+  geom_line(data=df.stet, aes(x = linear.ad, y = d15n), color = "gray", alpha = 0.0, size = 0.5) +
+  geom_line(data=df.stet, aes(x = linear.ad,
+                             y = rollmean(d15n, 3, na.pad = TRUE)), color = "#ff7f00", alpha = 0.99, size = 0.75) +
   
   annotate("text", x = 1100, y = 7, label = 'Medieval Warming', size = 3) +
-  # annotate("text", x = -600, y = 7, label = "Iron Age Cold Epoch", size = 4) +
   annotate("text", x = 75, y = 7, label = "Roman Warm Period", size = 3) +
-  annotate("pointrange", y = 7.5, x = 650, xmin = (650-200), xmax = (650+200), color = "black") +
   
   geom_vline(xintercept = 950, lty = 'dotted') +
   geom_vline(xintercept = 1250, lty = 'dotted') +
@@ -683,11 +672,11 @@ p1 <- ggplot() + # With ggplot2
   geom_vline(xintercept = -250, lty = "dotted") +
   geom_vline(xintercept = 400, lty = "dotted") +
   
-  ylab(c) +
+  ylab(n) +
   theme_classic() +
   xlab(x) +
   # xlim(-1200, 0) +
-  scale_x_continuous(breaks = scales::pretty_breaks(n = 10), limits = c(-300,1300)) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10), limits = c(-300,1400)) +
   theme(axis.text.y   = element_text(size=10, color = "black"),
         axis.text.x   = element_text(size=10, color = "black"),
         axis.title.y  = element_text(size=10),
@@ -699,19 +688,21 @@ p1
 
 plot(d13c ~ linear.ad, df.sav,
      xlab = x,
-     ylab = n,
+     ylab = c,
      type = "l",
      cex = 0.5,
-     ylim = c(-19, -14),
-     # xlim = c(0,1500),
+     ylim = c(-17,-14.50),
+     xlim = c(600,1250),
      col = alpha("black", 0.0))
 abline(v = 950, col = "black", lty = 'dashed')
 abline(v = 1250, col = "black", lty = 'dashed')
 abline(v = 400, col = alpha("black", 0.75), lty = "longdash")
-lines(forecast::ma(df.jack$d13c, order = 3, centre = TRUE) ~ linear.ad, df.jack,
-      col = "#4575b4", lwd = 1.5)
-lines(forecast::ma(df.sav$d13c, order = 3, centre = TRUE) ~ linear.ad, df.sav,
-      col = "#f46d43", lwd = 1.5)
+lines(forecast::ma(df.jack$d13c, order = 1, centre = TRUE) ~ linear.ad, df.jack,
+      col = alpha("#41b6c4", 0.99), lwd = 1.5)
+lines(forecast::ma(df.sav$d13c, order = 1, centre = TRUE) ~ linear.ad, df.sav,
+      col = alpha("#c7e9b4", 1.0), lwd = 1.5)
+lines(forecast::ma(df.stet$d13c, order = 1, centre = TRUE) ~ linear.ad, df.stet,
+      col = "#253494", lwd = 1.5)
 
 plot(d15n ~ linear.ad, df.sav,
      xlab = x,

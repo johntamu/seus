@@ -177,7 +177,7 @@ p + geom_point(size = 3.5, color = "black") +
   ylab("PC2 (34%)") +
   geom_hline(yintercept = 0, color = "black", linetype = "dashed") +
   geom_vline(xintercept = 0, color = "black", linetype = "dashed") +
-  geom_point(data = pred, aes(x=PC1, y=PC2), shape = 4, fill = "black", size = 4) +
+  # geom_point(data = pred, aes(x=PC1, y=PC2), shape = 4, fill = "black", size = 4) +
   theme(axis.text.y   = element_text(size=12, color = "black"),
         axis.text.x   = element_text(size=12, color = "black"),
         axis.title.y  = element_text(size=12),
@@ -186,7 +186,7 @@ p + geom_point(size = 3.5, color = "black") +
 
 # pca1 <- princomp(t.norm, cor = TRUE, scores = TRUE)
 col8 <- c('#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00') # 8 variables needing colors
-col4 <- c("#E69F00", "#56B4E9", "#009E73", "#D55E00")
+col4 <- c("#E69F00", "#56B4E9", "#009E73", "#D55E00", "#2166ac", "#b2182b")
 
 
 ##################################
@@ -304,7 +304,7 @@ larsen_eaa_norm <- larsen_eaa[,c(2:5)] - rowMeans(larsen_eaa[,c(2:5)])
 larsen_eaa_norm <- cbind(larsen_eaa$Group.ID3, larsen_eaa_norm)
 colnames(larsen_eaa_norm)[colnames(larsen_eaa_norm)=="larsen_eaa$Group.ID3"] <- "Group.ID3"
 
-lda_larsen <- lda(Group.ID3 ~ Phe + Thr + Ile + Leu, larsen_eaa, CV = FALSE) # Doing this on normalized values gets an error: variables are collinear
+lda_larsen <- lda(Group.ID3 ~ Phe + Thr + Ile + Leu, larsen_eaa, CV = TRUE) # Doing this on normalized values gets an error: variables are collinear
 lda_larsen_values <- predict(lda_larsen, dimen=2)$x
 lda_predicted_set2 <- predict(lda_larsen, newdata = set2)
 lda_predicted_set3 <- predict(lda_larsen, newdata = set3)
@@ -314,24 +314,29 @@ plot(lda_larsen, dimen = 2, abbrev = TRUE, ylim = c(-6,6), xlim = c(-6,6),
      pch = c(21,22,24)[as.numeric(larsen_eaa$Group.ID3)])
 
 eqscplot(lda_larsen_values, type = "p", pch = 22, cex = 1.25, bg = col4[as.numeric(larsen_eaa$Group.ID3)], xlab = "LD1", ylab = "LD2", tol = 0.25, las =1)
-legend("topright",
-       inset = c(0, 0),
-       lty = NULL,
-       bty = "n",
-       cex = 0.55,
-       # pch = c(22),
-       # col = "black",
-       fill = col4,
-       legend = levels(larsen_eaa$Group.ID3))
+# legend("topright",
+#        inset = c(0, 0),
+#        lty = NULL,
+#        bty = "n",
+#        cex = 0.55,
+#        # pch = c(22),
+#        # col = "black",
+#        fill = col4,
+#        legend = levels(larsen_eaa$Group.ID3))
 
-points(lda_predicted_set2$x, pch = 23, bg = "#2166ac", col = "black", cex = 1.25)
-points(lda_predicted_set3$x, pch = 23, bg = "#b2182b",col = "black", cex = 1.25)
-legend("topright",
+points(lda_predicted_set2$x, pch = 23, bg = "#2166ac", col = "black", cex = 1.25) # Set 2, post-1900
+points(lda_predicted_set3$x, pch = 23, bg = "#b2182b",col = "black", cex = 1.25) # Set 3, pre-1900
+legend("topleft",
        # inset = c(0, 0),
        lty = NULL,
        bty = "n",
-       pch = c(23,23,23,25,25),
-       legend = levels(larsen_eaa$Group.ID3))
+       cex = 0.75,
+       col = "black",
+       pch = c(22,22,22,22,23,23),
+       pt.bg = col4,
+       pt.cex = 1,
+       legend = c("Euk. algae", "Het. bacteria", "N2 fixing", "Non-N2 fixing", "post-1900", "pre-1900"))
+       # legend = levels(larsen_eaa$Group.ID3))
        # cex = 0.65,
        # pt.cex = 0.95,
        # pt.bg = c("#41b6c4","#7fbf7b", "#ffffbf", "#fee090", "#fc8d59", "#d73027"))

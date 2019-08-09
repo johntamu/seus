@@ -135,7 +135,7 @@ abline(lm.jack, col = "black", lty = "dashed", lwd = 1.5)
 # Update: 06/18/2019, deciding to leave those points in.
 
 r.stet.edit <- r.stet[-c(25:28),]
-lm.stet <- lm(r.stet.edit$mean ~ r.stet.edit$Distance..um.) # linear model for Stetson
+lm.stet <- lm(mean ~ Distance..um., r.stet) # linear model for Stetson, edit: changed 08/09/2019
 # lm.stet <- lm(r.stet$mean ~ r.stet$Distance..um.) # linear model for Stetson
 
 # To NOT leave out the points, and do a regression model on all of them:
@@ -253,6 +253,7 @@ plot(mean ~ Distance..um., r.stet, type = "o",
      pch = 21,
      cex = 1.25,
      bg = "#bdbdbd")
+abline(lm.stet)
 abline(s1, col = "black", lwd = 1.25)
 abline(s2, col = "black", lwd = 1.25)
 
@@ -490,10 +491,12 @@ lm.overall <- lm(D14C ~ Distance..um., data = overall)
 
 lm.whole <- lm(X14C.Age ~ Distance..um., data = whole)
 lm.whole.mm <- lm(X14C.Age ~ mm, data = whole)
-
 # Use predict() function to create a line, NOTE: You don't need to do it this way, so I am commenting it out
 # rise <- predict(lm.rising, newdata = rising)
 # desc <- predict(lm.desc, newdata = descending)
+
+t <- as.numeric(1/lm.whole$coefficients[2])
+
 
 # Plot the distance vs. radiocarbon figure
 par(pty = "s")

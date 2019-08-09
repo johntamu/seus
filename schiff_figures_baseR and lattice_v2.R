@@ -176,9 +176,9 @@ lines(d13c.5pt ~ linear.ad2, df.stet,
 s1 <- ggplot(df.stet, aes(x=linear.ad, y=d15n))
 s1 + geom_line(color = alpha("#009E73", 0.01)) +
   coord_fixed(ratio = 160) +
-  geom_line(data=df.stet, aes(x=linear.ad2, y=d15n), color = "#009E73", size = 1.15) +
+  geom_line(data=df.stet, aes(x=linear.ad, y=d15n), color = "#009E73", size = 0.75) +
   geom_line(data=df.jack4684, aes(x=linear.ad, y=d15n), color = alpha("#D55E00", 0.01)) +
-  geom_line(data=df.jack4684, aes(x=linear.ad, y=d15n), color = "#D55E00", size = 1.15) +
+  geom_line(data=df.jack4684, aes(x=linear.ad, y=d15n), color = "#D55E00", size = 0.75) +
   # theme_bw() +
   # theme_classic() +
   # geom_point() +
@@ -760,6 +760,8 @@ ndata %>%
          auto.key=list(columns=2, cex = 0.75),
          par.settings = my.settings)
 
+ggplot(value ~ variable, .)
+
 
 ndata.melt <- melt(ndata[1:45,], "Sample.ID2")
 ndata.melt$variable1 <- factor(ndata.melt$variable, 
@@ -825,7 +827,7 @@ p + geom_point(size = 3) +
 ndata %>%
   filter(Region == "SEUS") %>%
   droplevels(.) %>%
-  xyplot(Sum.V ~ Year.AD,
+  xyplot(Sum.V ~ Year.CE,
        data = .,
        group = Sample.ID2,
        cex = 1.5,
@@ -835,13 +837,31 @@ ndata %>%
        xlab = x,
        ylab = expression(paste(Sigma,"V")))
 
+ndata %>%
+  filter(Region == "SEUS") %>%
+  droplevels(.) -> t.ndata
+
+ggplot(aes(x = Year.CE, y = Sum.V), data = t.ndata) +
+  geom_point(aes(fill = factor(Sample.ID2), shape = factor(Sample.ID2)), size = 3.5) +
+  # scale_color_grey() +
+  scale_fill_manual(values=c("#636363","#bdbdbd","#f0f0f0")) +
+  scale_shape_manual(values=c(22,23,24))+
+  theme_classic() +
+  theme(legend.title=element_blank()) +
+  xlab(x) +
+  ylab(expression(paste(Sigma,"V"))) +
+  geom_vline(xintercept=950, linetype = 'dotted') +
+  geom_vline(xintercept=1250, linetype = 'dotted') +
+  geom_text(x=1100, y=3.5, label = "MCA")
+  
+
 ########################
 ## TP through time    ##
 ########################
 ndata %>%
-  # filter(Region == "SEUS") %>%
-  # droplevels(.) %>%
-  xyplot(TP ~ Year.AD,
+  filter(Region == "SEUS") %>%
+  droplevels(.) %>%
+  xyplot(TP ~ Year.CE,
          data = .,
          group = Sample.ID2,
          cex = 1.5,
@@ -851,14 +871,29 @@ ndata %>%
          xlab = x,
          ylab = "Trophic Position (Glu - Phe)")
 
+ggplot(aes(x = Year.CE, y = TP), data = t.ndata) +
+  geom_point(aes(fill = factor(Sample.ID2), shape = factor(Sample.ID2)), size = 3.5) +
+  scale_fill_manual(values=c("#636363","#bdbdbd","#f0f0f0")) +
+  scale_shape_manual(values=c(22,23,24))+
+  theme_classic() +
+  theme(legend.title=element_blank()) +
+  # xlab(x) +
+  xlab("Year CE") +
+  ylab("Trophic Position (Glu - Phe)") +
+  ylim(1,3) +
+  # geom_vline(xintercept=950, linetype = 'dotted') +
+  # geom_vline(xintercept=1250, linetype = 'dotted') +
+  geom_text(x=1100, y=3.5, label = "MCA")
+
 
 ######################
 ## Phe through time ##
 ######################
 ndata %>% 
-  filter(Phe > 1) %>%
-  filter(Phe < 13) %>%
-  filter(Sample.ID2 == "Jacksonville-4907" | Sample.ID2 == "Savannah Banks-4902") %>%
+  # filter(Phe > 1) %>%
+  # filter(Phe < 13) %>%
+  # filter(Sample.ID2 == "Jacksonville-4907" | Sample.ID2 == "Savannah Banks-4902") %>%
+  filter(Region == "SEUS") %>%
   droplevels(.) %>%
   xyplot(Phe ~ Year.CE,
        data = .,
@@ -868,6 +903,22 @@ ndata %>%
        auto.key = list(columns=c(2), cex = 0.75),
        xlab = x,
        ylab = expression({delta}^15*"N"[" Phe"]*" (\u2030)"))
+ndata %>%
+  filter(Region == "SEUS") -> t.ndata
+t.ndata$bp <- 1950 - t.ndata$Year.CE
+
+ggplot(aes(x = Year.CE, y = SrcAA), data = t.ndata) +
+  geom_point(aes(fill = factor(Sample.ID2), shape = factor(Sample.ID2)), size = 3.5) +
+  scale_fill_manual(values=c("#636363","#bdbdbd","#f0f0f0")) +
+  scale_shape_manual(values=c(22,23,24))+
+  theme_classic() +
+  theme(legend.title=element_blank()) +
+  # xlab(x) +
+  xlab("Year BP") +
+  ylab(phe) +
+  geom_vline(xintercept=950, linetype = 'dotted') +
+  geom_vline(xintercept=1250, linetype = 'dotted') +
+  geom_text(x=1100, y=3.5, label = "MCA")
 
 ndata %>% # Showing Phe through time, but only for select specimens (modify code as needed)
   filter(Phe > 1) %>%
@@ -886,13 +937,16 @@ xyplot(Phe ~ Year.AD,
      ylim = c(4, 14))
 
 
-plot(d15n ~ linear.ad, 
-     df.jack4684,
-     col = "black",
-     type = "o",
+plot(SrcAA ~ Year.CE, 
+     t.ndata,
+     col = alpha("black", 1.0),
      xlab = x,
+     xlim = c(1500, 2005),
+     ylim = c(7, 10),
      ylab = n,
      lwd = 1.25)
+lines(forecast::ma(d15n, order = 1, centre = TRUE) ~ linear.ad, df.stet, col = "red")
+lines(forecast::ma(d15n, order = 1, centre = TRUE) ~ linear.ad, df.jack4684, col = "blue")
   # xyplot(Phe ~ Year.AD,
   #        data = .,
   #        group = Sample.ID2,
@@ -1050,7 +1104,7 @@ p2 + theme_bw()
 #' Not final ones
 #' 
 
-xyplot(EAA ~ Year.AD, # Average EAA through time compared to bulk d13C
+xyplot(EAA ~ Year.CE, # Average EAA through time compared to bulk d13C
        data = seus_carbon,
        type = "o",
        pch = 21,
@@ -1072,17 +1126,62 @@ points(Glx ~ Year.AD,
        data = seus_carbon,
        col = "blue")
 
-obj2 <- xyplot(NEAA ~ Year.AD, data = seus_carbon, pch = 21, cex = 1.5, type = "o", xlim = c(1300, 2005),
+obj2 <- xyplot(EAA ~ Year.CE, data = seus_carbon, pch = 21, cex = 1.5, type = "o", xlim = c(1300, 2005),
                ylab = expression("Reconstructed RPP "*delta^{13}*"C (\u2030)"), xlab = x)
 obj1 <- xyplot(d13c ~ linear.ad, data = df.stet, type = "o", col = alpha("black", 0.4), lwd = 1.5, xlim = c(1300, 2005),
                xlab = x, ylab = expression(delta^{13}*"C (\u2030)"))
 doubleYScale(obj1, obj2, add.ylab2 = TRUE)
 
-obj2 <- xyplot(Phe ~ Year.AD, data = seus_carbon, pch = 21, cex = 1.5, type = "o", xlim = c(1300, 2005),
+obj2 <- xyplot(EAA ~ Year.CE, data = seus_carbon, pch = 21, cex = 1.5, type = "o", xlim = c(1300, 2005),
                ylab = expression("EAA "*delta^{13}*"C (\u2030)"), xlab = x)
 obj1 <- xyplot(d13c.5pt ~ linear.ad, data = df.stet, type = "l", col = alpha("black", 0.4), lwd = 1.5, xlim = c(1300, 2005),
                xlab = x, ylab = expression(delta^{13}*"C (\u2030)"))
 doubleYScale(obj1, obj2, add.ylab2 = TRUE)
+
+cplot1 <- seus_carbon %>%
+  dplyr::select(EAA, Year.CE) %>%
+  na.omit() %>%
+  ggplot(aes(x = Year.CE, y = EAA), size = 0.5, alpha = 0.75) +
+  geom_line(color = "gray", alpha = 0.4, size = 0.65) +
+  # geom_line(aes(y=rollmean(EAA, 3, na.pad = TRUE)), size = 0.65, color = '#225ea8') +
+  
+  ylab(n) +
+  xlab(NULL) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10), limits = c(1300,2005)) +
+  theme_classic() +
+  theme(axis.text.y   = element_text(size=10, color = "black"),
+        axis.text.x   = element_blank(),
+        axis.title.y  = element_text(size=10),
+        axis.title.x  = element_text(size=10),
+        axis.line.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
+
+cplot2 <- df.stet %>%
+  dplyr::select(linear.ad, d13c) %>%
+  na.omit() %>%
+  ggplot(aes(x = linear.ad, y = d13c), size = 0.5, alpha = 0.75) +
+  geom_line(color = "gray", alpha = 0.4, size = 0.65) +
+  geom_line(aes(y=rollmean(d13c, 3, na.pad = TRUE)), size = 0.65, color = '#081d58') +
+  
+  ylab(c) +
+  theme_classic() +
+  xlab(x) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10), limits = c(1300,2005)) +
+  theme(axis.text.y   = element_text(size=10, color = "black"),
+        axis.text.x   = element_text(size=10, color = "black"),
+        axis.title.y  = element_text(size=10),
+        axis.title.x  = element_text(size=10),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
+
+grid.newpage()
+grid.draw(rbind(ggplotGrob(cplot1), ggplotGrob(cplot2), size = "last"))
+
+#' Fig
 
 
 #' Note 3-1-2019

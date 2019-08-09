@@ -971,6 +971,98 @@ sd(bulk$d15n, na.rm = TRUE)
 sd(bulk$d13c, na.rm = TRUE)
 
 
+plot(D14C ~ Distance..um., r.stet, type = "o",
+     xlab = expression(paste("Distance", " (",mu,"m)")),
+     ylab = "D14C",
+     pch = 21,
+     cex = 1.25,
+     bg = "#bdbdbd")
+
+
+# I'm going to make a new jack data frame and set the linear ages to the overall growth record
+new.jack <- df.jack
+lm.jack <- lm(mean ~ Distance..um., r.jack)
+summary(lm.jack)
+plot(mean ~ Distance..um., r.jack)
+abline(lm.jack)
+
+new.jack$Distance..um. <- new.jack$distance*1000
+new.jack$predict <- predict(lm.jack, new.jack)
+new.jack$predict.ad <- 1950 - new.jack$predict
+
+new.jack %>%
+  filter(Distance..um. > 1100) -> new.jack
+plot(forecast::ma(new.jack$d13c, order = 5, centre = TRUE) ~ predict, new.jack, type = "l")
+
+t.sav <- df.sav
+t.sav$bp <- 1950 - t.sav$linear.ad
+plot(d15n ~ bp, t.sav, type = "l")
+lines(forecast::ma(new.jack$d15n, order = 5, centre = TRUE) ~ predict, new.jack, type = "l", col = "blue", lwd = 2)
+lines(value ~ linear.ad)
+
+carbon %>%
+  filter()
+
+t.stet <- df.stet
+t.stet$test.ad <- 2005 - ((t.stet$distance*1000)/growth.stet1)
+
+testplot1 <- t.stet %>%
+  dplyr::select(test.ad, d15n) %>%
+  na.omit() %>%
+  ggplot(aes(x = test.ad, y = d15n), size = 0.5, alpha = 0.75) +
+  geom_line(color = "gray", alpha = 0.4, size = 0.65) +
+  geom_line(aes(y=rollmean(d15n, 3, na.pad = TRUE)), size = 0.65, color = '#225ea8') +
+  
+  geom_vline(xintercept = 950, lty = 'dotted') +
+  geom_vline(xintercept = 1250, lty = 'dotted') +
+  geom_vline(xintercept = 1550, lty = 'dotted') +
+  geom_vline(xintercept = 1850, lty = 'dotted') +
+  
+  annotate("text", x = 1100, y = 7, label = 'Medieval Warming', size = 3.5) +
+  annotate("text", x = 1700, y = 7, label = "Little Ice Age", size = 3.5) +
+  
+  ylab(n) +
+  xlab(NULL) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
+  theme_classic() +
+  theme(axis.text.y   = element_text(size=10, color = "black"),
+        axis.text.x   = element_blank(),
+        axis.title.y  = element_text(size=10),
+        axis.title.x  = element_text(size=10),
+        axis.line.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
+
+testplot2 <- t.stet %>%
+  dplyr::select(test.ad, d13c) %>%
+  na.omit() %>%
+  ggplot(aes(x = test.ad, y = d13c), size = 0.5, alpha = 0.75) +
+  geom_line(color = "gray", alpha = 0.4, size = 0.65) +
+  geom_line(aes(y=rollmean(d13c, 3, na.pad = TRUE)), size = 0.65, color = '#081d58') +
+  
+  geom_vline(xintercept = 950, lty = 'dotted') +
+  geom_vline(xintercept = 1250, lty = 'dotted') +
+  geom_vline(xintercept = 1550, lty = 'dotted') +
+  geom_vline(xintercept = 1850, lty = 'dotted') +
+  
+  ylab(c) +
+  theme_classic() +
+  xlab(x) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10)) +
+  theme(axis.text.y   = element_text(size=10, color = "black"),
+        axis.text.x   = element_text(size=10, color = "black"),
+        axis.title.y  = element_text(size=10),
+        axis.title.x  = element_text(size=10),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
+
+grid.newpage()
+grid.draw(rbind(ggplotGrob(testplot1), ggplotGrob(testplot2), size = "last"))
+
+
 
 #' -----------------------------------------------------------
 #' This space below is test calculations for SSA outputs

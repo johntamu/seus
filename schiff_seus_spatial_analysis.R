@@ -190,20 +190,19 @@ mapContour(bathyLon,bathyLat,bathyZ,
         col = 'darkgray')
 
 # # add depth legend
-legend("topleft", 
+legend("topleft",
        # seg.len = 3,
        pch = c(4,2,1,6,5),
-       cex = 0.4,
-       legend = c("Jacksonville-4907 BC1", "Jacksonville-4684 BC1", "Jacksonville-4686 BC1", "Savannah-4902 BC1", "Stetson-4904"),
-       col = 'black', 
+       cex = 0.35,
+       legend = c("Jacksonville-4907 BC1", "Jacksonville-4684 BC1", "Savannah-4902 BC1", "Stetson-4904", "Jacksonville-4686-BC1"),
+       col = 'black',
        # title = "Depth [m]",
        bg = "white")
 
 # add map data
-mapPoints(longitude = pts$lon, latitude = pts$lat, pch = c(4,2,1,6,5), lwd = 1.5, col = "black", cex = 1.25)
+mapPoints(longitude = pts$lon, latitude = pts$lat, pch = c(4,2,1,6,5), lwd = 1.5, col = "black", cex = 0.85)
 # mapLines(longitude = lin$lon, latitude = lin$lat, col = 'blue')
 # mapPolygon(longitude = ply$lon, latitude = ply$lat, lty = 2)
-
 
 
 
