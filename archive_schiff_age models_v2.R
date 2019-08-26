@@ -16,11 +16,11 @@ library(clam)
 library(dplyr)
 
 # Create pathnames
-path1 <- '~/Documents/GitHub/rstudio/data/schiff radiocarbon 02-05-2019.csv'
+path1 <- '~/Documents/GitHub/data/schiff radiocarbon 02-05-2019.csv'
 path2 <- 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/schiff radiocarbon 02-05-2019.csv'
 path3 <- '/home/john/Desktop/data/schiff radiocarbon 02-05-2019.csv'
 
-df <- read.csv(path1)
+df <- read.csv(path1, header = TRUE)
 
 radiocarbon <- df
 
@@ -100,11 +100,15 @@ lm.jack <- lm(r.jack$X14C.Age ~ r.jack$Distance..um.)
 # Split into two dataframes. 
 # jsplit1 <- r.jack %>% filter(Distance..um. < 2500)
 # jsplit2 <- r.jack %>% filter(Distance..um. > 2500)
-jsplit1 <- r.jack %>% filter(Distance..um. <= 1890)
-jsplit2 <- r.jack %>% filter(Distance..um. >= 1890)
+jsplit1 <- r.jack %>% filter(Distance..um. <= 1890) # test
+jsplit2 <- r.jack %>% filter(Distance..um. >= 1890) # test
+
+jsplit1 <- r.jack %>% filter(Distance.microns <= 1229) # official, 08/13/2019
+jsplit2 <- r.jack %>% filter(Distance.microns >= 1229) # official, 08/13/2019
+
 # Linear models for split data
-jlm1 <- lm(mean ~ Distance..um., jsplit1)
-jlm2 <- lm(mean ~ Distance..um., jsplit2)
+jlm1 <- lm(mean ~ Distance.microns, jsplit1)
+jlm2 <- lm(mean ~ Distance.microns, jsplit2)
 jlm1.mm <- lm(mean ~ mm, jsplit1)
 jlm2.mm <- lm(mean ~ mm, jsplit2)
 summary(jlm1)
@@ -147,9 +151,9 @@ summary(lm.stet.all)
 # Stetson-4904 
 # Note: 07/12/2019, splitting the Stetson record into two grwoth rates like with Jacksonville to see how it varies
 r.stet %>% 
-  filter(Distance..um. <= 6021) -> stet.split1
+  filter(Distance.microns <= 4998) -> stet.split1
 r.stet %>%
-  filter(Distance..um. >= 6021) -> stet.split2
+  filter(Distance.microns >= 4998) -> stet.split2
 
 View(stet.split1)
 View(stet.split2)
@@ -157,8 +161,8 @@ View(stet.split2)
 plot(mean ~ Distance..um., stet.split1)
 plot(mean ~ Distance..um., stet.split2)
 
-s1 <- lm(mean ~ Distance..um., stet.split1)
-s2 <- lm(mean ~ Distance..um., stet.split2)
+s1 <- lm(mean ~ Distance.microns, stet.split1)
+s2 <- lm(mean ~ Distance.microns, stet.split2)
 s1.mm <- lm(mean ~ mm, stet.split1)
 s2.mm <- lm(mean ~ mm, stet.split2)
 summary(s1)
@@ -183,7 +187,7 @@ summary(lm.sav)
 # Jacksonville #
 ################
 
-plot(mean ~ Distance..um., r.jack, type = "o",
+plot(mean ~ Distance.microns, r.jack, type = "o",
      xlab = expression(paste("Distance", " (",mu,"m)")),
      ylab = "Median Age (Yrs BP)",
      pch = 21,
@@ -209,7 +213,7 @@ plot(mean ~ Distance..um., r.stet, type = "o",
      bg = "#bdbdbd")
 # abline(lm.stet, col = "#000000", lty = "dashed", lwd = 1.25)
 r2 <- summary(lm.stet.all)$adj.r.squared
-abline(lm.stet.all, col = "black", lwd = 1.25)
+# abline(lm.stet.all, col = "black", lwd = 1.25)
 abline(lm.stet, col = "black", lty = "dashed")
 mylabel <- bquote(italic(R)^2 == .(format(r2, digits = 3)))
 text(x = 6000, y = 400, labels = mylabel)
@@ -247,7 +251,7 @@ plot(D14C ~ Distance..um., r.jack2, type = "o",
      cex = 1.5,
      bg = "#bdbdbd")
 
-plot(mean ~ Distance..um., r.stet, type = "o",
+plot(mean ~ Distance.microns, r.stet, type = "o",
      xlab = expression(paste("Distance", " (",mu,"m)")),
      ylab = "Median Age (Yrs BP)",
      pch = 21,
@@ -300,7 +304,7 @@ print(growth2)
 print(growth3)
 
 # Create a column of ages to attach to bulk record dataframe in separate script file
-distance <- jack$distance..mm.*1000
+distance <- df.jack$distance*1000
 yrs1 <- (1950-min(r.jack$mean)) - (distance/growth1) # 588 (minimum) is median year AD for the edge of the coral
 yrs2 <- (1950-max(r.jack$mean)) - (distance/growth2) # 1380 is median year for the coral at distance 512 microns from edge
 t.dat <- cbind(distance,yrs1,yrs2)
@@ -321,26 +325,26 @@ yrs <- (1950-min(r.jack$mean)) - (distance/5)
 test <- (1950-max(r.jack$mean)) + (distance/6.5)
 
 # Below I am using the predict function to predict the age of the coral
-t.data <- jack
-t.data$Distance..um. <- t.data$distance..mm.*1000
+t.data <- df.jack
+t.data$Distance.microns <- t.data$distance*1000
 t.data$predict1 <- predict(jlm1, t.data)
 t.data$predict2 <- predict(jlm2, t.data)
 
-t.data$predict1 <- 1950 - t.data$predict1
-t.data$predict2 <- 1950 - t.data$predict2
-t.data$diff <- t.data$predict1 - t.data$predict2 # find the inflection point, in thise case between 58 and 59
+t.data$predict1 <- 1950 - t.data$predict1 # to convert to years AD
+t.data$predict2 <- 1950 - t.data$predict2 # to convert to years AD
+t.data$diff <- t.data$predict1 - t.data$predict2 # find the inflection point, in thise case between ...
 
 t.data %>%
-  select(Distance..um., predict1, predict2) -> t.data
+  select(Distance.microns, predict1, predict2) -> t.data
 
-first <- t.data[1:58,]
+first <- t.data[1:41,]
 first <- first[,-c(3)]
-second <- t.data[59:nrow(t.data),]
+second <- t.data[42:nrow(t.data),]
 second <- second[,-c(2)]
 names(first)[2] <- paste("yrs")
 names(second)[2] <- paste("yrs")
 binded <- rbind(first,second)
-length(binded$Distance..um.)
+length(binded$Distance.microns) # check length that it is what you expect
 
 #####################
 #                   #
@@ -357,9 +361,9 @@ t.dat <- cbind(distance2,yrs1,yrs2)
 t.dat <- as.data.frame(t.dat)
 t.dat$diff <- t.dat$yrs1 - t.dat$yrs2
 
-first <- t.dat[1:30,]
+first <- t.dat[1:21,]
 first <- first[,-c(3)]
-second <- t.dat[31:nrow(t.data),]
+second <- t.dat[22:nrow(t.dat),]
 second <- second[,-c(2)]
 names(first)[2] <- paste("yrs")
 names(second)[2] <- paste("yrs")
@@ -419,17 +423,18 @@ s2.growth <- as.numeric(1/s2$coefficients[2])
 print(s1.growth)
 print(s2.growth)
 
-lin1 <- 2005 - ((df.stet$distance*1000)/s1.growth)
+lin1 <- -55 + ((df.stet$distance*1000)/s1.growth)
 # lin2 <- 2005 - ((stetson$distance..mm.*1000)/s2.growth)
-lin2 <- (2005 - 800) - (df.stet$distance*1000/s2.growth)
+lin2 <- (-55 + 752.5) + (df.stet$distance*1000/s2.growth)
+
 
 f <- cbind(stetson$distance..mm.*1000,lin1, lin2)
 f <- as.data.frame(f)
 f$diff <- f$lin1 - f$lin2 # this identifies the inflection point more easily, at distance = 8500 microns
 
 
-first <- f[1:293,]
-second <- f[294:nrow(f),]
+first <- f[1:252,]
+second <- f[253:nrow(f),]
 
 first <- first[, -c(3)]
 second <- second[,-c(2)]
@@ -440,7 +445,30 @@ names(second)[2] <- paste("yrs")
 stet.binded <- rbind(first, second)
 length(stet.binded[,1])
 
-stet.linear.ad3 <- stet.binded$yrs
+stet.linear.ad3 <- 1950 - stet.binded$yrs
+
+
+# predict the ages in Stetson based on linear regresion 8-14-2019 --> abandoned because it does not go to present (2005 AD)
+t.stetson <- stetson
+t.stetson$Distance.microns <- t.stetson$distance..mm.*1000
+t.stetson$predict1 <- predict(s1, t.stetson)
+t.stetson$predict2 <- predict(s2, t.stetson)
+
+t.data$predict1 <- 1950 - t.data$predict1
+t.data$predict2 <- 1950 - t.data$predict2
+t.data$diff <- t.data$predict1 - t.data$predict2 # find the inflection point, in thise case between 23 and 24
+
+t.data %>%
+  select(Distance..um., predict1, predict2) -> t.data
+
+first <- t.data[1:23,]
+first <- first[,-c(3)]
+second <- t.data[24:nrow(t.data),]
+second <- second[,-c(2)]
+names(first)[2] <- paste("yrs")
+names(second)[2] <- paste("yrs")
+binded2 <- rbind(first,second)
+length(binded2$Distance..um.)
 
 #################
 # Savannah-4902 #
@@ -455,7 +483,7 @@ vector <- predict(lm.sav, t.data)
 
 sav$Distance..um. <- sav$distance..mm.*1000
 sav$predict1 <- predict(lm.sav, sav)
-sav.predict.ad <- 1950- sav$predict1
+sav.predict.ad <- 1950 - sav$predict1
 
 ######################################
 ##                                  ##

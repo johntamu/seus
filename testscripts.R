@@ -1063,7 +1063,157 @@ grid.newpage()
 grid.draw(rbind(ggplotGrob(testplot1), ggplotGrob(testplot2), size = "last"))
 
 
+df.stet %>%
+  dplyr::select(linear.ad, d15n, d13c) -> t.data
 
+zz <- as.ts(t.data)
+
+recon <- read.delim('~/Desktop/ssa-mtm-vectors/stet_d15n_win30_comp3_burg.txt', header = FALSE)
+recon2 <- read.delim('~/Desktop/ssa-mtm-vectors/stet_d13c_win30_comp3_burg.txt', header = FALSE)
+
+df.stet$ssa.d15n <- recon$V1
+
+t.stet <- df.stet
+t.stet$n1 <- t.stet$ssa.d15n
+t.stet$n2 <- t.stet$ssa.d15n + 8.2
+t.stet$c1 <- recon2$V1
+t.stet$c2 <- t.stet$c1 + mean(df.stet$d13c, na.rm = TRUE)
+
+plot(d15n ~ linear.ad, t.stet,
+     col = alpha("black", 0.3),
+     type = "l",
+     xlim = c(600,1200))
+minor.tick(nx=4, ny=2, tick.ratio=0.5, x.args = list(), y.args = list())
+lines(recon ~ linear.ad, t.stet,
+      col = "black",
+      type = "l")
+
+plot(d13c ~ linear.ad, t.stet,
+     col = alpha("black", 0.3),
+     type = "l",
+     xlim = c(600,1200))
+minor.tick(nx=4, ny=2, tick.ratio=0.5, x.args = list(), y.args = list())
+lines(c2 ~ linear.ad, t.stet,
+      col = "black",
+      type = "l")
+
+plot(n1 ~ linear.ad, t.stet,
+     col = alpha("black", 0.3),
+     type = "l")
+     # xlim = c(600,1200))
+lines(c1 ~ linear.ad, t.stet,
+      col = "black",
+      type = "l")
+
+jr1 <- read.delim('~/Desktop/ssa-mtm-vectors/jack_d15n_win30_comp5_burg.txt', header = FALSE)
+jr2 <- read.delim('~/Desktop/ssa-mtm-vectors/jack_d13c_win30_comp6_burg.txt', header = FALSE)
+
+t.jack <- df.jack
+
+t.jack$jr1 <- jr1$V1
+t.jack$jr2 <- jr2$V1
+
+t.jack$jr1n <- t.jack$jr1 + mean(t.jack$d15n)
+t.jack$jr2c <- t.jack$jr2 + mean(t.jack$d13c)
+
+plot(d13c ~ linear.ad, t.jack,
+     col = alpha("black", 0.3),
+     type = "o")
+     # xlim = c(600,1200))
+minor.tick(nx=4, ny=2, tick.ratio=0.5, x.args = list(), y.args = list())
+lines(jr2c ~ linear.ad, t.jack,
+      col = "black",
+      type = "l")
+
+plot(d15n ~ linear.ad, t.jack,
+     col = alpha("black", 0.3),
+     type = "l")
+# xlim = c(600,1200))
+minor.tick(nx=4, ny=2, tick.ratio=0.5, x.args = list(), y.args = list())
+lines(jr1n ~ linear.ad, t.jack,
+      col = "black",
+      type = "l")
+
+plot(jr1 ~ linear.ad, t.jack,
+     col = alpha("black", 0.3),
+     type = "l")
+lines(jr2 ~ linear.ad, t.jack,
+      col = "black",
+      type = "l")
+
+
+
+plot(d18Oc ~ Year.AD., core1, type = "o")
+lines(d13c ~ linear.ad, df.stet, type = "l")
+
+obj2 <- xyplot(SST.Anand. ~ Year.AD., core1, type = "o", xlab = x)
+obj1 <- xyplot(d15n ~ linear.ad, data = df.stet, type = "l", ylab = c, xlab = x)
+doubleYScale(obj1, obj2, add.ylab2 = TRUE)
+
+
+# Trying out a filter with butterworth filter from signal package
+# test vector will be stetson d15n
+test <- t.stet[1:376,]
+test1 <- test$d15n
+bf <- butter(15, 0.25, type = "low")
+b1 <- filtfilt(bf, test1)
+
+plot(b1, type = "l")
+plot(rollmean(d15n, 3, na.pad = TRUE) ~ linear.ad, t.stet, type = "l")
+
+lowpass.spline <- smooth.spline(test$d15n, y = NULL, spar = 1/2)
+plot(lowpass.spline$y, type = "l")
+lowpass.loess <- loess(d15n ~ linear.ad, data = test, span = 0.3)
+plot(lowpass.loess$fitted, type = "l")
+
+
+
+t.jack <- df.jack
+t.jack$yrad <- 1950 - jackdepths$best
+
+plot(d15n ~ linear.ad, t.sav, type = "l")
+lines(rollmean(d15n, 3, na.pad = TRUE) ~ yrad, t.jack, type = "l", col = 'blue')
+lines(rollmean(d15n, 3, na.pad = TRUE) ~ yrad, t.stet, type = "l", col = 'purple')
+
+
+t.stet <- df.stet
+t.stet$yrad <- 1950 - stetdepths$best
+plot(d15n ~ linear.ad, t.stet, type = "l", col = "gray")
+lines(rollmean(d15n, 10, na.pad = TRUE) ~ linear.ad, t.stet, type = "l", col = 'purple')
+vector <- rollmean(t.stet$d15n, 5, na.pad = TRUE)
+vector2 <- t.stet$d15n - vector
+vector3 <- pracma::detrend(t.stet$d15n, tt = 'linear')
+t.stet$vector2 <- vector2
+t.stet$vector3 <- vector3
+plot(vector2 ~ yrad, t.stet, type = "l")
+
+
+# Binning data rather than using a moving average
+
+binned <- shingle(df.stet$d15n, intervals = 5) # Doesnt do anything
+
+df.stet %>%
+  dplyr::select(d15n, d13c, linear.ad) -> t.df
+binned <- bin(df.stet$d15n, nbins = 20, labels = NULL, method = "length", na.omit = TRUE)
+binned <- bin(t.df, nbins = 20)
+
+binned <- rbin_equal_length(t.df, d15n, linear.ad, 25)
+binned <- rbin_quantiles(mbank, y, age, 10)
+plot(binned)
+
+
+
+
+
+# plotting age models plus error
+t.stet$best <- 1950 - stetdepths$best
+t.stet$min <- 1950 - stetdepths$min99. # This is from the age model with the 
+t.stet$max <- 1950 - stetdepths$max99.
+
+plot(rollmean(d15n, 10, na.pad = TRUE) ~ best, t.stet,
+     type = "l", col = "#225ea8")
+lines(rollmean(d15n, 10, na.pad = TRUE) ~ min, t.stet, col = "#1d91c0")
+lines(rollmean(d15n, 10, na.pad = TRUE) ~ max, t.stet, col = "#253494")
 #' -----------------------------------------------------------
 #' This space below is test calculations for SSA outputs
 #' from SSA-MTM toolkit

@@ -24,10 +24,16 @@
 #' 
 #' 
 # Stetson-4904
+write.table(df.stet$d15n, '~/Desktop/ssa-mtm-vectors/stetson_d15n.txt', 
+            row.names = FALSE, col.names = FALSE, sep = "\t", na = "NaN")
+write.table(df.stet$d13c, '~/Desktop/ssa-mtm-vectors/stetson_d13c.txt', 
+            row.names = FALSE, col.names = FALSE, sep = "\t", na = "NaN")
+
 write.table(df.stet$d15n, 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/toolkit_vectors/stetson_d15n.txt', 
             row.names = FALSE, col.names = FALSE, sep = "\t", na = "NaN")
 write.table(df.stet$d13c, 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/toolkit_vectors/stetson_d13c.txt', 
             row.names = FALSE, col.names = FALSE, sep = "\t", na = "NaN")
+
 # Jacksonville-4907
 write.table(df.jack$d15n, 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/toolkit_vectors/jack_d15n.txt', 
             row.names = FALSE, col.names = FALSE, sep = "\t", na = "NaN")

@@ -81,12 +81,20 @@ my.settings <- list(
   strip.border=list(col='black'))
 
 myColors <- brewer.pal(9, "YlGnBu")
+myColors3 <- brewer.pal(9, "BuGn")
 
 my.settings2 <- list(
   superpose.symbol=list(pch = c(21,22,23,24,25,8),
                         col = "black",
                         fill=myColors[1:8]),
   strip.background=list(col=myColors[8]),
+  strip.border=list(col='black'))
+
+my.settings3 <- list(
+  superpose.symbol=list(pch = c(21,22,23,24,25,8),
+                        col = "black",
+                        fill=myColors3[1:8]),
+  strip.background=list(col=myColors3[8]),
   strip.border=list(col='black'))
 
 bw_theme <- trellis.par.get()
@@ -205,7 +213,7 @@ s1 + geom_line(color = alpha("#009E73", 0.01)) +
 
 # Stetson Banks bulk d13C
 
-s2 <- ggplot(df.stet, aes(linear.ad4, d13c))
+s2 <- ggplot(df.stet, aes(linear.ad, d13c))
 s2 + geom_line() +
   geom_point(shape = 21, fill = "gray", color = "black", size = 3) +
   # geom_ribbon(aes(ymin = d13c + 0.3, ymax = d13c - 0.3), alpha = 0.2, color = "black", size = 0.25) +
@@ -213,7 +221,7 @@ s2 + geom_line() +
   # theme_classic() +
   # xlim(1400, 2010) +
   # scale_x_continuous(breaks = seq(500,2010,by=200), limits = c(500, 2010)) +
-  scale_x_continuous(breaks = seq(1300,2010,by=100), limits = c(1300, 2010)) +
+  # scale_x_continuous(breaks = seq(1300,2010,by=100), limits = c(1300, 2010)) +
   # scale_x_continuous(breaks = seq(1000,2010,by=100), limits = c(1000, 2010)) +
   # scale_x_continuous(breaks = seq(1000,1500,by=100), limits = c(1000, 1500)) +
   # scale_x_continuous(breaks = seq(1650, 1800, by = 25), limits = c(1650, 1800)) +
@@ -331,22 +339,22 @@ plot(d15n ~ linear.ad, df.sav,
      type = "l",
      xlim = c(0, 1400),
      col = alpha("black", 0.0))
-lines(d15n ~ linear.ad, df.jack,
-      col = "red", lwd = 2, type = "o")
-lines(d15n ~ linear.ad, df.sav,
-      col = "blue", lwd = 2, type = "o")
-lines(d15n.3pt ~ linear.ad4, df.stet, col = "purple", lwd = 2)
+lines(rollmean(d15n, 3, na.pad = TRUE) ~ linear.ad, df.jack,
+      col = "red", lwd = 2, type = "l")
+lines(rollmean(d15n, 3, na.pad = TRUE) ~ linear.ad, df.sav,
+      col = "blue", lwd = 2, type = "l")
+lines(rollmean(d15n, 15, na.pad = TRUE) ~ linear.ad, df.stet, col = "purple", lwd = 2)
 
 plot(d13c ~ linear.ad, df.jack,
      xlab = x,
      ylab = c,
      type = "l",
      col = alpha("black", 0.4))
-lines(d13c.3pt ~ linear.ad, df.jack,
+lines(rollmean(d13c, 3, na.pad = TRUE) ~ linear.ad, df.jack, # rollmean(d13c, 3, na.pad = TRUE))
       col = "red", lwd = 2)
-lines(d13c.3pt ~ linear.ad4, df.stet,
+lines(rollmean(d13c, 3, na.pad = TRUE) ~ linear.ad, df.stet,
       col = "purple", lwd = 2)
-lines(d13c.3pt ~ linear.ad, df.sav,
+lines(rollmean(d13c, 3, na.pad = TRUE) ~ linear.ad, df.sav,
       col = "blue", lwd = 2)
 
 j <- ggplot(df.jack, aes(linear.ad, d13c))
@@ -485,20 +493,26 @@ plot(d15n ~ linear.ad, df.sav,
      type = "l",
      col = alpha("black", 0.4),
      xlim = c(0,1500))
-lines(d15n.3pt ~ linear.ad, df.sav,
+lines(rollmean(d15n, 3, na.pad = TRUE) ~ linear.ad, df.sav,
       col = "red", lwd = 2)
-lines(d15n.3pt ~ linear.ad, df.jack,
+lines(rollmean(d15n, 3, na.pad = TRUE) ~ linear.ad, df.jack,
       col = "blue", lwd = 2)
+lines(rollmean(d15n, 3, na.pad = TRUE) ~ linear.ad, df.stet,
+      col = "purple", lwd = 2)
 
 par(pty = "s")
 plot(d13c ~ linear.ad, df.sav,
      xlab = "Calendar Years (C.E.)",
      ylab = c,
      type = "l",
-     col = alpha("black", 0.8))
-lines(d13c ~ linear.ad2, df.stet, col = alpha("purple", 0.3), lwd = 2)
-lines(d13c.3pt ~ linear.ad, df.sav,
+     col = alpha("black", 0.0))
+lines(rollmean(d13c, 3, na.pad = TRUE) ~ linear.ad, df.sav,
       col = "red", lwd = 2)
+lines(rollmean(d13c, 3, na.pad = TRUE) ~ linear.ad, df.jack,
+      col = "blue", lwd = 2)
+lines(rollmean(d13c, 5, na.pad = TRUE) ~ linear.ad, df.stet,
+      col = "purple", lwd = 2)
+
 
 
 plots1 <- df.sav %>%
@@ -533,15 +547,15 @@ grid.draw(rbind(ggplotGrob(plots1), ggplotGrob(plots2), size = "last"))
 # Jacksonville-4684 #
 #####################
 par(pty = "s")
-plot(d15n.3pt ~ linear.ad2, df.stet,
+plot(d15n ~ linear.ad, df.jack4684,
      xlab = "Calendar Years (C.E.)",
      ylab = n,
-     xlim=c(1300, 2005),
+     # xlim=c(1300, 2005),
      type = "l",
      col = alpha("red", 0.8))
-lines(d15n ~ linear.ad, df.jack4684, #d15n.3pt is wanting a moving average
+lines(rollmean(d15n, 3, na.pad = TRUE) ~ linear.ad, df.jack4684,
       col = "black", lwd = 1.25)
-points(d15n ~ linear.ad2, df.stet,
+points(rollmean(d15n, 3, na.pad = TRUE) ~ linear.ad, df.stet,
       col = "blue", lwd = 1.5)
 
 # with xyplot (lattice)
@@ -759,6 +773,29 @@ ndata %>%
          ylab = expression({delta}^15*"N (\u2030)"),
          auto.key=list(columns=2, cex = 0.75),
          par.settings = my.settings)
+
+ndata %>%
+  filter(Region == "SEUS") %>%
+  melt(., "Sample.ID") %>%
+  droplevels(.) %>%
+  filter(variable %in% tr.srcaa) %>% # Success! 03-04-2019
+  xyplot(value ~ variable,
+         .,
+         panel = function(x,  y, ...){
+           panel.xyplot(x, y, ...)
+           # panel.abline(h = 9, lty = 1)
+           # panel.abline(h = 9.25, lty = 2)
+           # panel.abline(h = 8.75, lty = 2)
+           panel.abline(v = 7.5, lty = 2)
+         },
+         cex=1.5,
+         ylim=c(-20, 40), # ylim and xlim are "first class" parameters and don't need to be in scales=list()
+         group = Sample.ID,
+         xlab = NULL,
+         ylab = expression({delta}^15*"N (\u2030)"),
+         auto.key=list(columns=2, cex = 0.75),
+         par.settings = my.settings2)
+
 
 ggplot(value ~ variable, .)
 
@@ -1030,12 +1067,13 @@ xyplot(value ~ variable1,
        melt,
        panel = function(x,  y, ...){
          panel.xyplot(x, y, ...)
-         panel.abline(h = -15.9, lty = 1) # Average bulk value
-         panel.abline(h = (-15.9+0.54), lty = 2) # + standard deviation
-         panel.abline(h = (-15.9-0.54), lty = 2) # - standard deviation
-         panel.abline(h = -11.4, lty = 1)
-         panel.abline(h = (-11.4+0.8), lty = 2)
-         panel.abline(h = (-11.4-0.8), lty = 2)
+         # panel.abline(h = -15.9, lty = 1) # Average bulk value
+         # panel.abline(h = (-15.9+0.54), lty = 2) # + standard deviation
+         # panel.abline(h = (-15.9-0.54), lty = 2) # - standard deviation
+         # panel.abline(h = -11.4, lty = 1)
+         # panel.abline(h = (-11.4+0.8), lty = 2)
+         # panel.abline(h = (-11.4-0.8), lty = 2)
+         panel.abline(v = 5.5, lty = 2)
        },
        cex=1.5,
        ylim=c(-30, 10), # ylim and xlim are "first class" parameters and don't need to be in scales=list()
@@ -1043,7 +1081,7 @@ xyplot(value ~ variable1,
        xlab = NULL,
        ylab = expression({delta}^13*"C (\u2030)"),
        auto.key=list(columns=3, cex = 0.55),
-       par.settings = my.settings)
+       par.settings = my.settings3)
 
 # Same plot using ggplot
 melt %>% 

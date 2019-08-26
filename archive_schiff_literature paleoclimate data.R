@@ -14,18 +14,51 @@
 #' NOAA paleoclimate database.
 #' 
 
-string <- '~/Documents/GitHub/data/paleoclimate_data/collated_data.csv'
-string <- '~/Documents/GitHub/data/paleoclimate_data/bc004a-tab.csv'
+#' -------------------
+#' Keiwgin 1996 data
+#' -------------------
+#' 
+
+string1 <- '~/Documents/GitHub/data/paleoclimate_data/bc004a-tab.txt'
+string2 <- '~/Documents/GitHub/data/paleoclimate_data/bc004d-tab.txt'
+keigwin4a <- read.delim(string1, header = TRUE, comment.char = '#')
+keigwin4d <- read.delim(string2, header = TRUE, comment.char = '#')
+
+plot(d18Og.rub ~ yrBP, keigwin4a, type= "o")
+keigwin4d %>%
+  filter(d18Og.rub != '-999') %>%
+plot(d18Og.rub ~ yrBP, ., type= "o")
+keigwin4d %>%
+  filter(carb. != '-999') %>%
+  plot(carb. ~ yrBP, ., type= "o")
+plot(d15n ~ bp, t.sav, type = "o", col = "gray")
+lines(rollmean(d15n, 4, na.pad = TRUE) ~ bp, t.jack, col = "blue")
+lines(d15n ~ bp, t.jack, type = "o", col = "blue")
+lines(rollmean(d15n, 5, na.pad = TRUE) ~ bp, t.sav)
+
+t.stet$d13c.norm <- t.stet$d13c - mean(t.stet$d13c, na.rm = TRUE)
+t.stet$d15n.norm <- t.stet$d15n - mean(t.stet$d15n, na.rm = TRUE)
+
+t.jack <- df.jack
+t.jack$bp <- 1950 - t.jack$linear.ad
   
-paleo.path <- string
-collated <- read.csv(paleo.path)
+# Richey dataset
+fisk <- read.csv('~/Documents/GitHub/data/paleoclimate_data/richey2009-fisk.csv', header = TRUE)
+garrison <- read.csv('~/Documents/GitHub/data/paleoclimate_data/richey2009-garrison.csv', header = TRUE)
 
-collated %>%
-  filter(Region == "Florida Straits") -> t
 
-plot(d18Og.rub ~ yrBP, collated, type= "o")
-plot(d13c ~ bp, t.jack, type = "o", pch = 22)
+plot(SST ~ yrBP, fisk, type = "o", xlim = c(0,775))
+plot(d13c ~ bp, t.stet, type = "o", xlim = c(0, 775), col = "gray")
+lines(rollmean(d13c, 10, na.pad = TRUE) ~ bp, t.stet)
 
+# Schmidt 2012 data
+schmidt <- read.delim('~/Documents/GitHub/data/paleoclimate_data/schmidt2012.txt', header = TRUE, comment.char = '#')
+plot(sst ~ age_calkaBP, schmidt, type = "o", xlim = c(0, 3))
+
+plot(d13c ~ bp, t.sav, type = "o", xlim = c(0, 3000), col = "gray")
+lines(rollmean(d13c, 10, na.pad = TRUE) ~ bp, t.sav)
+
+t.stet$bp <- 1950 - t.stet$linear.ad
 
 # Import Saenger et al (2011) data from Paleoceanography
 # Core 1: Core KNR140_2_59GGC

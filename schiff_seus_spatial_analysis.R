@@ -184,7 +184,7 @@ plot(coastlineWorldFine, clon = mlon, clat = mlat, span = span,
      projection="+proj=merc", col = 'lightgrey', drawBox = TRUE)
 # plot bathymetry
 mapContour(bathyLon,bathyLat,bathyZ,
-        levels = c(-500, -1000, -1500, -2000, -2500, -3000, -3500, -4000, -4500, -5000),
+        levels = c(-500, -1000, -1500, -2000, -3000, -4000, -5000),
         # lwd = c(1, 1, 2, 2, 3),
         # lty = c(3, 1, 3, 1, 3),
         col = 'darkgray')

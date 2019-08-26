@@ -19,6 +19,7 @@ library(dplyr)
 ###############
 path.win1 <- 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/schiff ncsiaa 09-01-2018.csv'
 path.mac1 <- '~/Google Drive/projects/rproj/seus/data/schiff ncsiaa 02-06-2019.csv'
+string <- '~/Documents/GitHub/data/schiff ncsiaa 02-06-2019.csv'
 
 ##################
 # Gulf of Mexico #
@@ -35,8 +36,7 @@ path4 <- 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/prouty g
 gom <- read.csv(path4)
 gom <- read.csv(path3)
 
-seus <- read.csv(path.win1)
-seus <- read.csv(path.mac1)
+seus <- read.csv(string)
 
 #####################################################
 # POM from elsewhere (e.g., Western North Atlantic) #
@@ -55,7 +55,7 @@ pathdsc <- 'path goes here'
 ################################
 
 gom$trophic.position <- (((gom$Glu - gom$Phe) - 3.4)/7.6) + 1
-seus$trophic.position <- (((seus$Glu - seus$Phe)-3.4)/7.6) + 1
+seus$trophic.position <- (((seus$Glx - seus$Phe)-3.4)/7.6) + 1
 ndata$trophic.position <- (((ndata$Glx - ndata$Phe) - 3.4)/7.6) + 1
 
 
@@ -94,7 +94,7 @@ gom$Sum.V <- (1/7)*trophic$Sum.Chi
 ########
 # SEUS #
 ########
-trophic.seus <- seus %>% select(sample.id, Ala, Asp, Glu, Ile, Leu, Pro, Val)
+trophic.seus <- seus %>% select(sample.id, Ala, Asx, Glx, Ile, Leu, Pro, Val)
 avg.trophic2 <- rowMeans(trophic.seus[, c(2:8)])
 
 trophic.seus$Dev.Ala <- abs(trophic.seus$Ala - avg.trophic2) # Remember absolute values!
@@ -247,3 +247,36 @@ ggplot(corals, aes(Year.CE, TP)) +
   theme_classic() +
   ylab("Trophic Position (Glu - Phe)") +
   xlab(x)
+
+#' ------------------------------------------
+#' 
+#' Below is code to add the most recent ages
+#' to the N-CSIAA data
+#' 
+#' ------------------------------------------
+#' 
+
+ndata <- read.csv("~/Google Drive/projects/rproj/seus/cleaned_ndata.csv") # Contains SEUS black coral data, GOM black corals, and some POM data from elsewhere
+
+# Add chronologies to N-CSIAA data
+
+# Filter bulkd dataframes that were loaded into the figures script file
+df.sav %>%
+  filter(sample.no. == 2 | sample.no. == 7 | sample.no. == 15 | sample.no. == 33 | sample.no. == 61 |
+           sample.no. == 66 | sample.no. == 115) -> sav.n
+df.jack %>%
+  filter(sample.no. == 23 | sample.no. == 55 | sample.no. == 56 | 
+           sample.no. == 134) -> jack.n
+df.jack4684 %>%
+  filter(sample.no. == 36 | sample.no. == 39 | sample.no. == 41 | sample.no. == 85 | 
+           sample.no. == 155) -> jack4684.n
+
+z <- rbind(sav.n, jack.n, jack4684.n)
+
+ndata %>%
+  filter(Region != "SEUS") -> t.df1
+
+t.vector <- c(z$linear.ad, t.df1$Year.CE)
+
+ndata$Year.CE <- t.vector # Now we have an updated ndata dataframe with current years
+ndata$yrBP <- 1950 - ndata$Year.CE
