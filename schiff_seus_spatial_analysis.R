@@ -16,6 +16,13 @@ library(marmap)
 library(oceanmap) # A new (young) package to plot data sites, 
 # but you can do this with other packages too
 
+
+# *************************
+# HTML links I have found
+# Helpful link: https://remi-daigle.github.io/2017-CHONe-Data/shocknawe.nb.html (not by those who wrote the package)
+# Helpful link: https://stackoverflow.com/questions/43543318/map-inset-in-marmap-including-a-marmap-file-in-ggplot2
+# *************************
+
 ########################################################################
 ##                                                                    ##
 ## Plot the Black coral stations with plotmap() from oceanmap package ##
@@ -64,8 +71,6 @@ map.scale(-86,33.7,ratio=FALSE,relwidth=0.3,cex=1.0)
 ## Bathymetric map of the study site using marmap package ##
 ##                                                        ##
 ############################################################
-# Helpful link: https://remi-daigle.github.io/2017-CHONe-Data/shocknawe.nb.html (not by those who wrote the package)
-# Helpful link: https://stackoverflow.com/questions/43543318/map-inset-in-marmap-including-a-marmap-file-in-ggplot2
 seusbathy <- getNOAA.bathy(lon1=-85, lon2=-70,
                            lat1=24, lat2=39, 
                            resolution=1)
@@ -206,6 +211,106 @@ mapPoints(longitude = pts$lon, latitude = pts$lat, pch = c(4,2,1,6,5), lwd = 1.5
 
 
 
+
+# *****************************************
+# Basically redoing the code above
+# but with updated plot points with
+# ALL collection sites, based on nutrients
+# data file from Nancy (reorganized by me)
+#
+# *****************************************
+
+nutrients <- read.csv('~/Documents/GitHub/data/cruise_nutrients.csv', comment.char = '#',
+                      header = TRUE, sep = ",")
+
+lons <- nutrients$lon_rounded
+lats <- nutrients$lat_rounded
+sites <- nutrients$site # For the legend, this needs to be a list of string names
+sites <- unique(sites)
+
+pts = data.frame(
+  lon = lons,
+  lat = lats)
+
+# Make it so only the unique values are in the dataframe (i.e., get rid of repeats)
+pts <- unique(pts)
+
+# get bathymetry data
+b = getNOAA.bathy(lon1=-95, lon2=-65,
+                  lat1=15, lat2=40, 
+                  resolution=1)
+library(oce)
+library(ocedata)
+data("coastlineWorldFine")
+
+# convert bathymetry
+bathyLon = as.numeric(rownames(b))
+bathyLat = as.numeric(colnames(b))
+bathyZ = as.numeric(b)
+dim(bathyZ) = dim(b)
+
+# define plotting region
+mlon = mean(pts$lon)
+mlat = mean(pts$lat)
+span = 1200
+span2 = 300
+lonlim = c(-90, -70)
+latlim = c(20, 35)
+
+dev.new(width = 9, height = 8)
+plot(coastlineWorldFine, clon = mlon, clat = mlat, span = span, 
+     projection="+proj=merc", col = 'lightgrey', drawBox = TRUE)
+# plot bathymetry
+mapContour(bathyLon,bathyLat,bathyZ,
+           levels = c(-500, -1000, -1500, -2000, -3000, -4000, -5000),
+           # lwd = c(1, 1, 2, 2, 3),
+           # lty = c(3, 1, 3, 1, 3),
+           col = 'darkgray')
+
+mapPoints(longitude = pts$lon, latitude = pts$lat, pch = c(0:17), lwd = 1.5, col = "black", cex = 1.25)
+# par(xpd = TRUE)
+legend("topleft",
+       # seg.len = 3,
+       pch = c(0:17),
+       cex = 0.75,
+       legend = sites,
+       col = 'black',
+       # title = "Depth [m]",
+       bg = "white")
+
+#' ---------------- Closer look at region --------------#
+#' 
+
+library(oce)
+library(ocedata)
+data("coastlineWorldFine")
+
+bathyLon = as.numeric(rownames(b))
+bathyLat = as.numeric(colnames(b))
+bathyZ = as.numeric(b)
+dim(bathyZ) = dim(b)
+
+mlon = mean(pts$lon)
+mlat = mean(pts$lat)
+span = 600
+lonlim = c(-78, -76)
+latlim = c(30, 34)
+
+dev.new(width = 9, height = 8)
+par(mar = c(1,1,1,1), cex = 1.3)
+plot(coastlineWorldFine, clon = mlon, clat = mlat, span = span, # no projection if using contour()
+     col = 'lightgrey')
+contour(bathyLon,bathyLat,bathyZ,
+           levels = c(-100, -300, -500, -700, -900, -1000, -1500, -2000, -3000, -4000, -5000),
+           col = 'darkgray', drawlabels = TRUE, add = TRUE)
+points(pts, pch = c(0:17), lwd = 1.5, col = "black", cex = 1.2)
+legend("topleft",
+       pch = c(0:17),
+       cex = 0.55,
+       legend = sites,
+       col = 'black',
+       bg = "white")
+dev.off()
 
 
 ##########################################################

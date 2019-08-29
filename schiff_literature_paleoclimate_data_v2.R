@@ -296,7 +296,7 @@ pryr.stetn %<a-% {plot(d15n ~ linear.ad, t.stet,
      col = alpha("black", 0.3),
      # axes = FALSE,
      ylab = "",
-     yaxt="n", xlim = c(1800, 2005))
+     yaxt="n", xlim = c(1800, 2005), ylim = c(7.5, 10.5))
 axis(side = 2)
 mtext(n, side = 2, line=2.5)
 lines(rollmean(d15n, 5, na.pad = TRUE) ~ linear.ad, t.stet,
