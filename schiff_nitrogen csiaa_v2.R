@@ -215,9 +215,13 @@ summary(reg)
 ################################
 
 # Calculation: d15N (predicted) = (TP * d15N-source) + d15N-source or d15N-phe (try both)
-nitrate <- 4.5 # d15N of nitrate based on depth profiles
+nitrate <- 6 # d15N of nitrate based on depth profiles
 src <- 4.5 # d15N of source nitrate or Phe depending on test you want to do
 enrichment <- 3 # How much d15N enriches with each trophic transfer, in permil
+
+test <- (1.9 * enrichment) + nitrate
+print(test)
+
 corals$d15N.pred <- (corals$TP * enrichment) + nitrate
 
 ggplot(corals, aes(Year.CE, d15N.pred)) +
