@@ -24,9 +24,9 @@ library(forecast)
 ## Load df.bulk from timeseries ##
 ## script file                  ##
 ##################################
-path1 <- '~/Documents/GitHub/data/schiff_bulk_years_08-14-2019.csv'
-path2 <- 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/schiff_bulk_years_08-14-2019.csv'
-path3 <- '/home/john/Desktop/data/schiff_bulk_years_08-14-2019.csv'
+path1 <- '~/Documents/GitHub/data/schiff_bulk_years_09-04-2019.csv'
+# path2 <- 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/schiff_bulk_years_08-14-2019.csv'
+# path3 <- '/home/john/Desktop/data/schiff_bulk_years_08-14-2019.csv'
 
 path <- path1
 
@@ -264,6 +264,8 @@ s1 + geom_line(color = alpha("#009E73", 0.01)) +
   xlim(1200, 2010) +
   xlab(x) +
   ylab(n)
+ggsave('~/Documents/GitHub/rstudio/ggplot_figs/bulk_n_jack4684_stet4904.png', plot = last_plot(), dpi = 300, width = 6, height = 5.5)
+dev.off()
 
 
 #' Figure: Recent history, bulk
@@ -392,7 +394,7 @@ splot1 <- df.stet %>%
   
   annotate("text", x = 1100, y = 7, label = 'Medieval Warming', size = 3.5) +
   annotate("text", x = 1700, y = 7, label = "Little Ice Age", size = 3.5) +
-  annotate("segment", x = 625, xend = 975, y = 9.75, yend = 9.75, color = "black") +
+  # annotate("segment", x = 625, xend = 975, y = 9.75, yend = 9.75, color = "black") +
   # annotate("text", x = 800, y = 9.85, label = "error = 350 yrs", size = 3) +
   # annotate("pointrange", x = 800, y = 9.75, ymin = 9.75, ymax = 9.75) +
   
@@ -440,6 +442,8 @@ splot2 <- df.stet %>%
 
 grid.newpage()
 grid.draw(rbind(ggplotGrob(splot1), ggplotGrob(splot2), size = "last"))
+dev.copy(pdf,"~/Documents/GitHub/rstudio/ggplot_figs/bulk_n_c_stet4904.pdf", width = 6, height = 6)
+dev.off()
 
 #' Figure: Recent history, bulk
 #' --------------------------------------------------------------------------------------
@@ -642,8 +646,10 @@ jplot2 <- t.jack %>%
         panel.grid.minor = element_blank())
 
 grid.newpage()
-grid.draw(rbind(ggplotGrob(jplot1), ggplotGrob(jplot2), size = "last"))
-grid.draw(rbind(ggplotGrob(jplot1), ggplotGrob(jplot2), ggplotGrob(paleoplot1), size = "last"))
+grid.arrange(jplot1, jplot2, ncol = 1)
+g <- arrangeGrob(jplot1, jplot2, ncol = 1)
+ggsave('~/Documents/GitHub/rstudio/ggplot_figs/bulk_n_c_jack4907.png', g, dpi = 300) # This works! 9-4-2019
+# grid.draw(rbind(ggplotGrob(jplot1), ggplotGrob(jplot2), ggplotGrob(paleoplot1), size = "last"))
 
 jplot1 <- t.jack %>%
   dplyr::select(linear.ad, d15n) %>%

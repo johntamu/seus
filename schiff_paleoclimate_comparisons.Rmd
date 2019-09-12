@@ -1,0 +1,366 @@
+---
+title: "Paleoclimate comparisons"
+output: html_notebook
+---
+
+```{r}
+# Load libraries
+library(maps)
+library(ggplot2)
+library(marmap)
+library(oceanmap)
+library(dplyr)
+library(ggplot2)
+library(lattice)
+library(latticeExtra)
+library(reshape2)
+library(Hmisc)
+library(grid)
+library(zoo) 
+library(forecast)
+library(pryr)
+```
+
+```{r}
+# Load data
+path1 <- '~/Documents/GitHub/data/schiff_bulk_years_09-04-2019.csv'
+path <- path1
+df.bulk <- read.csv(path, header = TRUE)
+
+colnames(df.bulk)[names(df.bulk) == "distance..mm."] <- "distance" # Rename some columns for easier coding
+colnames(df.bulk)[names(df.bulk) == "d15n.vs.air"] <- "d15n"
+colnames(df.bulk)[names(df.bulk) == "d13c.vs.vpdb"] <- "d13c"
+
+df.jack <- df.bulk %>% filter(coral.id == 'jack-4907-bc1-d3')
+df.sav <- df.bulk %>% filter(coral.id == 'sav-4902-bc1-unk')
+df.stet <- df.bulk %>% filter(coral.id == 'stet-4904-bc1-d2')
+df.jack2 <- df.bulk %>% filter(coral.id == 'jack-4907-bc1-d1')
+df.jack4684 <- df.bulk %>% filter(coral.id == 'jack-4684-bc-unk')
+df.jack4686 <- df.bulk %>% filter(coral.id == 'jack-4686-bc-d1-t1')
+
+x <- 'Year CE'
+phe <- expression({delta}^15*"N"[" Phe"]*" (\u2030)")
+n <- expression(delta^{15}*"N (\u2030)")
+c <- expression(delta^{13}*"C (\u2030)")
+eaa.neaa <- c('Phe', 'Thr', 'Ile', 'Leu', 'Val', 'Asx', 'Glx', 'Pro', 'Ala', 'Ser', 'Gly') # For Essential/Non-Essential ordering
+tr.srcaa <- c('Glu', 'Asp', 'Ala', 'Ile', 'Leu', 'Pro', 'Val', 'Gly', 'Ser', 'Lys', 'Tyr', 'Phe', 'Thr') # For Trophic/Source AA ordering
+
+t.stet <- df.stet
+t.sav <- df.sav
+t.jack <- df.jack
+t.jack4684 <- df.jack4684
+
+t.stet$bp <- 1950 - t.stet$linear.ad
+t.sav$bp <- 1950 - t.sav$linear.ad
+t.jack$bp <- 1950 - t.jack$linear.ad
+t.jack4684$bp <- 1950 - t.jack4684$linear.ad
+ndata$bp <- 1950 - ndata$Year.CE
+```
+
+```{r}
+# Paleoclimate data from the literature
+
+# Keiwgin 1996; Bermuda Rise
+string1 <- '~/Documents/GitHub/data/paleoclimate_data/bc004a-tab.txt'
+string2 <- '~/Documents/GitHub/data/paleoclimate_data/bc004d-tab.txt'
+keigwin4a <- read.delim(string1, header = TRUE, comment.char = '#')
+keigwin4d <- read.delim(string2, header = TRUE, comment.char = '#')
+
+# Richey 2009; Gulf of Mexico
+fisk <- read.csv('~/Documents/GitHub/data/paleoclimate_data/richey2009-fisk.csv', header = TRUE)
+garrison <- read.csv('~/Documents/GitHub/data/paleoclimate_data/richey2009-garrison.csv', header = TRUE)
+
+# Richey 2007; Gulf of Mexico
+richey2007 <- read.csv('~/Documents/GitHub/data/paleoclimate_data/richey2007.csv', header = TRUE)
+
+# Schmidt 2012; Gulf of Mexico
+schmidt <- read.delim('~/Documents/GitHub/data/paleoclimate_data/schmidt2012.txt', header = TRUE, comment.char = '#')
+
+# Saenger 2011; Carolina Slope
+saenger.core1 <- '~/Documents/GitHub/data/paleoclimate_data/saenger2011_core1.csv'
+saenger.core2 <- '~/Documents/GitHub/data/paleoclimate_data/saenger2011_core2.csv'
+core1 <- read.csv(saenger.core1)
+
+# Saenger 2009; Bahamas
+bahamas.sst <- read.csv('~/Documents/GitHub/data/paleoclimate_data/bahamas2009sst.csv')
+
+# Lund and Curry 2006; Great Bahama Bank
+
+
+# Trouet 2009; NAO z-score
+trouet <- read.delim('~/Documents/GitHub/data/paleoclimate_data/nao-trouet2009.txt', header = TRUE, comment.char = '#', sep = "")
+
+# ***********************
+# Build a new data frame
+#
+#
+# ***********************
+
+schmidt$age <- schmidt$age_calkaBP*1000
+
+schmidt.melt <- melt(schmidt, "age")
+richey2007.melt <- melt(richey2007, "Cal.yr.B.P.")
+fisk.melt <- melt(fisk, "yrBP")
+core1.melt <- melt(core1, "Year.AD.")
+keigwin1.melt <- melt(keigwin4a, "yrBP")
+keigwin2.melt <- melt(keigwin4d, "yrBP")
+bahamas.melt <- melt(bahamas.sst, "Year..A.D.")
+trouet.melt <- melt(trouet, "Year")
+
+colnames(schmidt.melt)[colnames(schmidt.melt)=="age"] <- "yrBP"
+colnames(richey2007.melt)[colnames(richey2007.melt)=="Cal.yr.B.P."] <- "yrBP"
+colnames(fisk.melt)[colnames(fisk.melt)=="yrBP"] <- "yrBP"
+colnames(core1.melt)[colnames(core1.melt)=="Year.AD."] <- "yrAD"
+colnames(keigwin1.melt)[colnames(keigwin1.melt)=="yrBP"] <- "yrBP"
+colnames(keigwin2.melt)[colnames(keigwin2.melt)=="yrBP"] <- "yrBP"
+colnames(bahamas.melt)[colnames(bahamas.melt)=="Year..A.D."] <- "yrAD"
+colnames(trouet.melt)[colnames(trouet.melt)=="Year"] <- "yrAD"
+
+core1.melt$yrBP <- 1950 - core1.melt$yrAD
+bahamas.melt$yrBP <- 1950 - bahamas.melt$yrAD
+trouet.melt$yrBP <- 1950 - trouet.melt$yrAD
+```
+
+```{r}
+# Deep-sea coral plots
+xlim1 <- c(0,700)
+nx <- 3
+pryr.jackn %<a-% {plot(d15n ~ bp, t.jack,
+                    type = "l",
+                    cex = 0.5,
+                    col = alpha("black", 0.3),
+                    # axes = FALSE,
+                    ylab = "",
+                    yaxt="l",
+                    bty = "l",
+                    xlab = "Years BP"
+                    # xlim = c(1750, 3000)
+                    )
+  axis(side = 2)
+  mtext(n, side = 2, line=2.5)
+  lines(rollmean(d15n, 5, na.pad = TRUE) ~ bp, t.jack,
+        col = "black")
+}
+pryr.jackc %<a-% {plot(d13c ~ bp, t.jack,
+     type = "l",
+     cex = 0.25,
+     col = alpha("black", 0.3),
+     # axes = FALSE,
+     ylab = "",
+     yaxt="n",
+     xlab = "Years BP",
+     bty = "l",
+     # xlim = c(1750, 3000),
+     ylim = c(-17,-14))
+axis(side = 2)
+mtext(c, side = 2, line=2.5)
+mtext("Years BP", side = 1, line = 0.8, outer = TRUE, cex = 0.85, font = 2)
+lines(rollmean(d13c, 10, na.pad = TRUE) ~ bp, t.jack,
+      col = "black")
+}
+pryr.savn %<a-% {plot(d15n ~ bp, t.sav,
+                       type = "l",
+                       cex = 0.5,
+                       col = alpha("black", 0.3),
+                       # axes = FALSE,
+                       xlab = "Years BP",
+                       ylab = "",
+                       yaxt="n",
+                      bty = "l",
+                       # xlab = "",
+                       ylim = c(6,11))
+  axis(side = 2)
+  mtext(n, side = 2, line=2.5)
+  lines(rollmean(d15n, ma1, na.pad = TRUE) ~ bp, t.sav,
+        col = "black")
+}
+pryr.savc %<a-% {plot(d13c ~ bp, t.sav,
+                       type = "l",
+                       cex = 0.5,
+                       col = alpha("black", 0.3),
+                       # axes = FALSE,
+                       xlab = "Years BP",
+                       ylab = "",
+                       yaxt="n",
+                      bty = "l",
+                       # xlab = "",
+                       ylim = c(-17,-15))
+  axis(side = 2)
+  mtext(c, side = 2, line=2.5)
+  lines(rollmean(d13c, ma1, na.pad = TRUE) ~ bp, t.sav,
+        col = "black")
+}
+pryr.stetn %<a-% {plot(d15n ~ bp, t.stet,
+     type = "l",
+     cex = 0.5,
+     col = alpha("black", 0.3),
+     bty = "l",
+     # axes = FALSE,
+     ylab = "",
+     xlab = "Years BP",
+     yaxt="n", 
+     # xlim = c(1800, 2005), 
+     ylim = c(6.5, 10.5))
+minor.tick(nx = 5)
+axis(side = 2)
+mtext(n, side = 2, line=2.5)
+lines(rollmean(d15n, 5, na.pad = TRUE) ~ bp, t.stet,
+      col = "black")
+}
+pryr.stetc %<a-% {plot(d13c ~ bp, t.stet,
+                       type = "l",
+                       cex = 0.5,
+                       col = alpha("black", 0.3),
+                       # axes = FALSE,
+                       ylab = "",
+                       yaxt="n",
+                       xlab = "Years BP",
+                       bty = "l",
+                       xlim = xlim1,
+                       ylim = c(-16.5,-15)
+                       )
+  minor.tick(nx = nx)
+  axis(side = 2)
+  mtext(c, side = 2, line=2.5)
+  lines(rollmean(d13c, 20, fill = NA, align = "center") ~ bp, t.stet,
+        col = "black")
+}
+
+pryr.jackn
+pryr.jackc
+pryr.savn
+pryr.savc
+pryr.stetn
+pryr.stetc
+```
+
+```{r}
+# Paleoclimate plots
+
+
+pryr.richey %<a-% {richey2007.melt %>%
+    filter(variable == 'SST') %>%
+    na.omit() %>%
+    plot(value ~ yrBP, .,
+         type = "l",
+         bty = "l",
+         col = alpha("black", 0.3),
+         main = "richey 2007 sst, GOM")
+  richey2007.melt %>%
+    filter(variable == 'SST') %>%
+    na.omit() %>%
+  lines(rollmean(value, 5, na.pad = TRUE) ~ yrBP, ., col = "black")
+  
+}
+pryr.schmidt %<a-% {schmidt.melt %>%
+    filter(variable == 'sst') %>%
+    na.omit() %>%
+    plot(value ~ yrBP, .,
+         type = "l",
+         bty = "l",
+         col = alpha("black", 0.3),
+         main = "Schmidt 2012 SST, GOM")
+  schmidt.melt %>%
+    filter(variable == 'sst') %>%
+    na.omit() %>%
+    lines(rollmean(value, 3, na.pad = TRUE) ~ yrBP, ., col = "black")
+  
+}
+pryr.fisk %<a-% {fisk.melt %>%
+    filter(variable == 'SST') %>%
+    na.omit() %>%
+    plot(value ~ yrBP, .,
+         type = "l",
+         bty = "l",
+         col = alpha("black", 0.3),
+         main = "Richey 2009 GOM, Fisk core",
+         xlim = xlim1)
+  minor.tick(nx = nx)
+  fisk.melt %>%
+    filter(variable == 'SST') %>%
+    na.omit() %>%
+    lines(rollmean(value, 3, na.pad = TRUE) ~ yrBP, ., col = "black")
+  
+}
+pryr.keigwin1 %<a-% {keigwin1.melt %>%
+  filter(variable == 'carb.') %>% # carb. or d18Og.rub
+  na.omit() %>%
+  plot(value ~ yrBP, .,
+       type = "o",
+       bty = "l",
+       col = alpha("black", 0.3),
+       xlab = "Years BP",
+       main = "Keigwin")
+# keigwin1.melt %>%
+#   filter(variable == 'carb.') %>%
+#   na.omit() %>%
+#   lines(rollmean(value, 1, na.pad = TRUE) ~ yrBP, ., col = "black")
+}
+pryr.core1 %<a-% {core1.melt %>%
+    filter(variable == 'SST.Anand.') %>% # Lots of proxies in this one: SST.Anand., d18Oc, d18Osw, d18Ow
+    na.omit() %>%
+    plot(value ~ yrBP, .,
+         type = "o",
+         bty = "l",
+         col = alpha("black", 0.3),
+         xlab = "Years BP",
+         # ylab = "d18Ow",
+         ylab = "SST",
+         # ylab = "d18Oc",
+         # ylab = "d18Osw",
+         main = "Saenger sediment core, Carolina slope")
+  core1.melt %>%
+    filter(variable == 's.e.') %>%
+    na.omit() %>%
+    lines(value ~ yrBP, ., col = "black", lty = 'dashed')
+}
+pryr.bahamas %<a-% {bahamas.melt %>%
+    filter(variable == 'SST.anomaly') %>%
+    na.omit() %>%
+    plot(value ~ yrBP, .,
+         type = "l",
+         bty = "l",
+         col = alpha("black", 0.3),
+         xlab = "Years BP",
+         main = "Bahamas SST anomaly, saenger 2009")
+  bahamas.melt %>%
+    filter(variable == 'SST.anomaly') %>%
+    na.omit() %>%
+    lines(rollmean(value, 5, na.pad = TRUE) ~ yrBP, ., col = "black")
+}
+pryr.trouet %<a-% {trouet.melt %>%
+    filter(variable == 'NAOms') %>%
+    na.omit() %>%
+    plot(value ~ yrBP, .,
+         type = "l",
+         bty = "l",
+         col = alpha("black", 0.3),
+         xlab = "Years BP",
+         main = "Trouet NAO")
+  trouet.melt %>%
+    filter(variable == 'NAOms') %>%
+    na.omit() %>%
+    lines(rollmean(value, 100, na.pad = TRUE) ~ yrBP, ., col = "black")
+}
+
+pryr.richey
+pryr.schmidt
+pryr.fisk
+pryr.keigwin1
+pryr.core1
+pryr.bahamas
+pryr.trouet
+```
+
+```{r}
+# Plot them together
+
+par.set <- par(pty = "s", mfrow=c(2,1), oma = c(2, 2, 0, 0), # two rows of text at the outer left and bottom margin
+               mar = c(1, 1, 0, 0)+0.3) # space for one row of text at ticks and to separate plots
+# mgp = c(2, 1, 0))   # axis label at 2 rows distance, tick labels at 1 row
+
+pryr.fisk
+pryr.stetc
+pdf('test.pdf')
+```
+

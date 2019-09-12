@@ -63,7 +63,7 @@ bahamas.sst <- read.csv('~/Documents/GitHub/data/paleoclimate_data/bahamas2009ss
 
 # Trouet 2009; NAO z-score
 trouet <- read.delim('~/Documents/GitHub/data/paleoclimate_data/nao-trouet2009.txt', header = TRUE, comment.char = '#', sep = "")
-
+trouet$z <- (trouet$NAOms - mean(trouet$NAOms)) / sd(trouet$NAOms)
 # ***********************
 # Build a new data frame
 #

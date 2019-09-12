@@ -623,32 +623,33 @@ doubleYScale(obj2, obj1, add.ylab2 = TRUE, style1= NULL, style2 = NULL)
 
 
 pl1 <- df.jack4684 %>%
-  select(linear.ad, d15n, d15n.3pt) %>%
+  select(linear.ad, d15n) %>%
   na.omit() %>%
   ggplot(aes(x = linear.ad, y = d15n), size = 0.5, alpha = 0.75) +
   geom_point(shape = 21, color = "black", fill = "blue", alpha = 0.3) +
-  geom_line(aes(y=d15n.3pt), size = 1.0) +
+  geom_line(aes(y=rollmean(d15n, 3, na.pad = TRUE)), size = 0.5) +
   ylab(n) +
-  xlim(1400,1900) +
-  theme_classic()
+  xlim(1600,2005) +
+  theme_classic() +
   theme(axis.title.x = element_blank(), axis.text.x = element_blank(), axis.text.y = element_text(color = "black"))
 pl1
 
 pl2 <- t.ndata %>%
-  select(Year.AD, Phe) %>%
+  select(Year.CE, Phe) %>%
   na.omit() %>%
-  ggplot(aes(x = Year.AD, y = Phe)) +
+  ggplot(aes(x = Year.CE, y = Phe)) +
   geom_point(shape = 23, color = "black", fill = "red", alpha = 0.75, size = 4) +
   # geom_line(aes(y=Phe), size = 1.0) +
   ylab(phe) +
   theme_classic() +
   xlab(x) +
-  xlim(1400,1900) +
+  xlim(1600,2005) +
+  ylim(1,8) +
   theme(axis.text.x = element_text(color = "black"), axis.text.y = element_text(color = "black"))
 pl2
 
 grid.newpage()
-grid.draw(rbind(ggplotGrob(pl1), ggplotGrob(pl2), size = "last"))
+grid.arrange(rbind(ggplotGrob(pl1), ggplotGrob(pl2), size = "last"))
 
 
 
@@ -1148,19 +1149,19 @@ xyplot(EAA ~ Year.CE, # Average EAA through time compared to bulk d13C
        pch = 21,
        cex = 1.5)
 
-xyplot(Gly ~ Year.AD, # Average EAA through time compared to bulk d13C
+xyplot(Gly ~ Year.CE, # Average EAA through time compared to bulk d13C
        data = seus_carbon,
        type = "o",
        # ylim = c(-25, -15),
        pch = 21,
        cex = 1.5)
 
-plot(Bulk ~ Year.AD,
+plot(Bulk ~ Year.CE,
      data = seus_carbon,
      type = "o", ylim = c(-18, -14),
      ylab = expression({delta}^13*"C (\u2030)"),
      xlab = "Calendar Year (C.E).")
-points(Glx ~ Year.AD,
+points(Glx ~ Year.CE,
        data = seus_carbon,
        col = "blue")
 

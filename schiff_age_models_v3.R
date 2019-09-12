@@ -85,7 +85,7 @@ m <- mean(c(gr1, gr2, gr3))
 sd(c(gr1, gr2, gr3))
 
 ad1 <- 2004 - ((jack4684$distance..mm.*1000)/gr3) # 15 microns per year, from rounding up average overall growth rate
-ad2 <- 2004 - ((jack4684$distance..mm.*1000)/gr2) # 23 microns per year, this also fits with overall linear trend
+ad2 <- 2004 - ((jack4684$distance..mm.*1000)/23) # 23 microns per year, this also fits with overall linear trend
 ad3 <- 2004 - ((jack4684$distance..mm.*1000)/gr1) # 9 microns per year
 ad4 <- 2004 - ((jack4684$distance..mm.*1000)/20) # Test, based on sheet from Nancy
 ad5 <- 2004 - ((jack4684$distance..mm.*1000)/16) # from 'm'
