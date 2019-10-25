@@ -722,19 +722,21 @@ plot(d15n ~ linear.ad, df.jack, # With Base R
      ylab = n,
      type = "l",
      cex = 0.5,
-     xlim = c(-1100,250),
+     xlim = c(500,2005),
      col = alpha("black", 0.3))
 abline(v = 950, col = "black", lty = 'dashed')
 abline(v = 1250, col = "black", lty = 'dashed')
 abline(v = 400, col = alpha("black", 0.75), lty = "longdash")
 abline(v = -900, col = "black", lty = 'dashed')
 abline(v = -300, col = "black", lty = 'dashed')
-lines(forecast::ma(df.jack$d15n, order = 15, centre = TRUE) ~ linear.ad, df.jack,
+lines(forecast::ma(df.jack$d15n, order = 3, centre = TRUE) ~ linear.ad, df.jack,
       col = "#4575b4", lwd = 1.5)
 lines(forecast::ma(df.sav$d15n, order = 3, centre = TRUE) ~ linear.ad, df.sav,
       col = "#f46d43", lwd = 1.5)
 lines(forecast::ma(df.stet$d15n, order = 5, centre = TRUE) ~ linear.ad, df.stet,
-      col = "#f46d43", lwd = 1.5)
+      col = "red", lwd = 1.5)
+lines(forecast::ma(df.jack4684$d15n, order = 3, centre = TRUE) ~ linear.ad, df.jack4684,
+      col = "green", lwd = 1.5)
 
 p1 <- ggplot() + # With ggplot2
   geom_line(data=df.jack, aes(x = linear.ad, y = d15n), color = "gray", alpha = 0.0, size = 0.5) +

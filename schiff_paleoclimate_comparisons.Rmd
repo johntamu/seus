@@ -90,6 +90,12 @@ bahamas.sst <- read.csv('~/Documents/GitHub/data/paleoclimate_data/bahamas2009ss
 # Trouet 2009; NAO z-score
 trouet <- read.delim('~/Documents/GitHub/data/paleoclimate_data/nao-trouet2009.txt', header = TRUE, comment.char = '#', sep = "")
 
+# Moy et al, 2002; ENSO sediment red intensity
+moy2002 <- read.delim('~/Documents/GitHub/data/paleoclimate_data/pallcacocha_red_intensity.txt', header = TRUE, comment.char = '#', sep = "")
+
+# Moy et al, 2002; Number of events in 100 yr non-overlapping windows
+moy100yrwindow <- read.delim('~/Documents/GitHub/data/paleoclimate_data/moy2002_red_intensity_100yr.txt', header = TRUE, comment.char = '#', sep = "")
+
 # ***********************
 # Build a new data frame
 #
@@ -106,6 +112,7 @@ keigwin1.melt <- melt(keigwin4a, "yrBP")
 keigwin2.melt <- melt(keigwin4d, "yrBP")
 bahamas.melt <- melt(bahamas.sst, "Year..A.D.")
 trouet.melt <- melt(trouet, "Year")
+moy.melt <- melt(moy2002, "Age.yrBP")
 
 colnames(schmidt.melt)[colnames(schmidt.melt)=="age"] <- "yrBP"
 colnames(richey2007.melt)[colnames(richey2007.melt)=="Cal.yr.B.P."] <- "yrBP"
@@ -115,6 +122,7 @@ colnames(keigwin1.melt)[colnames(keigwin1.melt)=="yrBP"] <- "yrBP"
 colnames(keigwin2.melt)[colnames(keigwin2.melt)=="yrBP"] <- "yrBP"
 colnames(bahamas.melt)[colnames(bahamas.melt)=="Year..A.D."] <- "yrAD"
 colnames(trouet.melt)[colnames(trouet.melt)=="Year"] <- "yrAD"
+colnames(moy.melt)[colnames(moy.melt)=="Age.yrBP"] <- "yrBP"
 
 core1.melt$yrBP <- 1950 - core1.melt$yrAD
 bahamas.melt$yrBP <- 1950 - bahamas.melt$yrAD
@@ -123,8 +131,8 @@ trouet.melt$yrBP <- 1950 - trouet.melt$yrAD
 
 ```{r}
 # Deep-sea coral plots
-xlim1 <- c(0,700)
-nx <- 3
+xlim1 <- c(0,3000)
+nx <- 4
 pryr.jackn %<a-% {plot(d15n ~ bp, t.jack,
                     type = "l",
                     cex = 0.5,
@@ -132,10 +140,11 @@ pryr.jackn %<a-% {plot(d15n ~ bp, t.jack,
                     # axes = FALSE,
                     ylab = "",
                     yaxt="l",
-                    bty = "l",
+                    bty = "o",
                     xlab = "Years BP"
                     # xlim = c(1750, 3000)
                     )
+  minor.tick(nx = nx)
   axis(side = 2)
   mtext(n, side = 2, line=2.5)
   lines(rollmean(d15n, 5, na.pad = TRUE) ~ bp, t.jack,
@@ -152,6 +161,7 @@ pryr.jackc %<a-% {plot(d13c ~ bp, t.jack,
      bty = "l",
      # xlim = c(1750, 3000),
      ylim = c(-17,-14))
+minor.tick(nx = nx)
 axis(side = 2)
 mtext(c, side = 2, line=2.5)
 mtext("Years BP", side = 1, line = 0.8, outer = TRUE, cex = 0.85, font = 2)
@@ -169,6 +179,7 @@ pryr.savn %<a-% {plot(d15n ~ bp, t.sav,
                       bty = "l",
                        # xlab = "",
                        ylim = c(6,11))
+  minor.tick(nx = nx)
   axis(side = 2)
   mtext(n, side = 2, line=2.5)
   lines(rollmean(d15n, ma1, na.pad = TRUE) ~ bp, t.sav,
@@ -185,6 +196,7 @@ pryr.savc %<a-% {plot(d13c ~ bp, t.sav,
                       bty = "l",
                        # xlab = "",
                        ylim = c(-17,-15))
+  minor.tick(nx = nx)
   axis(side = 2)
   mtext(c, side = 2, line=2.5)
   lines(rollmean(d13c, ma1, na.pad = TRUE) ~ bp, t.sav,
@@ -199,9 +211,9 @@ pryr.stetn %<a-% {plot(d15n ~ bp, t.stet,
      ylab = "",
      xlab = "Years BP",
      yaxt="n", 
-     # xlim = c(1800, 2005), 
+     xlim = xlim1,
      ylim = c(6.5, 10.5))
-minor.tick(nx = 5)
+minor.tick(nx = nx)
 axis(side = 2)
 mtext(n, side = 2, line=2.5)
 lines(rollmean(d15n, 5, na.pad = TRUE) ~ bp, t.stet,
@@ -234,10 +246,35 @@ pryr.stetn
 pryr.stetc
 ```
 
+
+```{r}
+png('~/Documents/GitHub/rstudio/bulk_jack_n.png', width = 4.5, height = 4, units = 'in', res = 300)
+pryr.jackn
+dev.off()
+
+png('~/Documents/GitHub/rstudio/bulk_jack_c.png', width = 4.5, height = 4, units = 'in', res = 300)
+pryr.jackc
+dev.off()
+
+png('~/Documents/GitHub/rstudio/bulk_sav_n.png', width = 4.5, height = 4, units = 'in', res = 300)
+pryr.savn
+dev.off()
+
+png('~/Documents/GitHub/rstudio/bulk_sav_c.png', width = 4.5, height = 4, units = 'in', res = 300)
+pryr.savc
+dev.off()
+
+png('~/Documents/GitHub/rstudio/bulk_stet_n.png', width = 4.5, height = 4, units = 'in', res = 300)
+pryr.stetn
+dev.off()
+
+png('~/Documents/GitHub/rstudio/bulk_stet_c.png', width = 4.5, height = 4, units = 'in', res = 300)
+pryr.stetc
+dev.off()
+```
+
 ```{r}
 # Paleoclimate plots
-
-
 pryr.richey %<a-% {richey2007.melt %>%
     filter(variable == 'SST') %>%
     na.omit() %>%
@@ -245,7 +282,8 @@ pryr.richey %<a-% {richey2007.melt %>%
          type = "l",
          bty = "l",
          col = alpha("black", 0.3),
-         main = "richey 2007 sst, GOM")
+         main = "richey 2007 sst, GOM",
+         xlim = xlim1)
   richey2007.melt %>%
     filter(variable == 'SST') %>%
     na.omit() %>%
@@ -336,12 +374,42 @@ pryr.trouet %<a-% {trouet.melt %>%
          bty = "l",
          col = alpha("black", 0.3),
          xlab = "Years BP",
-         main = "Trouet NAO")
+         main = "Trouet NAO",
+         xlim = xlim1)
   trouet.melt %>%
     filter(variable == 'NAOms') %>%
     na.omit() %>%
-    lines(rollmean(value, 100, na.pad = TRUE) ~ yrBP, ., col = "black")
+    lines(rollmean(value, 100, na.pad = TRUE) ~ yrBP, ., col = "black", xlim = xlim1)
 }
+
+pryr.moy %<a-% {moy.melt %>%
+    filter(variable == 'Red.Color.Intensity.Units') %>%
+    na.omit() %>%
+    plot(value ~ yrBP, .,
+         type = "l",
+         bty = "l",
+         col = alpha("black", 0.3),
+         xlab = "Years BP",
+         main = "Red Intensity",
+         xlim = xlim1)
+  moy.melt %>%
+    filter(variable == 'Red.Color.Intensity.Units') %>%
+    na.omit() %>%
+    lines(rollmean(value, 100, na.pad = TRUE) ~ yrBP, ., col = "black", xlim = xlim1)
+}
+
+pryr.moy100yr %<a-% {moy100yrwindow %>%
+    plot(Number.events ~ yrBP, .,
+         type = "l",
+         bty = "l",
+         col = alpha("black", 0.3),
+         xlab = "Years BP",
+         main = "Number of ENSO events",
+         xlim = xlim1)
+}
+```
+
+```{r}
 
 pryr.richey
 pryr.schmidt
@@ -350,17 +418,19 @@ pryr.keigwin1
 pryr.core1
 pryr.bahamas
 pryr.trouet
+pryr.moy
+pryr.moy100yr
 ```
 
 ```{r}
 # Plot them together
 
-par.set <- par(pty = "s", mfrow=c(2,1), oma = c(2, 2, 0, 0), # two rows of text at the outer left and bottom margin
+par.set <- par(pty = "s", mfrow=c(3,1), oma = c(2, 2, 0, 0), # two rows of text at the outer left and bottom margin
                mar = c(1, 1, 0, 0)+0.3) # space for one row of text at ticks and to separate plots
 # mgp = c(2, 1, 0))   # axis label at 2 rows distance, tick labels at 1 row
 
-pryr.fisk
-pryr.stetc
-pdf('test.pdf')
+pryr.jackn
+pryr.stetn
+pryr.moy
 ```
 

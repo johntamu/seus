@@ -92,3 +92,21 @@ string <- '~/Documents/GitHub/data/schiff_bulk_years_09-04-2019.csv'
   
 df.bulk <- rbind(jack, jack2, jack4684, jack4686, stetson, sav)
 write.csv(df.bulk, string, row.names = FALSE)
+
+#---------------------
+# Creating two separate age records
+# One linear, the other uses multiple
+# linear growth rates
+# Good comparison
+#---------------------
+
+# Only after making sure you are importing the linear growth rate model
+jack.agemodel.linear <- jack
+jack.agemodel.linear$yr.ad <- jack4907.ad
+jack.agemodel.linear$yr.bp <- 1950 - jack.agemodel.linear$yr.ad
+
+jack$yr.bp <- 1950 - jack$linear.ad
+
+jack.smoothspline <- jack
+jack.smoothspline$yr.ad <- jack4907.ad
+jack.smoothspline$yr.bp <- 1950 - jack.smoothspline$yr.ad

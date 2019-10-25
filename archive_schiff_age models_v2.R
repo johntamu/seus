@@ -507,17 +507,17 @@ sav.predict.ad <- 1950 - sav$predict1
 ##                                ##
 ####################################
 
-rising <- r.jack2 %>% filter(Distance..um. < 700 & Distance..um. > 269)
-descending <- r.jack2 %>% filter(Distance..um. < 300)
-overall <- r.jack2 %>% filter(Distance..um. < 700)
-whole <- r.jack2 %>% filter(Distance..um. > 545)
+rising <- r.jack2 %>% filter(Distance.microns < 700 & Distance.microns > 269)
+descending <- r.jack2 %>% filter(Distance.microns < 300)
+overall <- r.jack2 %>% filter(Distance.microns < 700)
+whole <- r.jack2 %>% filter(Distance.microns > 545)
 
 # Three linear models: rising, descending and overall
-lm.rising <- lm(D14C ~ Distance..um., data = rising)
-lm.desc <- lm(D14C ~ Distance..um., data = descending)
-lm.overall <- lm(D14C ~ Distance..um., data = overall)
+lm.rising <- lm(D14C ~ Distance.microns, data = rising)
+lm.desc <- lm(D14C ~ Distance.microns, data = descending)
+lm.overall <- lm(D14C ~ Distance.microns, data = overall)
 
-lm.whole <- lm(X14C.Age ~ Distance..um., data = whole)
+lm.whole <- lm(X14C.Age ~ Distance.microns, data = whole)
 lm.whole.mm <- lm(X14C.Age ~ mm, data = whole)
 # Use predict() function to create a line, NOTE: You don't need to do it this way, so I am commenting it out
 # rise <- predict(lm.rising, newdata = rising)
@@ -528,7 +528,7 @@ t <- as.numeric(1/lm.whole$coefficients[2])
 
 # Plot the distance vs. radiocarbon figure
 par(pty = "s")
-plot(D14C ~ Distance..um., data = r.jack2,
+plot(D14C ~ Distance.microns, data = r.jack2,
      type="o",
      cex = 1.5,
      pch = 21,

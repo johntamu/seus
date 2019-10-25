@@ -99,9 +99,9 @@ trouet.melt$yrBP <- 1950 - trouet.melt$yrAD
 #' all together
 #' ------------------------
 
-bp <- "Years BP"
+bp <- "Years before 1950 CE"
 sst <- "SST (deg C)"
-lim <- c(2000,3000)
+lim <- c(600,2000)
 {
 plotrichey <- richey2007.melt %>%
   filter(variable == 'SST') %>%
@@ -109,7 +109,19 @@ plotrichey <- richey2007.melt %>%
   ggplot(aes(x = yrBP, y = rollmean(value, 5, na.pad = TRUE))) +
   geom_line(color = "#bd0026") +
   geom_line(aes(x = yrBP, y = value), color = alpha("black", 0.3)) +
-  theme_classic() +
+    annotate(geom = "text", x = 200, y = 26.25, label = "GOM sediment core (Richey et al, 2007)", size = 3) +
+    theme_bw() +
+    theme(axis.text.y   = element_text(size=10, color = "black"),
+          axis.text.x   = element_blank(),
+          axis.title.y  = element_text(size=10),
+          axis.title.x  = element_blank(),
+          axis.line.x = element_blank(),
+          axis.ticks.x = element_line(size = 0.25, color = "black"),
+          axis.ticks.y = element_line(size = 0.25, color = "black"),
+          panel.background = element_rect(size = 0.0, color = "black"),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank()) +
+    xlab(bp) +
   xlab(bp) +
   ylab(sst) +
   xlim(lim)
@@ -118,24 +130,57 @@ plotfisk <- fisk.melt %>%
   na.omit() %>%
   ggplot(aes(x = yrBP, y = value), size = 0.5, alpha = 0.75) +
   geom_line(color = "black", size = 0.75) +
-  theme_classic() +
+  annotate(geom = "text", x = 200, y = 26.25, label = "GOM sediment core (Richey et al, 2009)", size = 3) +
+  theme_bw() +
+  theme(axis.text.y   = element_text(size=10, color = "black"),
+        axis.text.x   = element_text(size=10, color = "black"),
+        axis.title.y  = element_text(size=10),
+        axis.title.x  = element_text(size=10, color = "black"),
+        axis.line.x = element_blank(),
+        axis.ticks.x = element_line(size = 0.25, color = "black"),
+        axis.ticks.y = element_line(size = 0.25, color = "black"),
+        panel.background = element_rect(size = 0.0, color = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
   xlab(bp) +
   ylab(sst) +
   xlim(lim)
 stet.n <- ggplot(data=t.stet, aes(x = bp, y = rollmean(d15n, 15, na.pad = TRUE))) +
   geom_line(color = "black") +
   geom_line(aes(bp, y = d15n), color = alpha("black", 0.3)) +
+  # geom_line(data=t.jack4684, aes(x=bp, y=rollmean(d15n, 5, na.pad = TRUE)), color = "red") +
+  # geom_line(data=t.jack4684, aes(bp, y = d15n), color = alpha("red", 0.3)) +
   # geom_point() +
-  theme_classic() +
+  theme_bw() +
+  theme(axis.text.y   = element_text(size=10, color = "black"),
+        axis.text.x   = element_blank(),
+        axis.title.y  = element_text(size=10),
+        axis.title.x  = element_blank(),
+        axis.line.x = element_blank(),
+        axis.ticks.x = element_line(size = 0.25, color = "black"),
+        axis.ticks.y = element_line(size = 0.25, color = "black"),
+        panel.background = element_rect(size = 0.0, color = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
   xlab(bp) +
   ylab(n) +
   xlim(lim) +
-  ylim(7.5, 9.5)
+  ylim(7, 10)
 stet.c <- ggplot(data=t.stet, aes(x = bp, y = rollmean(d13c, 15, na.pad = TRUE))) +
   geom_line(color = "black") +
   geom_line(aes(bp, y = d13c), color = alpha("black", 0.3)) +
   # geom_point() +
-  theme_classic() +
+  theme_bw() +
+  theme(axis.text.y   = element_text(size=10, color = "black"),
+        axis.text.x   = element_blank(),
+        axis.title.y  = element_text(size=10),
+        axis.title.x  = element_blank(),
+        axis.line.x = element_blank(),
+        axis.ticks.x = element_line(size = 0.25, color = "black"),
+        axis.ticks.y = element_line(size = 0.25, color = "black"),
+        panel.background = element_rect(size = 0.0, color = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank()) +
   xlab(bp) +
   ylab(c) +
   xlim(lim) +
@@ -224,7 +269,7 @@ plottrouet <- trouet.melt %>%
 }
 
 grid.newpage()
-grid.draw(rbind(ggplotGrob(plotk1), ggplotGrob(plot.jackn), ggplotGrob(plot.jackc), ggplotGrob(plotschmidt), size = "last")) #  
+grid.draw(rbind(ggplotGrob(stet.n), ggplotGrob(plot.jackn), ggplotGrob(plotfisk), size = "last")) #  ggplotGrob(stet.c)
 
 #' -------------------------------------------------
 #' Comparing bulk record data to
@@ -471,3 +516,31 @@ plot(nfix ~ bp, t.stet,
      cex = 0.5,
      col = alpha("black", 0.3))
 }
+
+pdf('~/Documents/GitHub/rstudio/paleo_richey2007_GOM.pdf')
+pryr.richey
+dev.off()
+
+pdf('~/Documents/GitHub/rstudio/paleo_schmidt2012_GOM.pdf')
+pryr.schmidt
+dev.off()
+
+pdf('~/Documents/GitHub/rstudio/paleo_richey2009_GOM.pdf')
+pryr.fisk
+dev.off()
+
+pdf('~/Documents/GitHub/rstudio/paleo_keigwin.pdf')
+pryr.keigwin1
+dev.off()
+
+pdf('~/Documents/GitHub/rstudio/paleo_saenger2011_carolina_slope.pdf')
+pryr.core1
+dev.off()
+
+pdf('~/Documents/GitHub/rstudio/paleo_saenger2009_bahamas_recon_sst.pdf')
+pryr.bahamas
+dev.off()
+
+pdf('~/Documents/GitHub/rstudio/paleo_trouet_recon_NAOms.pdf')
+pryr.trouet
+dev.off()

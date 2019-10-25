@@ -18,6 +18,7 @@ path3 <- '/home/john/Desktop/data/schiff radiocarbon 02-05-2019.csv'
 df <- read.csv(path1, header = TRUE)
 
 radiocarbon <- df
+core.dir <- '~/Documents/GitHub/data/clam/Cores'
 
 ##################################
 ## Create separate dataframes.  ##
@@ -65,7 +66,7 @@ r.stet2 <- radiocarbon %>% filter(Coral == 'stet-4904-bc1')
 # Jacksonville-4684 BC1
 # **********************
 
-# Note: This one is particularly important because we can als use the bomb spike
+# Note: This one is particularly important because we can also use the bomb spike
 
 ################
 # Growth rates #
@@ -109,7 +110,15 @@ stetson %>%
 write.table(depths, '~/Documents/GitHub/data/clam/Cores/stetson/stetson_depths.txt', 
             sep = '\t', row.names = FALSE, col.names = FALSE)
 
-clam(core="stetson", type = 1, smooth = 0.8, prob = 0.99, its = 1000,
+clam(core="stetson", type = 2, smooth = 0.6, prob = 0.99, its = 1000, # Linear regression
+     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
+     depths.file = TRUE, thickness = 0.1, est = 2, cmyr = TRUE, youngest = c(1))
+
+clam(core="stetson", type = 4, smooth = 0.6, prob = 0.99, its = 1000, # Spline model
+    coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
+    depths.file = TRUE, thickness = 0.1, est = 2)
+
+clam(core="stetson", type = 1, smooth = 0.3, prob = 0.99, its = 1000, # Linear interpolation
      coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
      depths.file = TRUE, thickness = 0.1, est = 2)
 
@@ -124,17 +133,39 @@ stetson %>%
 write.table(depths, '~/Documents/GitHub/data/clam/Cores/stetson2/stetson2_depths.txt', 
             sep = '\t', row.names = FALSE, col.names = FALSE)
 
-clam(core="stetson2", type = 4, smooth = 0.2, prob = 0.99, its = 1000,
+par(pty = "s", mfrow = c(1,2))
+clam(core="stetson2", type = 2, smooth = 0.3, prob = 0.99, its = 1000,
      coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
-     depths.file = TRUE, thickness = 0.1, est = 1, bty = "o")
+     depths.file = TRUE, thickness = 0.1, est = 1, bty = "o", youngest = (1950-2005))
 
 clam(core="stetson2", type = 1, prob = 0.99, its = 1000,
      coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
-     depths.file = TRUE, thickness = 0.1, est = 1, bty = "o", cmyr = TRUE)
+     depths.file = TRUE, thickness = 0.1, est = 1, bty = "o", cmyr = TRUE, youngest = c(1))
 
 # stet2depths <- read.delim('~/Documents/GitHub/data/clam/Cores/stetson2/stetson2_smooth_spline_ages.txt')
 stet2depths <- read.delim('~/Documents/GitHub/data/clam/Cores/stetson2/stetson2_interpolated_ages.txt')
 stet2depths$rate <- stet2depths$acc.rate*1000
+
+#-------------------------
+# Stetson-4904 model
+# comparison
+#-------------------------
+
+pryr.stetmodel1 %<a-% {jack.agemodel.linear %>%
+    plot(d15n.vs.air ~ yr.bp, .,
+         type = "l",
+         bty = "n",
+         col = alpha("black", 0.3),
+         xlab = "Years BP",
+         ylab = n,
+         # main = "Age Model 1",
+         xaxt = "n",
+         xlim = c(500, 3500),
+         ylim = c(7,10))
+  jack.agemodel.linear %>%
+    lines(rollmean(d15n.vs.air, 3, na.pad = TRUE) ~ yr.bp, ., col = "black")
+}
+
 
 # **********************
 # Jacksonville-4907 BC1 
@@ -144,18 +175,122 @@ jack %>%
 write.table(depths, '~/Documents/GitHub/data/clam/Cores/jack4907/jack4907_depths.txt', 
             sep = '\t', row.names = FALSE, col.names = FALSE)
 
+par(pty = "s", mfrow=c(1,3))
+clam(core="jack4907", type = 4, smooth = 0.5, prob = 0.99, its = 1000,
+     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
+     depths.file = TRUE, thickness = 0.1, est = 5, cmyr = TRUE, bty = "o")
+
+clam(core="jack4907", type = 2, prob = 0.99, its = 1000, # Use linear regression with a hiatus
+     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
+     depths.file = TRUE, thickness = 0.05, est = 1, cmyr = TRUE, hiatus = c(0.935, 3.5), # hiatus argument is depth in cm ***
+     bty = "o", youngest = c(1)) 
+
+# One linear regression
+
+clam(core="jack4907", type = 2, prob = 0.99, its = 1000, # Use linear regression with a hiatus
+     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
+     depths.file = TRUE, thickness = 0.1, est = 1, cmyr = TRUE,
+     bty = "o", youngest = 500) 
+
+# Smoothing spline with clam package
+
 clam(core="jack4907", type = 4, smooth = 0.5, prob = 0.99, its = 1000,
      coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
      depths.file = TRUE, thickness = 0.1, est = 5, cmyr = TRUE)
 
-clam(core="jack4907", type = 2, prob = 0.99, its = 1000, # Use linear regression with a hiatus
-     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = TRUE,
-     depths.file = TRUE, thickness = 0.1, est = 1, cmyr = TRUE, hiatus = c(0.95, 3.5), # hiatus argument is depth in cm ***
-     bty = "o") 
-
-# jackdepths <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4907/jack4907_smooth_spline_ages.txt')
+jackdepths <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4907/jack4907_smooth_spline_ages.txt')
 jackdepths <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4907/jack4907_polyn_regr_ages.txt')
 jackdepths$rate <- jackdepths$acc.rate*1000
+
+# --------------------------------
+# Jacksonville-4907 
+# model comparison
+# --------------------------------
+
+pryr.agemodel1 %<a-% {jack.agemodel.linear %>%
+    plot(d15n.vs.air ~ yr.bp, .,
+         type = "l",
+         bty = "n",
+         col = alpha("black", 0.3),
+         xlab = "Years BP",
+         ylab = n,
+         # main = "Age Model 1",
+         xaxt = "n",
+         xlim = c(500, 3500),
+         ylim = c(7,10))
+  jack.agemodel.linear %>%
+    lines(rollmean(d15n.vs.air, 3, na.pad = TRUE) ~ yr.bp, ., col = "black")
+}
+pryr.agemodel2 %<a-% {jack %>%
+    plot(d15n.vs.air ~ yr.bp, .,
+         type = "l",
+         bty = "l",
+         col = alpha("black", 0.3),
+         xlab = "Years BP",
+         ylab = n,
+         # main = "Age Model 2",
+         # xaxt = "n",
+         xlim = c(500, 3500),
+         ylim = c(7,10))
+  axis(side = 2)
+  jack %>%
+    lines(rollmean(d15n.vs.air, 3, na.pad = TRUE) ~ yr.bp, ., col = "black")
+}
+pryr.agemodel3 %<a-% {jack.smoothspline %>%
+    plot(d15n.vs.air ~ yr.bp, .,
+         type = "l",
+         bty = "l",
+         col = alpha("black", 0.3),
+         xlab = "Years BP",
+         ylab = n,
+         # main = "Age Model 1",
+         # xaxt = "n",
+         xlim = c(500, 3500),
+         ylim = c(7,10))
+  jack.smoothspline %>%
+    lines(rollmean(d15n.vs.air, 3, na.pad = TRUE) ~ yr.bp, ., col = "black")
+}
+
+par.set <- par(pty = "s", mfrow=c(3,1), oma = c(2, 2, 0, 0), # two rows of text at the outer left and bottom margin
+               mar = c(1, 1, 0, 0)+0.3) # space for one row of text at ticks and to separate plots
+
+agemodel1 <- ggplot() + # With ggplot2
+  geom_line(data=jack.agemodel.linear, aes(x = yr.bp, y = d15n.vs.air), color = "gray", alpha = 0.6, size = 0.5) +
+  geom_line(data=jack.agemodel.linear, aes(x = yr.bp,
+                              y = rollmean(d15n.vs.air, 3, na.pad = TRUE)), color = "black", alpha = 0.99, size = 0.5) +
+  ylab(n) +
+  theme_classic() +
+  # xlab(x) +
+  xlim(500, 3500) +
+  # scale_x_continuous(breaks = scales::pretty_breaks(n = 10), limits = c(500, 3500)) +
+  theme(axis.text.y   = element_text(size=10, color = "black"),
+        axis.text.x   = element_blank(),
+        axis.line.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.title.y  = element_text(size=10),
+        axis.title.x  = element_blank(),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
+
+agemodel2 <- ggplot() + # With ggplot2
+  geom_line(data=jack, aes(x = yr.bp, y = d15n.vs.air), color = "gray", alpha = 0.6, size = 0.5) +
+  geom_line(data=jack, aes(x = yr.bp, y = rollmean(d15n.vs.air, 3, na.pad = TRUE)), color = "black", alpha = 0.99, size = 0.5) +
+  ylab(n) +
+  theme_classic() +
+  xlab("Years BP") +
+  # xlim(500, 3500) +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 10), limits = c(500, 3500)) +
+  theme(axis.text.y   = element_text(size=10, color = "black"),
+        axis.text.x   = element_text(size=10, color = "black"),
+        axis.title.y  = element_text(size=10),
+        axis.title.x  = element_text(size=10),
+        panel.background = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank())
+
+grid.newpage()
+grid.draw(rbind(ggplotGrob(agemodel1), ggplotGrob(agemodel2), size = "last"))
 
 # **********************
 # Savannah-4907 BC1 
@@ -172,6 +307,14 @@ clam(core="sav4902", type = 4, smooth = 0.2, prob = 0.95, its = 1000,
 clam(core="sav4902", type = 4, smooth = 0.5, prob = 0.95, its = 1000,
      coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
      depths.file = TRUE, thickness = 0.1, est = 1, youngest = c(1), cmyr = TRUE)
+
+clam(core="sav4902", type = 2, smooth = 0.5, prob = 0.95, its = 1000,
+     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
+     depths.file = TRUE, thickness = 0.1, est = 1, youngest = c(1), cmyr = TRUE)
+
+clam(core="sav4902", type = 2, smooth = 0.5, prob = 0.95, its = 1000,
+     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
+     depths.file = TRUE, thickness = 0.1, est = 1, youngest = c(1), cmyr = TRUE, hiatus = c(20))
 
 savdepths <- read.delim('~/Documents/GitHub/data/clam/Cores/sav4902/sav4902_smooth_spline_ages.txt')
 savdepths$rate = savdepths$acc.rate*1000
@@ -191,6 +334,44 @@ clam(core="jack4684", type = 2, smooth = 0.4, prob = 0.95, its = 1000,
 
 # jack4684depths <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4684/jack4684_smooth_spline_ages.txt')
 jack4684depths <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4684/jack4684_polyn_regr_ages.txt')
+
+# *********************************
+#
+# Create some figures for Results 
+# section of dissertation
+#
+# *********************************
+
+# Linear regression figure
+
+par(pty = "s", mfrow = c(2,2))
+clam(core="stetson", type = 2, smooth = 0.6, prob = 0.99, its = 1000, # Linear regression
+     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
+     depths.file = TRUE, thickness = 0.1, est = 2, bty = "o")
+
+clam(core="jack4907", type = 2, prob = 0.99, its = 1000, # Use linear regression with a hiatus
+     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
+     depths.file = TRUE, thickness = 0.1, est = 1, cmyr = TRUE,
+     bty = "o") 
+
+clam(core="sav4902", type = 2, smooth = 0.5, prob = 0.95, its = 1000,
+     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
+     depths.file = TRUE, thickness = 0.1, est = 1, youngest = c(1), cmyr = TRUE, bty = "o")
+
+clam(core="jack4684", type = 2, smooth = 0.4, prob = 0.95, its = 1000,
+     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
+     depths.file = TRUE, thickness = 0.1, est = 2, ignore = c(2:7), youngest = c(1), bty = "o")
+
+# Breaking into multiple regressions 
+
+par(pty = "s", mfrow = c(1,1))
+clam(core="jack4907", type = 2, prob = 0.99, its = 1000, # Use linear regression with a hiatus
+     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
+     depths.file = TRUE, thickness = 0.05, est = 1, cmyr = TRUE, hiatus = c(0.935, 3.5), # hiatus argument is depth in cm ***
+     bty = "o") 
+
+
+
 
 #' --------------------------------------------
 #' PART 3: Bacon Age Models (with Bacon R package)

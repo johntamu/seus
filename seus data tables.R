@@ -178,3 +178,30 @@ dt <- carbon %>% filter(Group.ID2 == "Leiopathes") %>%
   select(Ala, Asx, Glx, Gly, Ile, Leu, Lys, Phe, Pro, Ser, Thr, Tyr, Val)
 
 stargazer(dt, summary = FALSE, rownames = FALSE, type = "html", out = "carbontable.html")
+
+####################################
+## Bulk d15N and d13C data table  ##
+## for all samples                ##
+####################################
+
+bulk.table <- df.bulk %>%
+  filter(coral.id == "jack-4684-bc-unk" | coral.id == "jack-4907-bc1-d1" |
+           coral.id == "jack-4907-bc1-d3" | coral.id == "sav-4902-bc1-unk" |
+           coral.id == "stet-4904-bc1-d2")
+
+bulk.table <- bulk.table %>% 
+  select(coral.id, sample.no., distance, d15n, d13c, linear.ad)
+
+stargazer(bulk.table, summary = FALSE, rownames = FALSE, type = "html", out = 'bulktable.html')
+
+## --------------------
+## Data table showing which age model
+## was used for each disk
+## --------------------
+
+# models <- data.frame(coral = c("Jacksonville-4907 Disk 1",
+#                                "Jacksonville-4684 Disk *",
+#                                "Stetson-4904 Disk 5",
+#                                "Stetson-4904 Disk *",
+#                                "Savannah-4902 Disk *"),
+#                      linear.age.model)

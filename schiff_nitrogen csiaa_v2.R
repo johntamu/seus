@@ -215,7 +215,7 @@ summary(reg)
 ################################
 
 # Calculation: d15N (predicted) = (TP * d15N-source) + d15N-source or d15N-phe (try both)
-nitrate <- 6 # d15N of nitrate based on depth profiles
+nitrate <- 5 # d15N of nitrate based on depth profiles
 src <- 4.5 # d15N of source nitrate or Phe depending on test you want to do
 enrichment <- 3 # How much d15N enriches with each trophic transfer, in permil
 
@@ -236,7 +236,7 @@ ggplot(corals, aes(Year.CE, Bulk)) +
   ylab(n) +
   xlab(x)
 
-ggplot(corals, aes(Year.CE, Phe)) +
+ggplot(corals, aes(Year.CE, Nfix)) +
   geom_point() +
   theme_classic() +
   geom_vline(xintercept = 950, lty = 'dashed') +
@@ -251,6 +251,20 @@ ggplot(corals, aes(Year.CE, TP)) +
   theme_classic() +
   ylab("Trophic Position (Glu - Phe)") +
   xlab(x)
+
+################################
+## Calculated fraction Nfix   ##
+## based on Bulk d15N         ##
+## in CSIAA samples           ##
+################################
+
+d15N.Psink <- -3.3 #corals$Bulk
+d15N.Nfix <- -1
+d15N.nitrate <- 4.5
+
+Nfix <- 1 - ((d15N.Psink - d15N.Nfix)/(d15N.nitrate - d15N.Nfix))
+print(Nfix)
+corals$Nfix <- Nfix
 
 #' ------------------------------------------
 #' 
