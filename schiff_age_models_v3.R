@@ -110,9 +110,9 @@ stetson %>%
 write.table(depths, '~/Documents/GitHub/data/clam/Cores/stetson/stetson_depths.txt', 
             sep = '\t', row.names = FALSE, col.names = FALSE)
 
-clam(core="stetson", type = 2, smooth = 0.6, prob = 0.99, its = 1000, # Linear regression
-     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
-     depths.file = TRUE, thickness = 0.1, est = 2, cmyr = TRUE, youngest = c(1))
+clam(core="stetson", type = 2, smooth = 0.3, prob = 0.99, its = 1000, # Linear regression
+     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = TRUE,
+     depths.file = TRUE, thickness = 0.1, est = 2, cmyr = TRUE, youngest = c(1), bty = "o")
 
 clam(core="stetson", type = 4, smooth = 0.6, prob = 0.99, its = 1000, # Spline model
     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
@@ -122,7 +122,7 @@ clam(core="stetson", type = 1, smooth = 0.3, prob = 0.99, its = 1000, # Linear i
      coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
      depths.file = TRUE, thickness = 0.1, est = 2)
 
-stetdepths <- read.delim('~/Documents/GitHub/data/clam/Cores/stetson/stetson_smooth_spline_ages.txt')
+stetdepths <- read.delim('~/Documents/GitHub/data/clam/Cores/stetson/stetson_polyn_regr_ages.txt')
 
 # **********************
 # Stetson-4904 BC1 PART 2
@@ -134,12 +134,12 @@ write.table(depths, '~/Documents/GitHub/data/clam/Cores/stetson2/stetson2_depths
             sep = '\t', row.names = FALSE, col.names = FALSE)
 
 par(pty = "s", mfrow = c(1,2))
-clam(core="stetson2", type = 2, smooth = 0.3, prob = 0.99, its = 1000,
-     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
-     depths.file = TRUE, thickness = 0.1, est = 1, bty = "o", youngest = (1950-2005))
+clam(core="stetson2", type = 2, smooth = 0.3, prob = 0.95, its = 1000,
+     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = TRUE,
+     depths.file = TRUE, thickness = 0.1, est = 1, bty = "o", cmyr = TRUE, youngest = (1950-2005))
 
-clam(core="stetson2", type = 1, prob = 0.99, its = 1000,
-     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
+clam(core="stetson2", type = 1, prob = 0.95, its = 1000,
+     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = TRUE,
      depths.file = TRUE, thickness = 0.1, est = 1, bty = "o", cmyr = TRUE, youngest = c(1))
 
 # stet2depths <- read.delim('~/Documents/GitHub/data/clam/Cores/stetson2/stetson2_smooth_spline_ages.txt')
@@ -178,12 +178,22 @@ write.table(depths, '~/Documents/GitHub/data/clam/Cores/jack4907/jack4907_depths
 par(pty = "s", mfrow=c(1,3))
 clam(core="jack4907", type = 4, smooth = 0.5, prob = 0.99, its = 1000,
      coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
-     depths.file = TRUE, thickness = 0.1, est = 5, cmyr = TRUE, bty = "o")
+     depths.file = TRUE, thickness = 0.1, est = 5, cmyr = TRUE, bty = "o", mix.calibrationcurves(offset = c(-37,5)))
+
+clam(core="jack4907", type = 2, prob = 0.99, its = 1000, # Use linear regression with a hiatus
+     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = TRUE,
+     depths.file = TRUE, thickness = 0.05, est = 1, cmyr = TRUE, hiatus = c(0.935, 3.5), # hiatus argument is depth in cm ***
+     bty = "o", youngest = c(1)) 
+
+clam(core="jack4907", type = 2, prob = 0.95, its = 1000, # Use linear regression with a hiatus
+     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = TRUE,
+     depths.file = TRUE, thickness = 0.05, est = 1, cmyr = TRUE, hiatus = c(1.8), # hiatus argument is depth in cm ***
+     bty = "o", youngest = c(1))
 
 clam(core="jack4907", type = 2, prob = 0.99, its = 1000, # Use linear regression with a hiatus
      coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
      depths.file = TRUE, thickness = 0.05, est = 1, cmyr = TRUE, hiatus = c(0.935, 3.5), # hiatus argument is depth in cm ***
-     bty = "o", youngest = c(1)) 
+     bty = "o", youngest = c(1), mix.calibrationcurves(offset = c(-37,5)))
 
 # One linear regression
 
@@ -307,16 +317,16 @@ clam(core="sav4902", type = 4, smooth = 0.2, prob = 0.95, its = 1000,
 clam(core="sav4902", type = 4, smooth = 0.5, prob = 0.95, its = 1000,
      coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
      depths.file = TRUE, thickness = 0.1, est = 1, youngest = c(1), cmyr = TRUE)
+par(pty = "s")
+clam(core="sav4902", type = 2, smooth = 0.5, prob = 0.95, its = 1000,
+     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = TRUE,
+     depths.file = TRUE, thickness = 0.1, est = 1, youngest = c(1), cmyr = TRUE, bty ="o")
 
 clam(core="sav4902", type = 2, smooth = 0.5, prob = 0.95, its = 1000,
      coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
-     depths.file = TRUE, thickness = 0.1, est = 1, youngest = c(1), cmyr = TRUE)
+     depths.file = TRUE, thickness = 0.1, est = 1, youngest = c(1), cmyr = TRUE, hiatus = c(20.5))
 
-clam(core="sav4902", type = 2, smooth = 0.5, prob = 0.95, its = 1000,
-     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
-     depths.file = TRUE, thickness = 0.1, est = 1, youngest = c(1), cmyr = TRUE, hiatus = c(20))
-
-savdepths <- read.delim('~/Documents/GitHub/data/clam/Cores/sav4902/sav4902_smooth_spline_ages.txt')
+savdepths <- read.delim('~/Documents/GitHub/data/clam/Cores/sav4902/sav4902_polyn_regr_ages.txt')
 savdepths$rate = savdepths$acc.rate*1000
 
 # **********************
@@ -329,8 +339,8 @@ write.table(depths, '~/Documents/GitHub/data/clam/Cores/jack4684/jack4684_depths
             sep = '\t', row.names = FALSE, col.names = FALSE)
 
 clam(core="jack4684", type = 2, smooth = 0.4, prob = 0.95, its = 1000,
-     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
-     depths.file = TRUE, thickness = 0.1, est = 2, ignore = c(2:7), youngest = c(1))
+     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = TRUE,
+     depths.file = TRUE, thickness = 0.1, est = 2, ignore = c(2:7), cmyr = TRUE, youngest = c(1), bty = "o")
 
 # jack4684depths <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4684/jack4684_smooth_spline_ages.txt')
 jack4684depths <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4684/jack4684_polyn_regr_ages.txt')

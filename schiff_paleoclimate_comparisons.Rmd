@@ -96,6 +96,17 @@ moy2002 <- read.delim('~/Documents/GitHub/data/paleoclimate_data/pallcacocha_red
 # Moy et al, 2002; Number of events in 100 yr non-overlapping windows
 moy100yrwindow <- read.delim('~/Documents/GitHub/data/paleoclimate_data/moy2002_red_intensity_100yr.txt', header = TRUE, comment.char = '#', sep = "")
 
+# Thompson et al, 2013; Annually Resolved Ice Core Records of Tropical Climate Variability over the Past ~1800 Years
+thompson <- read.delim('~/Documents/GitHub/data/paleoclimate_data/quelccaya2013.txt', header = TRUE, comment.char = "#", sep = "")
+
+# Wanamaker et al, 2008; Coupled North Atlantic Slopewater forcing on Gulf of Maine temperatures over the past millennium.
+maine <- read.delim('~/Documents/GitHub/data/paleoclimate_data/wgomaine-tab.txt', header = TRUE, comment.char = "#", sep = "")
+
+
+# Sachs et al 2007; Northwest Atlantic Slope Holocene Alkenone SST Data
+sachs <- read.delim('~/Documents/GitHub/data/paleoclimate_data/sachs2007.txt', header = TRUE, comment.char = "#", sep = "\t")
+
+
 # ***********************
 # Build a new data frame
 #
@@ -113,6 +124,9 @@ keigwin2.melt <- melt(keigwin4d, "yrBP")
 bahamas.melt <- melt(bahamas.sst, "Year..A.D.")
 trouet.melt <- melt(trouet, "Year")
 moy.melt <- melt(moy2002, "Age.yrBP")
+thompson.melt <- melt(thompson, "age_AD")
+maine.melt <- melt(maine, "calyr")
+sachs.melt <- melt(sachs, id.vars = c("Age..kyr.BP.", "Core"))
 
 colnames(schmidt.melt)[colnames(schmidt.melt)=="age"] <- "yrBP"
 colnames(richey2007.melt)[colnames(richey2007.melt)=="Cal.yr.B.P."] <- "yrBP"
@@ -123,15 +137,22 @@ colnames(keigwin2.melt)[colnames(keigwin2.melt)=="yrBP"] <- "yrBP"
 colnames(bahamas.melt)[colnames(bahamas.melt)=="Year..A.D."] <- "yrAD"
 colnames(trouet.melt)[colnames(trouet.melt)=="Year"] <- "yrAD"
 colnames(moy.melt)[colnames(moy.melt)=="Age.yrBP"] <- "yrBP"
+colnames(thompson.melt)[colnames(thompson.melt)=="age_AD"] <- "yrAD"
+colnames(maine.melt)[colnames(maine.melt)=="calyr"] <- "yrAD"
+colnames(sachs.melt)[colnames(sachs.melt)=="Age..kyr.BP."] <- "yrBP"
 
 core1.melt$yrBP <- 1950 - core1.melt$yrAD
 bahamas.melt$yrBP <- 1950 - bahamas.melt$yrAD
 trouet.melt$yrBP <- 1950 - trouet.melt$yrAD
+thompson.melt$yrBP <- 1950 - thompson.melt$yrAD
+maine.melt$yrBP <- 1950 - maine.melt$yrAD
+sachs.melt$yrBP <- sachs.melt$yrBP*1000
+moy.melt$yrAD <- 1950 - moy.melt$yrBP
 ```
 
 ```{r}
 # Deep-sea coral plots
-xlim1 <- c(0,3000)
+xlim1 <- c(900,3100)
 nx <- 4
 pryr.jackn %<a-% {plot(d15n ~ bp, t.jack,
                     type = "l",
@@ -140,9 +161,9 @@ pryr.jackn %<a-% {plot(d15n ~ bp, t.jack,
                     # axes = FALSE,
                     ylab = "",
                     yaxt="l",
-                    bty = "o",
-                    xlab = "Years BP"
-                    # xlim = c(1750, 3000)
+                    bty = "l",
+                    xlab = "Years BP",
+                    xlim = xlim1
                     )
   minor.tick(nx = nx)
   axis(side = 2)
@@ -156,16 +177,16 @@ pryr.jackc %<a-% {plot(d13c ~ bp, t.jack,
      col = alpha("black", 0.3),
      # axes = FALSE,
      ylab = "",
-     yaxt="n",
+     yaxt="l",
      xlab = "Years BP",
      bty = "l",
-     # xlim = c(1750, 3000),
+     xlim = xlim1,
      ylim = c(-17,-14))
 minor.tick(nx = nx)
 axis(side = 2)
 mtext(c, side = 2, line=2.5)
 mtext("Years BP", side = 1, line = 0.8, outer = TRUE, cex = 0.85, font = 2)
-lines(rollmean(d13c, 10, na.pad = TRUE) ~ bp, t.jack,
+lines(rollmean(d13c, 5, na.pad = TRUE) ~ bp, t.jack,
       col = "black")
 }
 pryr.savn %<a-% {plot(d15n ~ bp, t.sav,
@@ -177,7 +198,7 @@ pryr.savn %<a-% {plot(d15n ~ bp, t.sav,
                        ylab = "",
                        yaxt="n",
                       bty = "l",
-                       # xlab = "",
+                     xlim = xlim1,
                        ylim = c(6,11))
   minor.tick(nx = nx)
   axis(side = 2)
@@ -194,7 +215,7 @@ pryr.savc %<a-% {plot(d13c ~ bp, t.sav,
                        ylab = "",
                        yaxt="n",
                       bty = "l",
-                       # xlab = "",
+                     xlim = xlim1,
                        ylim = c(-17,-15))
   minor.tick(nx = nx)
   axis(side = 2)
@@ -202,7 +223,7 @@ pryr.savc %<a-% {plot(d13c ~ bp, t.sav,
   lines(rollmean(d13c, ma1, na.pad = TRUE) ~ bp, t.sav,
         col = "black")
 }
-pryr.stetn %<a-% {plot(d15n ~ bp, t.stet,
+pryr.stetn %<a-% {plot(d15n ~ bp, t.stet, 
      type = "l",
      cex = 0.5,
      col = alpha("black", 0.3),
@@ -238,6 +259,43 @@ pryr.stetc %<a-% {plot(d13c ~ bp, t.stet,
         col = "black")
 }
 
+pryr.jack4684 %<a-% {plot(d15n ~ bp, t.jack4684,
+                       type = "l",
+                       cex = 0.5,
+                       col = alpha("black", 0.3),
+                       # axes = FALSE,
+                       ylab = "",
+                       yaxt="n",
+                       xlab = "Years BP",
+                       bty = "l",
+                       xlim = xlim1
+                       # ylim = c(-16.5,-15)
+                       )
+  minor.tick(nx = nx)
+  axis(side = 2)
+  mtext(n, side = 2, line=2.5)
+  lines(rollmean(d15n, 5, fill = NA, align = "center") ~ bp, t.jack4684,
+        col = "black")
+}
+
+pryr.jack4684c %<a-% {plot(d13c ~ bp, t.jack4684,
+                       type = "l",
+                       cex = 0.5,
+                       col = alpha("black", 0.3),
+                       # axes = FALSE,
+                       ylab = "",
+                       yaxt="n",
+                       xlab = "Years BP",
+                       bty = "l",
+                       xlim = xlim1
+                       # ylim = c(-16.5,-15)
+                       )
+  minor.tick(nx = nx)
+  axis(side = 2)
+  mtext(c, side = 2, line=2.5)
+  lines(rollmean(d13c, 5, fill = NA, align = "center") ~ bp, t.jack4684,
+        col = "black")
+}
 pryr.jackn
 pryr.jackc
 pryr.savn
@@ -335,7 +393,7 @@ pryr.keigwin1 %<a-% {keigwin1.melt %>%
 #   lines(rollmean(value, 1, na.pad = TRUE) ~ yrBP, ., col = "black")
 }
 pryr.core1 %<a-% {core1.melt %>%
-    filter(variable == 'SST.Anand.') %>% # Lots of proxies in this one: SST.Anand., d18Oc, d18Osw, d18Ow
+    filter(variable == 'd18Oc') %>% # Lots of proxies in this one: SST.Anand., d18Oc, d18Osw, d18Ow
     na.omit() %>%
     plot(value ~ yrBP, .,
          type = "o",
@@ -344,13 +402,15 @@ pryr.core1 %<a-% {core1.melt %>%
          xlab = "Years BP",
          # ylab = "d18Ow",
          ylab = "SST",
+         xlim = xlim1
          # ylab = "d18Oc",
          # ylab = "d18Osw",
-         main = "Saenger sediment core, Carolina slope")
-  core1.melt %>%
-    filter(variable == 's.e.') %>%
-    na.omit() %>%
-    lines(value ~ yrBP, ., col = "black", lty = 'dashed')
+         # main = "Saenger sediment core, Carolina slope"
+         )
+  # core1.melt %>%
+  #   filter(variable == 's.e.') %>%
+  #   na.omit() %>%
+  #   lines(value ~ yrBP, ., col = "black", lty = 'dashed')
 }
 pryr.bahamas %<a-% {bahamas.melt %>%
     filter(variable == 'SST.anomaly') %>%
@@ -360,7 +420,9 @@ pryr.bahamas %<a-% {bahamas.melt %>%
          bty = "l",
          col = alpha("black", 0.3),
          xlab = "Years BP",
-         main = "Bahamas SST anomaly, saenger 2009")
+         xlim = xlim1
+         # main = "Bahamas SST anomaly, saenger 2009"
+         )
   bahamas.melt %>%
     filter(variable == 'SST.anomaly') %>%
     na.omit() %>%
@@ -374,7 +436,7 @@ pryr.trouet %<a-% {trouet.melt %>%
          bty = "l",
          col = alpha("black", 0.3),
          xlab = "Years BP",
-         main = "Trouet NAO",
+         # main = "Trouet NAO",
          xlim = xlim1)
   trouet.melt %>%
     filter(variable == 'NAOms') %>%
@@ -390,7 +452,7 @@ pryr.moy %<a-% {moy.melt %>%
          bty = "l",
          col = alpha("black", 0.3),
          xlab = "Years BP",
-         main = "Red Intensity",
+         ylab = "Red Intensity",
          xlim = xlim1)
   moy.melt %>%
     filter(variable == 'Red.Color.Intensity.Units') %>%
@@ -407,6 +469,87 @@ pryr.moy100yr %<a-% {moy100yrwindow %>%
          main = "Number of ENSO events",
          xlim = xlim1)
 }
+
+pryr.thompson %<a-% {thompson.melt %>%
+    filter(variable == 'no3_ppb') %>%
+    plot(value ~ yrBP, .,
+         type = "l",
+         bty = "l",
+         col = alpha("black", 0.3),
+         xlab = "Years BP",
+         # main = "Variable",
+         xlim = xlim1)
+   thompson.melt %>%
+    filter(variable == 'no3_ppb') %>%
+    na.omit() %>%
+    lines(rollmean(value, 10, na.pad = TRUE) ~ yrBP, ., col = "black", xlim = xlim1)
+}
+
+pryr.maine %<a-% {maine.melt %>%
+    filter(variable == 'sst') %>%
+    plot(value ~ yrBP, .,
+         type = "l",
+         bty = "l",
+         col = alpha("black", 0.3),
+         xlab = "Years BP",
+         # main = "Variable",
+         xlim = xlim1)
+   maine.melt %>%
+    filter(variable == 'sst') %>%
+    na.omit() %>%
+    lines(rollmean(value, 10, na.pad = TRUE) ~ yrBP, ., col = "black", xlim = xlim1)
+}
+
+pryr.virginia %<a-% {sachs.melt %>%
+    filter(variable == 'SST') %>%
+    filter(Core == "Virginia Slope") %>%
+    plot(value ~ yrBP, .,
+         type = "o",
+         bty = "l",
+         col = alpha("black", 0.3),
+         xlab = "Years BP",
+         # main = "Variable",
+         xlim = xlim1)
+   sachs.melt %>%
+    filter(variable == 'SST') %>%
+    filter(Core == "Virginia Slope") %>%
+    na.omit() %>%
+    lines(rollmean(value, 3, na.pad = TRUE) ~ yrBP, ., col = "black", xlim = xlim1)
+}
+
+pryr.laurentian %<a-% {sachs.melt %>%
+    filter(variable == 'SST') %>%
+    filter(Core == "Laurentian Fan") %>%
+    plot(value ~ yrBP, .,
+         type = "o",
+         bty = "l",
+         col = alpha("black", 0.3),
+         xlab = "Years BP",
+         # main = "Variable",
+         xlim = xlim1)
+   sachs.melt %>%
+    filter(variable == 'SST') %>%
+    filter(Core == "Laurentian Fan") %>%
+    na.omit() %>%
+    lines(rollmean(value, 3, na.pad = TRUE) ~ yrBP, ., col = "black", xlim = xlim1)
+}
+
+pryr.scotian %<a-% {sachs.melt %>%
+    filter(variable == 'SST') %>%
+    filter(Core == "Scotian Margin") %>%
+    plot(value ~ yrBP, .,
+         type = "o",
+         bty = "l",
+         col = alpha("black", 0.3),
+         xlab = "Years BP",
+         # main = "Variable",
+         xlim = xlim1)
+   sachs.melt %>%
+    filter(variable == 'SST') %>%
+    filter(Core == "Scotian Margin") %>%
+    na.omit() %>%
+    lines(rollmean(value, 3, na.pad = TRUE) ~ yrBP, ., col = "black", xlim = xlim1)
+}
 ```
 
 ```{r}
@@ -420,6 +563,12 @@ pryr.bahamas
 pryr.trouet
 pryr.moy
 pryr.moy100yr
+pryr.thompson
+pryr.maine
+pryr.virginia
+pryr.laurentian
+pryr.scotian
+
 ```
 
 ```{r}
@@ -429,8 +578,9 @@ par.set <- par(pty = "s", mfrow=c(3,1), oma = c(2, 2, 0, 0), # two rows of text 
                mar = c(1, 1, 0, 0)+0.3) # space for one row of text at ticks and to separate plots
 # mgp = c(2, 1, 0))   # axis label at 2 rows distance, tick labels at 1 row
 
-pryr.jackn
-pryr.stetn
+# pryr.jackn
+pryr.jackc
 pryr.moy
+pryr.savc
 ```
 

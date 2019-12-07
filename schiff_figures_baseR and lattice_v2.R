@@ -833,7 +833,7 @@ plot(value ~ variable1, plot.data)
 ## Trophic Dynamics ## 
 ######################
 xyplot(TP ~ Sum.V | Region, # SumV vs. Trophic Position
-       ndata[1:30,],
+       ndata[1:29,],
        group = Sample.ID2,
        pch = 21,
        cex = 1.5,
@@ -849,7 +849,7 @@ ndata %>%
 p <- ggplot(bc.ndata, aes(x=Sum.V, y=TP, shape = Region, fill = Region), color = "black")
 p + geom_point(size = 3) +
   facet_wrap(~Region, ncol = 1) +
-  scale_shape_manual(values = c(22, 23)) +
+  scale_shape_manual(values = c(23, 23)) +
   scale_color_manual(values = c("#D55E00", "#E69F00")) +
   ylab("Trophic Position (Glu - Phe)") +
   xlab(expression(paste(Sigma,"V"))) +
@@ -1058,7 +1058,7 @@ seus_carbon <- read.csv("~/Google Drive/projects/rproj/seus/data/schiff c-csiaa 
 # Helpful link: https://stackoverflow.com/questions/21982987/mean-per-group-in-a-data-frame
 
 seus_carbon %>% 
-  select(-c(Bulk)) %>%
+  # select(-c(Bulk)) %>%
   melt(., "Group.ID") -> melt # Nifty trick using magrittr pipe operator, %>%
 
 melt$variable1 <- factor(melt$variable, 

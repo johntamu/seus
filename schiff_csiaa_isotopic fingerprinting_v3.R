@@ -75,10 +75,20 @@ carbon %>%
 # Oct 25, 2019: a dataset using bacteria, euk macroalgae, euk microalgae, N2-fixing
 
 carbon %>%
+  dplyr::select(Group.ID2, Phe, Thr, Ile, Leu, Val) %>%
+  filter(Group.ID2 == "Bacteria" |
+          
+
+           Group.ID2 == "Macroalgae" |
+           Group.ID2 == "Microalgae") -> training_set
+
+carbon %>%
   dplyr::select(Group.ID3, Phe, Thr, Ile, Leu, Val) %>%
   filter(Group.ID3 == "N2 fixing" |
            Group.ID3 == "Eukaryotic algae" |
-           Group.ID3 == "Heterotrophic bacteria") -> training_set
+           Group.ID3 == "Heterotrophic bacteria" |
+           Group.ID3 == "Leiopathes-post" |
+           Group.ID3 == "Leiopathes-pre") -> training_set
 
 
 training_norm <- training_set[,-c(1)] - rowMeans(training_set[,-c(1)])
@@ -128,7 +138,7 @@ p + geom_point(size = 3.5, color = "black") +
   ylab("PC2") +
   geom_hline(yintercept = 0, color = "black", linetype = "dashed") +
   geom_vline(xintercept = 0, color = "black", linetype = "dashed") +
-  # geom_point(data = pred, aes(x=PC1, y=PC2), shape = 4, fill = "black", size = 4) +
+  geom_point(data = pred, aes(x=PC1, y=PC2), shape = 4, fill = "black", size = 4) +
   theme(axis.text.y   = element_text(size=12, color = "black"),
         axis.text.x   = element_text(size=12, color = "black"),
         axis.title.y  = element_text(size=12),

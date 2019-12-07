@@ -158,6 +158,34 @@ coralSpec <- data.frame(
 
 View(coralSpec)
 
+coralSpec <- data.frame(
+  coral.id = c('Jacksonville-4907 BC1',
+               'Jacksonville-4684 BC1',
+               'Jacksonville-4686 BC1',
+               'Stetson-4904 BC1',
+               'Savannah-4902 BC1'),
+  location = c('Jacksonville Lithoherms',
+               'Jacksonville lithoherms',
+               'Jacksonville Lithoherms',
+               'Stetson Banks',
+               'Savannah Banks'),
+  group = c('Leiopathes','Leiopathes','Leiopathes','Leiopathes', 'Leiopathes'),
+  c14.age.inner = c(3130, 940, NA, 1910, 2530),
+  error.inner = c(35, 40, NA, 40, 40),
+  c14.age.outer = c(1010, NA, NA, NA, 1110),
+  error.outer = c(35, 35, NA, NA, 40),
+  c14.no.samples = c(18, NA, 4, 7, 32),
+  radius = c(),
+  growth.rate1 = c(),
+  growth.rate2 = c(),
+  growth.rate3 = c()
+  
+)
+
+View(coralSpec)
+stargazer(coralSpec, summary = FALSE, rownames = FALSE, type = "html", digit.separator = "", out = "coralspec.html")
+
+
 ############################## 3/3/2019
 ## Lifespan vs Growth rate  ##
 ##############################
@@ -194,7 +222,7 @@ bulk.table <- bulk.table %>%
 
 stargazer(bulk.table, summary = FALSE, rownames = FALSE, type = "html", out = 'bulktable.html')
 
-## --------------------
+--------------------
 ## Data table showing which age model
 ## was used for each disk
 ## --------------------

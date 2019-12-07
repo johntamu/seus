@@ -64,6 +64,16 @@ bahamas.sst <- read.csv('~/Documents/GitHub/data/paleoclimate_data/bahamas2009ss
 # Trouet 2009; NAO z-score
 trouet <- read.delim('~/Documents/GitHub/data/paleoclimate_data/nao-trouet2009.txt', header = TRUE, comment.char = '#', sep = "")
 trouet$z <- (trouet$NAOms - mean(trouet$NAOms)) / sd(trouet$NAOms)
+
+# Thompson et al, 2013; Annually Resolved Ice Core Records of Tropical Climate Variability over the Past ~1800 Years
+thompson <- read.delim('~/Documents/GitHub/data/paleoclimate_data/quelccaya2013.txt', header = TRUE, comment.char = "#", sep = "")
+
+
+# Sachs et al 2007; Northwest Atlantic Slope Holocene Alkenone SST Data
+sachs <- read.delim('~/Documents/GitHub/data/paleoclimate_data/sachs2007.txt', header = TRUE, comment.char = "#", sep = "\t")
+
+
+
 # ***********************
 # Build a new data frame
 #
@@ -80,6 +90,7 @@ keigwin1.melt <- melt(keigwin4a, "yrBP")
 keigwin2.melt <- melt(keigwin4d, "yrBP")
 bahamas.melt <- melt(bahamas.sst, "Year..A.D.")
 trouet.melt <- melt(trouet, "Year")
+sachs.melt <- melt(sachs, "Age..kyr.BP.") # Double check this matches with .Rmd file
 
 colnames(schmidt.melt)[colnames(schmidt.melt)=="age"] <- "yrBP"
 colnames(richey2007.melt)[colnames(richey2007.melt)=="Cal.yr.B.P."] <- "yrBP"
@@ -89,6 +100,7 @@ colnames(keigwin1.melt)[colnames(keigwin1.melt)=="yrBP"] <- "yrBP"
 colnames(keigwin2.melt)[colnames(keigwin2.melt)=="yrBP"] <- "yrBP"
 colnames(bahamas.melt)[colnames(bahamas.melt)=="Year..A.D."] <- "yrAD"
 colnames(trouet.melt)[colnames(trouet.melt)=="Year"] <- "yrAD"
+colnames(sachs.melt)[colnames(sachs.melt)=="Age..kyr.BP."] <- "yrBP"
 
 core1.melt$yrBP <- 1950 - core1.melt$yrAD
 bahamas.melt$yrBP <- 1950 - bahamas.melt$yrAD
@@ -495,7 +507,7 @@ plot(d15n ~ linear.ad, t.jack,
      yaxt="l",
      ylim = c(7,11),
      # xlab = "Years BP",
-     xlim = c(250,2005)
+     xlim = c(-1000,2005)
      )
 axis(side = 2)
 mtext(n, side = 2, line=2.5)

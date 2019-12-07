@@ -518,7 +518,7 @@ lm.desc <- lm(D14C ~ Distance.microns, data = descending)
 lm.overall <- lm(D14C ~ Distance.microns, data = overall)
 
 lm.whole <- lm(X14C.Age ~ Distance.microns, data = whole)
-lm.whole.mm <- lm(X14C.Age ~ mm, data = whole)
+# lm.whole.mm <- lm(X14C.Age ~ mm, data = whole)
 # Use predict() function to create a line, NOTE: You don't need to do it this way, so I am commenting it out
 # rise <- predict(lm.rising, newdata = rising)
 # desc <- predict(lm.desc, newdata = descending)
@@ -535,14 +535,14 @@ plot(D14C ~ Distance.microns, data = r.jack2,
      bg = '#bdbdbd',
      xlim = c(0, 2500),
      ylim = c(-75, 150),
-     ylab = expression(paste(Delta^{14}, "C")),
+     ylab = expression(paste(Delta^{14}, "C (\u2030)")),
      xlab = expression(paste("Distance", " (",mu,"m)")))
 # lines(rise ~ Distance..um., data = rising, col = "#41b6c4", lwd = 2) # predicted based on lm.rising
 # lines(desc ~ Distance..um., data = descending, col = "#253494", lwd = 2) # predicted based on lm.descending
 clip(250, 750, -55, 140)
-abline(lm.rising, col = "#41b6c4", lwd = 2, lty = "dashed")
+abline(lm.rising, col = "black", lwd = 1, lty = "dashed")
 clip(0, 500, -50, 140)
-abline(lm.desc, col = "#253494", lwd = 2, lty = "dashed")
+abline(lm.desc, col = 'black', lwd = 1, lty = "dashed")
 
 
 # Make a useful data table of bomb spike growth rates
@@ -564,7 +564,7 @@ bomb.table
 par(pty = "s", mfrow = c(1,3)) # edit to adjust for the number of radiocarbon age models
 
 # Stetson-4904 BC1
-plot(mean ~ Distance..um., r.stet, type = "o",
+plot(mean ~ Distance.microns, r.stet, type = "o",
      xlab = expression(paste("Distance", " (",mu,"m)")),
      ylab = "Years BP",
      pch = 21,

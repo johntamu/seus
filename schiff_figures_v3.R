@@ -716,13 +716,13 @@ grid.draw(rbind(ggplotGrob(jplot1), ggplotGrob(jplot2), size = "last"))
 #' --------------------------------------------------------------------------------------
 #' Jack-4907 vs Sav-4902
 #' --------------------------------------------------------------------------------------
-
+time.variable <- bp
 plot(d15n ~ linear.ad, df.jack, # With Base R
      xlab = x,
      ylab = n,
      type = "l",
      cex = 0.5,
-     xlim = c(500,2005),
+     xlim = c(-500,2005),
      col = alpha("black", 0.3))
 abline(v = 950, col = "black", lty = 'dashed')
 abline(v = 1250, col = "black", lty = 'dashed')
@@ -893,6 +893,10 @@ p + geom_point(size = 3) +
   xlab(expression(paste(Sigma,"V"))) +
   theme_bw() +
   theme(axis.text=element_text(size=11, color = "black"))
+
+xyplot(TP ~ Sum.V, data = ndata,
+       group = Region,
+       auto.key = TRUE)
 
 
 ########################
