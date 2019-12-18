@@ -821,7 +821,7 @@ lines(d15n ~ linear.ad, df.sav,
 ##                            ##
 ##                            ##
 ################################
-ndata <- read.csv("~/Google Drive/projects/rproj/seus/cleaned_ndata.csv") # Contains SEUS black coral data, GOM black corals, and some POM data from elsewhere
+ndata <- read.csv("~/Documents/GitHub/data/cleaned_ndata.csv") # Contains SEUS black coral data, GOM black corals, and some POM data from elsewhere
 
 ######################
 ## Overall AA plots ##

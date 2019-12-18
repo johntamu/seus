@@ -88,10 +88,16 @@ jack2$linear.ad <- jack4907.usgs.ad
 jack4684$linear.ad <- jack4684.ad
 jack4686$linear.ad <- jack4686.ad
 
-string <- '~/Documents/GitHub/data/schiff_bulk_years_09-04-2019.csv'
+string <- '~/Documents/GitHub/data/schiff_bulk_years_12-15-2019.csv'
   
 df.bulk <- rbind(jack, jack2, jack4684, jack4686, stetson, sav)
 write.csv(df.bulk, string, row.names = FALSE)
+
+# Specimens by themselves
+write.csv(jack, '~/Documents/GitHub/data/schiff_bulk_years_jack4907_12-15-2019.csv')
+write.csv(sav, '~/Documents/GitHub/data/schiff_bulk_years_sav_12-15-2019.csv')
+write.csv(stetson, '~/Documents/GitHub/data/schiff_bulk_years_stetson_12-15-2019.csv')
+write.csv(stetson2013,'~/Documents/GitHub/data/schiff_bulk_years_stetson2013_12-15-2019.csv')
 
 #---------------------
 # Creating two separate age records
