@@ -110,15 +110,15 @@ stetson %>%
 write.table(depths, '~/Documents/GitHub/data/clam/Cores/stetson/stetson_depths.txt', 
             sep = '\t', row.names = FALSE, col.names = FALSE)
 
-clam(core="stetson", type = 2, prob = 0.99, its = 1000, # Linear regression
+clam(core="stetson", type = 1, prob = 0.95, its = 1000, # Linear regression
      coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = TRUE,
-     depths.file = TRUE, thickness = 0.1, cmyr = TRUE, youngest = -55, bty = "o")
+     depths.file = TRUE, thickness = 0.1, est=1, outlier=c(2:11,13:15,17:24,26:27), cmyr = TRUE, youngest = -55, bty = "o")
 
-clam(core="stetson", type = 4, smooth = 0.8, prob = 0.99, its = 1000, # Spline model
+clam(core="stetson", type = 4, smooth = 0.8, prob = 0.95, its = 1000, # Spline model
     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
     depths.file = TRUE, thickness = 0.1, est = 2)
 
-clam(core="stetson", type = 1, smooth = 0.3, prob = 0.99, its = 1000, # Linear interpolation
+clam(core="stetson", type = 1, smooth = 0.3, prob = 0.95, its = 1000, # Linear interpolation
      coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
      depths.file = TRUE, thickness = 0.1, est = 2)
 
@@ -182,6 +182,12 @@ clam(core="jack4907", type = 4, smooth = 0.5, prob = 0.99, its = 1000,
      coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
      depths.file = TRUE, thickness = 0.1, est = 5, cmyr = TRUE, bty = "o", mix.calibrationcurves(offset = c(-37,5)))
 
+
+clam(core="jack4907", type = 1, prob = 0.95, its = 1000, # Use linear regression with a hiatus
+     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = TRUE,
+     depths.file = TRUE, outlier = c(4:9,11:16), thickness = 0.05, est = 1, cmyr = TRUE, 
+     bty = "o") 
+
 clam(core="jack4907", type = 2, prob = 0.99, its = 1000, # Use linear regression with a hiatus
      coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = TRUE,
      depths.file = TRUE, thickness = 0.05, est = 1, cmyr = TRUE, hiatus = c(0.935, 3.5), # hiatus argument is depth in cm ***
@@ -213,7 +219,8 @@ clam(core="jack4907", type = 4, smooth = 0.5, prob = 0.99, its = 1000,
      depths.file = TRUE, thickness = 0.1, est = 5, cmyr = TRUE)
 
 # jackdepths <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4907/jack4907_smooth_spline_ages.txt')
-jackdepths <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4907/jack4907_polyn_regr_ages.txt')
+# jackdepths <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4907/jack4907_polyn_regr_ages.txt')
+jackdepths <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4907/jack4907_interpolated_ages.txt')
 jackdepths$rate <- jackdepths$acc.rate*1000
 
 # --------------------------------
@@ -322,15 +329,16 @@ clam(core="sav4902", type = 4, smooth = 0.5, prob = 0.95, its = 1000,
      coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
      depths.file = TRUE, thickness = 0.1, est = 1, youngest = c(1), cmyr = TRUE)
 par(pty = "s")
-clam(core="sav4902", type = 2, smooth = 0.5, prob = 0.95, its = 1000,
+clam(core="sav4902", type = 1, smooth = 0.5, prob = 0.95, its = 1000,
      coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = TRUE,
-     depths.file = TRUE, thickness = 0.1, youngest = c(1), cmyr = TRUE, bty ="o")
+     depths.file = TRUE, thickness = 0.1, outlier=c(2,5), cmyr = TRUE, bty ="o")
 
 clam(core="sav4902", type = 2, smooth = 0.5, prob = 0.95, its = 1000,
      coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
      depths.file = TRUE, thickness = 0.1, est = 1, youngest = c(1), cmyr = TRUE, hiatus = c(20.5))
 
-savdepths <- read.delim('~/Documents/GitHub/data/clam/Cores/sav4902/sav4902_polyn_regr_ages.txt')
+# savdepths <- read.delim('~/Documents/GitHub/data/clam/Cores/sav4902/sav4902_polyn_regr_ages.txt')
+savdepths <- read.delim('~/Documents/GitHub/data/clam/Cores/sav4902/sav4902_interpolated_ages.txt')
 savdepths$rate = savdepths$acc.rate*1000
 
 # **********************

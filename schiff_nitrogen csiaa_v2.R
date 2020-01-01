@@ -274,11 +274,11 @@ corals$Nfix <- Nfix
 #' ------------------------------------------
 #' 
 
-ndata <- read.csv("~/Google Drive/projects/rproj/seus/cleaned_ndata.csv") # Contains SEUS black coral data, GOM black corals, and some POM data from elsewhere
+ndata <- read.csv("~/Documents/GitHub/data/cleaned_ndata.csv") # Contains SEUS black coral data, GOM black corals, and some POM data from elsewhere
 
 # Add chronologies to N-CSIAA data
 
-# Filter bulkd dataframes that were loaded into the figures script file
+# Filter bulk dataframes that were loaded into the figures script file
 df.sav %>%
   filter(sample.no. == 2 | sample.no. == 7 | sample.no. == 15 | sample.no. == 33 | sample.no. == 61 |
            sample.no. == 66 | sample.no. == 115) -> sav.n
@@ -298,3 +298,5 @@ t.vector <- c(z$linear.ad, t.df1$Year.CE)
 
 ndata$Year.CE <- t.vector # Now we have an updated ndata dataframe with current years
 ndata$yrBP <- 1950 - ndata$Year.CE
+
+write.csv(ndata, '~/Documents/GitHub/data/cleaned_ndata_12-22-2019.csv')

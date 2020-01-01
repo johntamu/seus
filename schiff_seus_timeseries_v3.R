@@ -75,7 +75,7 @@ jack4907.ad <- 1950 - jackdepths$best
 jack4907.usgs.ad <- NA
 jack4686.ad <- NA
 jack4684.ad <- 1950 - jack4684depths$best
-jack4684.ad <- ad2 # 23 microns per year growth rate
+# jack4684.ad <- ad2 # 23 microns per year growth rate
 # stet4904.ad <- 1950 - stetdepths$best
 stet4904.ad <- 1950 - stet2depths$best # from the coarser resolution Stetson radiocarbon record
 sav4902.ad <- 1950 - savdepths$best
@@ -88,7 +88,7 @@ jack2$linear.ad <- jack4907.usgs.ad
 jack4684$linear.ad <- jack4684.ad
 jack4686$linear.ad <- jack4686.ad
 
-string <- '~/Documents/GitHub/data/schiff_bulk_years_12-15-2019.csv'
+string <- '~/Documents/GitHub/data/schiff_bulk_years_12-22-2019.csv'
   
 df.bulk <- rbind(jack, jack2, jack4684, jack4686, stetson, sav)
 write.csv(df.bulk, string, row.names = FALSE)

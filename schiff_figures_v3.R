@@ -24,7 +24,7 @@ library(forecast)
 ## Load df.bulk from timeseries ##
 ## script file                  ##
 ##################################
-path1 <- '~/Documents/GitHub/data/schiff_bulk_years_09-04-2019.csv'
+path1 <- '~/Documents/GitHub/data/schiff_bulk_years_12-22-2019.csv'
 # path2 <- 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/schiff_bulk_years_08-14-2019.csv'
 # path3 <- '/home/john/Desktop/data/schiff_bulk_years_08-14-2019.csv'
 
