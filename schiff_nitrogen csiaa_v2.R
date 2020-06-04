@@ -19,7 +19,7 @@ library(dplyr)
 ###############
 path.win1 <- 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/schiff ncsiaa 09-01-2018.csv'
 path.mac1 <- '~/Google Drive/projects/rproj/seus/data/schiff ncsiaa 02-06-2019.csv'
-string <- '~/Documents/GitHub/data/schiff ncsiaa 02-06-2019.csv'
+string <- '~/Documents/GitHub/data/schiff ncsiaa 05-28-2020.csv'
 
 ##################
 # Gulf of Mexico #
@@ -29,9 +29,9 @@ string <- '~/Documents/GitHub/data/schiff ncsiaa 02-06-2019.csv'
 
 path1 <- '~/Google Drive/projects/rproj/seus/data/prouty gom n-csiaa.csv'
 path2 <- 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/prouty gom n-csiaa.csv' # The eventual path for the Google Drive folder on the Windows computer
-path3 <- '~/Google Drive/projects/rproj/seus/data/prouty gom n-csiaa-means-v2.csv'
-path4 <- 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/prouty gom n-csiaa-means-v2.csv'
+path3 <- '~/Documents/GitHub/data/prouty gom n-csiaa-means-v2.csv'
 
+path4 <- 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/prouty gom n-csiaa-means-v2.csv'
 # Load the data
 gom <- read.csv(path4)
 gom <- read.csv(path3)
@@ -166,12 +166,15 @@ ndata <- read.csv("cleaned_ndata.csv")
 #' Identifying if differences 
 #' between coral specimens are significant
 
-ndata %>%
+# ndata %>%
+#   filter(Sample.ID2 == "Jacksonville-4907" | Sample.ID2 == "Jacksonville-4684" | Sample.ID2 == "Savannah Banks-4902") -> corals
+
+seus %>%
   filter(Sample.ID2 == "Jacksonville-4907" | Sample.ID2 == "Jacksonville-4684" | Sample.ID2 == "Savannah Banks-4902") -> corals
 
 phe.aov <- aov(Phe ~ Sample.ID2, corals) # One-way ANOVA with Phe
 sraa.aov <- aov(SrcAA ~ Sample.ID2, corals) # One-way ANOVA with avg Sr-AA
-tp.aov <- aov(TP ~ Sample.ID2, corals)
+tp.aov <- aov(TP ~ Coral, corals)
 sumv.aov <- aov(Sum.V ~ Sample.ID2, corals)
 
 summary(phe.aov)
@@ -258,7 +261,7 @@ ggplot(corals, aes(Year.CE, TP)) +
 ## in CSIAA samples           ##
 ################################
 
-d15N.Psink <- -3.3 #corals$Bulk
+d15N.Psink <- corals$Bulk
 d15N.Nfix <- -1
 d15N.nitrate <- 4.5
 

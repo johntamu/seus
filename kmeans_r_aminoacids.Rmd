@@ -1,0 +1,114 @@
+```{r}
+library(vegan)
+library(MASS)
+library(dplyr)
+library(ggplot2)
+library(grid)
+library(gridExtra)
+library(ggfortify)
+```
+
+```{r}
+path <- '~/Documents/GitHub/data/schiff c-csiaa data from schiff_larsen_in prog.csv'
+
+carbon <- read.csv(path) # Check original excel sheet for standard deviations, etc. 
+```
+
+```{r}
+# K-means clustering analysis
+
+# CLUSTER ANALYSIS #
+
+carbon %>%
+  dplyr::select(Group.ID, Group.ID2, Phe, Thr, Ile, Leu) %>%
+  filter(Group.ID2 == "Eukaryote" |
+           Group.ID2 == "Prokaryote" |
+           Group.ID2 == "Leiopathes") -> test_table
+mydata <- test_table
+mydata <- mydata[-16,]
+mydata <- data.frame(mydata[,-1], row.names=mydata[,1])
+mydata <- mydata %>% dplyr::select(Phe, Thr, Ile, Leu)
+mydata <- scale(mydata)
+wss <- (nrow(mydata)-1)*sum(apply(mydata,2,var))
+for (i in 2:15) wss[i] <- sum(kmeans(mydata,
+                                     centers=i)$withinss)
+plot(1:15, wss, type="b", xlab="Number of Clusters",
+     ylab="Within groups sum of squares")
+
+# K-Means Cluster Analysis
+fit <- kmeans(mydata, centers = 5, iter.max = 5000000, nstart = 25) # 4 cluster solution
+# get cluster means
+aggregate(mydata,by=list(fit$cluster),FUN=mean)
+# append cluster assignment
+mydata <- data.frame(mydata, fit$cluster)
+
+library(cluster)
+clusplot(mydata, fit$cluster, color=TRUE, shade=TRUE,
+         labels=2, lines=0)
+
+# mydata2 <- cbind(mydata, test_table$Group.ID2)
+```
+
+```{r}
+carbon %>%
+  dplyr::select(Group.ID, Group.ID2, Phe, Thr, Ile, Leu) %>%
+  filter(Group.ID2 == "Microalgae" |
+           Group.ID2 == "Macroalgae" |
+           Group.ID2 == "Bacteria" |
+           Group.ID2 == "Leiopathes") -> test_table
+mydata <- test_table
+mydata <- data.frame(mydata[,-1], row.names=mydata[,1])
+mydata <- mydata %>% dplyr::select(Phe, Thr, Ile, Leu)
+mydata <- scale(mydata)
+
+autoplot(kmeans(mydata, centers = 3), data = test_table, label = TRUE,
+         mapping = aes(colour = test_table$Group.ID2))
+
+aggregate(mydata,by=list(fit$cluster),FUN=mean)
+# append cluster assignment
+# mydata <- data.frame(mydata, fit$cluster)
+
+```
+
+
+
+```{r}
+# K-means clustering analysis
+
+# CLUSTER ANALYSIS #
+
+carbon %>%
+  dplyr::select(Group.ID, Group.ID2, Phe, Glx) %>%
+  filter(Group.ID2 == "Microalgae" |
+           Group.ID2 == "Macroalgae" |
+           Group.ID2 == "Bacteria" |
+           Group.ID2 == "Leiopathes") -> test_table
+mydata <- test_table
+mydata <- data.frame(mydata[,-1], row.names=mydata[,1])
+mydata <- mydata %>% dplyr::select(Phe, Glx)
+mydata <- scale(mydata)
+wss <- (nrow(mydata)-1)*sum(apply(mydata,2,var))
+for (i in 2:15) wss[i] <- sum(kmeans(mydata,
+                                     centers=i)$withinss)
+plot(1:15, wss, type="b", xlab="Number of Clusters",
+     ylab="Within groups sum of squares")
+
+# K-Means Cluster Analysis
+fit <- kmeans(mydata, 4) # 4 cluster solution
+# get cluster means
+aggregate(mydata,by=list(fit$cluster),FUN=mean)
+# append cluster assignment
+mydata <- data.frame(mydata, fit$cluster)
+
+library(cluster)
+clusplot(mydata, fit$cluster, color=TRUE, shade=TRUE,
+         labels=2, lines=0)
+
+mydata2 <- cbind(mydata, test_table$Group.ID2)
+
+ggplot() +
+  geom_point(data = mydata2, 
+             mapping = aes(x = Phe, 
+                                  y = Glx, 
+                                  colour = test_table$Group.ID2))
+```

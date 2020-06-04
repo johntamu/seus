@@ -25,12 +25,12 @@ library(vegan)
 ######################################
 
 carbon %>%
-  dplyr::select(Group.ID, Group.ID2, Group.ID3, Source, Phe, Thr, Ile, Leu) %>%
+  dplyr::select(Group.ID, Group.ID2, Feature, Source, Phe, Thr, Ile, Leu) %>%
   filter(Group.ID2 == "Microalgae" |
            Group.ID2 == "Macroalgae" |
            Group.ID2 == "Bacteria" |
-           Group.ID3 == "Leiopathes-pre" |
-           Group.ID3 == "Leiopathes-post") -> pca_set
+           Group.ID2 == "Leiopathes" |
+           Feature == "Leiopathes-post") -> pca_set
 
 carbon %>%
   dplyr::select(Group.ID, Group.ID2, Group.ID3, Source, Phe, Thr, Ile, Leu) %>%
