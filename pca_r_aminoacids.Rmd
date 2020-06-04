@@ -14,8 +14,8 @@ library(ggfortify)
 ```
 ```{r}
 # path1 <- 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/schiff c-csiaa stetson.csv'
-path <- '~/Documents/GitHub/data/schiff c-csiaa data from schiff_larsen_in prog.csv'
-
+# path <- '~/Documents/GitHub/data/schiff c-csiaa data from schiff_larsen_in prog.csv'
+path <- '~/Documents/GitHub/data/schiff c-csiaa_training dataset.csv'
 carbon <- read.csv(path) # Check original excel sheet for standard deviations, etc. 
 
 carbon %>%
@@ -114,32 +114,32 @@ df_pca
 ```
 
 ```{r}
-
-# Using ggplot
-# plot(df_pca$x[,1], df_pca$x[,2])
-df_out <- as.data.frame(df_pca$x)
-df_out$group <- sapply(strsplit(as.character(row.names(endmembers)), "_"), "[[", 1)
-head(df_out)
-
+# 
+# # Using ggplot
+# # plot(df_pca$x[,1], df_pca$x[,2])
+# df_out <- as.data.frame(df_pca$x)
+# df_out$group <- sapply(strsplit(as.character(row.names(endmembers)), "_"), "[[", 1)
+# head(df_out)
+# 
+# # p <- ggplot(df_out,aes(x=PC1,y=PC2,color=group ))
+# # p <- p + geom_point()
+# # p
+# percentage <- round(df_pca$sdev / sum(df_pca$sdev) * 100, 0)
+# percentage <- paste( colnames(df_out), "(", paste( as.character(percentage), "%", ")", sep="") )
+# 
+# theme <- theme(panel.background = element_blank(),
+#                panel.border=element_rect(fill=NA),
+#                panel.grid.major = element_blank(),
+#                panel.grid.minor = element_blank(),
+#                strip.background=element_blank(),
+#                axis.text.x=element_text(colour="black"),
+#                axis.text.y=element_text(colour="black"),
+#                axis.ticks=element_line(colour="black"),
+#                plot.margin=unit(c(1,1,1,1),"line"))
+# 
 # p <- ggplot(df_out,aes(x=PC1,y=PC2,color=group ))
-# p <- p + geom_point()
+# p <- p + geom_point() + theme + xlab(percentage[1]) + ylab(percentage[2])
 # p
-percentage <- round(df_pca$sdev / sum(df_pca$sdev) * 100, 0)
-percentage <- paste( colnames(df_out), "(", paste( as.character(percentage), "%", ")", sep="") )
-
-theme <- theme(panel.background = element_blank(),
-               panel.border=element_rect(fill=NA),
-               panel.grid.major = element_blank(),
-               panel.grid.minor = element_blank(),
-               strip.background=element_blank(),
-               axis.text.x=element_text(colour="black"),
-               axis.text.y=element_text(colour="black"),
-               axis.ticks=element_line(colour="black"),
-               plot.margin=unit(c(1,1,1,1),"line"))
-
-p <- ggplot(df_out,aes(x=PC1,y=PC2,color=group ))
-p <- p + geom_point() + theme + xlab(percentage[1]) + ylab(percentage[2])
-p
 ```
 
 
@@ -149,20 +149,37 @@ carbon %>%
   dplyr::select(Group.ID2, Phe, Thr, Ile, Leu, Val) %>%
   filter(Group.ID2 == "Microalgae" |
            Group.ID2 == "Macroalgae" |
-           Group.ID2 == "Bacteria"
-           # Category == "Sediment trap" |
-           # Group.ID2 == 'Leiopathes'
+           Group.ID2 == "Bacteria" |
+           Group.ID2 == "Plants" |
+           # Group.ID2 == 'Seagrasses' |
+           Group.ID2 == 'Leiopathes'
          ) -> endmembers
+
+# carbon %>%
+#   dplyr::select(Category, Phe, Thr, Ile, Leu, Val) %>%
+#   filter(
+#     Category == "Bacteria" |
+#       Category == "Cyanobacteria" |
+#             Category == "Cyanobacteria-L" |
+#       Category == "Diatom" |
+#       Category == "Phaeophyte" | # Brown algae
+#       Category == 'Haptophyte' | # Coccolithophore
+#       Category == 'Leiopathes'
+#   ) -> endmembers
 mydata <- endmembers
+mydata <- na.omit(mydata)
 mydata_labels <- mydata
 head(mydata)
-row.names(mydata) <- paste(mydata$Group.ID2, row.names(mydata), sep="_") 
+row.names(mydata) <- paste(mydata$Group.ID2, row.names(mydata), sep="_") # Change between Category or Group.ID2
 head(mydata)
 mydata$Group.ID2 <- NULL
 head(mydata)
-df_pca <- prcomp(mydata, scale = TRUE)
-
+mydata <- mydata - rowMeans(mydata)
+df_pca <- prcomp(mydata, scale. = TRUE)
+# df_pca <- princomp(mydata, cor = TRUE, scores = TRUE)
+#
 df_out <- as.data.frame(df_pca$x)
+# df_out <- as.data.frame(df_pca$scores)
 df_out$group <- sapply(strsplit(as.character(row.names(mydata)), "_"), "[[", 1)
 head(df_out)
 
@@ -176,10 +193,14 @@ theme <- theme(panel.background = element_blank(),
                axis.ticks=element_line(colour="black"),
                plot.margin=unit(c(1,1,1,1),"line"))
 
-p <- autoplot(df_pca, data = mydata_labels, colour = 'Group.ID2', loadings = TRUE, loadings.colour = 'black',
-              frame = FALSE, frame.type = 'norm')
+p <- autoplot(df_pca, data = mydata_labels, fill = 'Group.ID2', color = 'black', shape = 'Group.ID2', size = 3, loadings = TRUE, loadings.colour = 'black',
+              frame = FALSE, frame.type = 'norm', scale = 0)
 p <- p + theme
+p <- p + scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")) + scale_shape_manual(values=c(21:22, 8, 23:25))
+p <- p + labs(fill = "Group") + labs(shape = "Group")
 p
+
+ggsave('~/Desktop/pca_.pdf', plot=last_plot(), width = 7, height = 5, dpi = 300)
 ```
 
 ```{r}
@@ -189,8 +210,8 @@ carbon %>%
   filter(
     Group.ID2 == "Microalgae" |
       Group.ID2 == "Macroalgae" |
-      Group.ID2 == "Bacteria" |
-      Group.ID2 == "Seagrasses"
+      Group.ID2 == "Bacteria" 
+      # Group.ID2 == "Plants"
       # Group.ID2 == 'Leiopathes'
          ) -> endmembers
 head(endmembers)
@@ -198,25 +219,174 @@ carbon %>%
   dplyr::select(Group.ID2, Phe, Thr, Ile, Leu, Val) %>%
   filter(Group.ID2 == "Leiopathes") -> leio
 
+carbon %>%
+  dplyr::select(Group.ID2, Phe, Thr, Ile, Leu, Val) %>%
+  filter(Group.ID2 == "Sediment trap") -> sediment
+
+carbon %>%
+  dplyr::select(Group.ID2, Phe, Thr, Ile, Leu, Val) %>%
+  filter(Group.ID2 == "Isidella A7") -> isidella
+
 train <- endmembers
 train <- na.omit(train)
 train <- droplevels(train)
 leio <- droplevels(leio)
+sediment <- droplevels(sediment)
+isidella <- droplevels(isidella)
 
 lda_train <- lda(Group.ID2 ~ Phe + Thr + Ile + Leu, train)
 pred <- predict(lda_train, newdata = leio) # pred$x has 10 items because there were ten (10) d13CAA samples
+pred_sediment <- predict(lda_train, newdata = sediment)
+pred_isidella <- predict(lda_train, newdata = isidella)
 
 lda_data <- cbind(train, predict(lda_train)$x)
 leio_data <- cbind(leio, pred$x)
-lda_data <- rbind(lda_data, leio_data)
+sediment_data <- cbind(sediment, pred_sediment$x)
+isidella_data <- cbind(isidella, pred_isidella$x)
+lda_data <- rbind(lda_data, leio_data, sediment_data, isidella_data)
 
 p1 <- ggplot(lda_data, aes(LD1, LD2)) + geom_point(aes(shape = Group.ID2, fill = Group.ID2), size = 3)
 p1 <- p1 + theme_linedraw() + theme(panel.grid = element_blank())
-p1 <- p1 + scale_shape_manual(values=c(21:25)) 
-p1 <- p1 + scale_fill_manual(values=c('#d7191c','#fdae61','#ffffbf','#abd9e9','#2c7bb6'))
+# p1 <- p1 + scale_shape_manual(values=c(21:25)) 
+# p1 <- p1 + scale_fill_manual(values=c('#d7191c','#fdae61','#ffffbf','#abd9e9','#2c7bb6'))
 p1
 
 ```
 
 
+```{r}
+
+pred.train <- predict(lda_train,train)$class
+pred.test <- predict(lda_train,leio)$class
+mean(pred.train == train$Group.ID2)
+mean(pred.test == train$Group.ID2)
+
+
+lda.test <- predict(lda_train, train)
+train$lda <- lda.test$class
+table(train$lda, train$Group.ID2)
+
+
+lda.test <- predict(lda_train,leio)
+leio$lda <- lda.test$class
+table(leio$lda,leio$Group.ID2)
+```
+
+```{r}
+# Linear discriminant analysis
+carbon %>%
+  dplyr::select(Category, Phe, Thr, Ile, Leu, Val) %>%
+  filter(
+    Category == "Bacteria" |
+      Category == "Cyanobacteria" |
+            Category == "Cyanobacteria-L" |
+      Category == "Diatom" |
+      Category == "Phaeophyte" | # Brown algae
+      Category == 'Haptophyte' # Coccolithophore
+         ) -> endmembers
+head(endmembers)
+carbon %>%
+  dplyr::select(Category, Phe, Thr, Ile, Leu, Val) %>%
+  filter(Category == "Leiopathes") -> leio
+
+carbon %>%
+  dplyr::select(Category, Phe, Thr, Ile, Leu, Val) %>%
+  filter(Category == "Sediment trap") -> sediment
+
+carbon %>%
+  dplyr::select(Category, Phe, Thr, Ile, Leu, Val) %>%
+  filter(Category == "Isidella") -> isidella
+
+train <- endmembers
+train <- na.omit(train)
+train <- droplevels(train)
+leio <- droplevels(leio)
+sediment <- droplevels(sediment)
+isidella <- droplevels(isidella)
+
+lda_train <- lda(Category ~ Phe + Thr + Ile + Leu, train)
+pred <- predict(lda_train, newdata = leio) # pred$x has 10 items because there were ten (10) d13CAA samples
+# pred_sediment <- predict(lda_train, newdata = sediment)
+# pred_isidella <- predict(lda_train, newdata = isidella)
+
+lda_data <- cbind(train, predict(lda_train)$x)
+leio_data <- cbind(leio, pred$x)
+# sediment_data <- cbind(sediment, pred_sediment$x)
+# isidella_data <- cbind(isidella, pred_isidella$x)
+# lda_data <- rbind(lda_data, leio_data, sediment_data, isidella_data)
+lda_data <- rbind(lda_data, leio_data)
+
+p1 <- ggplot(lda_data, aes(LD1, LD2)) + geom_point(aes(shape = Category, fill = Category), size = 3)
+p1 <- p1 + theme_linedraw() + theme(panel.grid = element_blank())
+# p1 <- p1 + scale_shape_manual(values=c(21:25)) 
+# p1 <- p1 + scale_fill_manual(values=c('#d7191c','#fdae61','#ffffbf','#abd9e9','#2c7bb6'))
+p1
+
+```
+
+```{r}
+pred.train <- predict(lda_train,train)$class
+pred.test <- predict(lda_train,leio)$class
+mean(pred.train == train$Category)
+mean(pred.test == train$Category)
+
+
+lda.test <- predict(lda_train, train)
+train$lda <- lda.test$class
+table(train$lda, train$Category)
+
+
+lda.test <- predict(lda_train,leio)
+leio$lda <- lda.test$class
+table(leio$lda,leio$Category)
+```
+
+```{r}
+carbon %>%
+  dplyr::select(Category, Phe, Thr, Ile, Leu, Val) %>%
+  filter(
+    Category == "Bacteria" |
+      Category == "Cyanobacteria" |
+      Category == "Diatom" |
+      Category == "Leiopathes" |
+      Category == "Phaeophyte" | # Brown algae
+      Category == 'Haptophyte' # Coccolithophore
+         ) -> endmembers
+
+mydata <- endmembers
+mydata <- na.omit(mydata)
+mydata_labels <- mydata
+head(mydata)
+row.names(mydata) <- paste(mydata$Category, row.names(mydata), sep="_") # Change between Category or Group.ID2
+head(mydata)
+mydata$Category <- NULL
+head(mydata)
+mydata <- mydata - rowMeans(mydata)
+df_pca <- prcomp(mydata, scale. = TRUE)
+# df_pca <- princomp(mydata, cor = TRUE, scores = TRUE)
+#
+df_out <- as.data.frame(df_pca$x)
+# df_out <- as.data.frame(df_pca$scores)
+df_out$group <- sapply(strsplit(as.character(row.names(mydata)), "_"), "[[", 1)
+head(df_out)
+
+theme <- theme(panel.background = element_blank(),
+               panel.border=element_rect(fill=NA),
+               panel.grid.major = element_blank(),
+               panel.grid.minor = element_blank(),
+               strip.background=element_blank(),
+               axis.text.x=element_text(colour="black"),
+               axis.text.y=element_text(colour="black"),
+               axis.ticks=element_line(colour="black"),
+               plot.margin=unit(c(1,1,1,1),"line"))
+
+p <- autoplot(df_pca, data = mydata_labels, fill = 'Category', color = 'black', shape = 'Category', size = 3, loadings = TRUE, loadings.colour = 'black',
+              frame = FALSE, frame.type = 'norm', scale = 0)
+p <- p + theme
+p <- p + scale_fill_manual(values=c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")) + scale_shape_manual(values=c(21:22,23,24,8,25))
+p <- p + labs(fill = "Group") + labs(shape = "Group")
+p
+
+ggsave('~/Desktop/pca_2.pdf', plot=last_plot(), width = 7, height = 5, dpi = 300)
+```
 
