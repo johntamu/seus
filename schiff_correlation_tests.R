@@ -268,3 +268,23 @@ df <- as.data.frame(iris)
 row.names(df) <- paste(df$Species, row.names(df), sep="_") 
 df$Species <- NULL
 head(df)
+
+
+# t-test before and after 1900 d15N
+
+t.table <- read.csv('~/Documents/GitHub/data/schiff_bulk_years_09-04-2019.csv')
+library(dplyr)
+
+t.table <- t.table %>% filter(coral.id == "jack-4684-bc-unk" | coral.id == 'stet-4904-bc1-d2')
+t.table1 <- t.table %>% filter(coral.id == "jack-4684-bc-unk")
+t.table2 <- t.table %>% filter(coral.id == "stet-4904-bc1-d2")
+
+stet1 <- t.table2 %>% filter(linear.ad > 1900)
+stet2 <- t.table2 %>% filter(linear.ad < 1900 & linear.ad > 1500)
+
+t.test(stet1$d15n.vs.air, stet2$d15n.vs.air)
+
+j1 <- t.table1 %>% filter(linear.ad > 1900)
+j2 <- t.table1 %>% filter(linear.ad < 1900 & linear.ad > 1500)
+
+t.test(j1$d15n.vs.air, j2$d15n.vs.air)
