@@ -288,3 +288,63 @@ j1 <- t.table1 %>% filter(linear.ad > 1900)
 j2 <- t.table1 %>% filter(linear.ad < 1900 & linear.ad > 1500)
 
 t.test(j1$d15n.vs.air, j2$d15n.vs.air)
+
+
+
+
+
+
+
+
+# Mol percent calculation and figure with error bar
+# mol <- read.csv('C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/schiff_stetson aa mol percent.csv')
+mol <- read.csv('~/Documents/GitHub/data/schiff_stetson aa mol percent.csv')
+
+mol$Total <- rowSums(mol[,2:13])
+# mol$Year.AD <- seus_carbon$Year.AD
+
+mean(mol$Total)
+sd(mol$Tota)
+
+data <- data.frame(
+  name=letters[1:5],
+  value=sample(seq(4,15),5),
+  sd=c(1,0.2,3,2,4))
+
+ggplot(data) +
+  geom_bar( aes(x=name, y=value), stat="identity", fill="skyblue", alpha=0.5) +
+  geom_linerange( aes(x=name, ymin=value-sd, ymax=value+sd), colour="orange", alpha=0.9, size=1.3)
+
+library(dplyr)
+library(reshape2)
+library(lattice)
+
+mol %>%
+  melt(., "Sample") -> t.data
+write.csv(t.data, "data.csv")
+levels(t.data$variable)
+mol %>%
+  melt(., "Sample") %>%
+  barchart(value ~ variable,
+           data = .,
+           horiz = FALSE,
+           ylab = 'Amino acids (mol, %)',
+           col = "darkgrey")
+
+t.mol <- mol
+rownames(t.mol) <- t.mol[,1]
+t.mol$Sample <- NULL
+mean <- colMeans(t.mol)
+sd <- apply(t.mol, 2, sd)
+mean <- as.data.frame(mean)
+mean$sd <- sd
+library(data.table)
+mean <- setDT(mean, keep.rownames = "aa")[]
+ggplot(mean) +
+  geom_bar( aes(x=aa, y=mean), stat="identity", fill="#1b9e77", alpha=1, color = "black", size = 0.25) +
+  geom_linerange( aes(x=aa, ymin=mean-sd, ymax=mean+sd), colour="#000000", alpha=1, size=0.5) +
+  theme_linedraw() +
+  theme(panel.grid = element_blank(), axis.ticks.x = element_line(size = 0.25, color = "black")) +
+  ylab("Amino acid (Mol%)") +
+  xlab(NULL)
+ggsave("mol_percent.png",width = 5, height = 5)

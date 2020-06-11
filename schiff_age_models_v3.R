@@ -193,6 +193,11 @@ clam(core="jack4907", type = 2, prob = 0.99, its = 1000, # Use linear regression
      depths.file = TRUE, thickness = 0.05, est = 1, cmyr = TRUE, hiatus = c(0.935, 3.5), # hiatus argument is depth in cm ***
      bty = "o", youngest = c(1)) 
 
+clam(core="jackusgs", type = 2, prob = 0.99, its = 1000, # Use linear regression with a hiatus
+     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = TRUE,
+     depths.file = TRUE, thickness = 0.05, est = 1, cmyr = TRUE, hiatus = c(0.6, 2.8), # hiatus argument is depth in cm ***
+     bty = "o",  youngest = c(1)) 
+
 clam(core="jack4907", type = 2, prob = 0.95, its = 1000, # Use linear regression with a hiatus
      coredir = core.dir, cc = 4, ccdir=".", BCAD = FALSE, depth = "mm", plotname = TRUE,
      depths.file = TRUE, thickness = 0.1, est = 7, cmyr = TRUE, hiatus = c(1.35), # 1.1 works; hiatus argument is depth in cm ***
@@ -219,8 +224,8 @@ clam(core="jack4907", type = 4, smooth = 0.5, prob = 0.99, its = 1000,
      depths.file = TRUE, thickness = 0.1, est = 5, cmyr = TRUE)
 
 # jackdepths <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4907/jack4907_smooth_spline_ages.txt')
-# jackdepths <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4907/jack4907_polyn_regr_ages.txt')
-jackdepths <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4907/jack4907_interpolated_ages.txt')
+jackdepths <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4907/jack4907_polyn_regr_ages.txt')
+# jackdepths <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4907/jack4907_interpolated_ages.txt')
 jackdepths$rate <- jackdepths$acc.rate*1000
 
 # --------------------------------

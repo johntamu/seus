@@ -26,8 +26,7 @@ carbon %>%
            Category == "Sediment trap" |
            Category == 'Cyanobacteria' |
            # Feature == "Seagrasses" |
-           Category == "Leiopathes-pre" |
-           Category == "Leiopathes-post"
+           Category == "Leiopathes" |
            # Feature == 'Leiopathes'
          ) -> pca_set
 
@@ -316,7 +315,7 @@ leio_data <- cbind(leio, pred$x)
 lda_data <- rbind(lda_data, leio_data)
 
 p1 <- ggplot(lda_data, aes(LD1, LD2)) + geom_point(aes(shape = Category, fill = Category), size = 3)
-p1 <- p1 + theme_linedraw() + theme(panel.grid = element_blank())
+p1 <- p1 + theme_linedraw() + theme(panel.grid = element_blank(), axis.ticks.x = element_line(size = 0.25, color = "black"))
 # p1 <- p1 + scale_shape_manual(values=c(21:25)) 
 # p1 <- p1 + scale_fill_manual(values=c('#d7191c','#fdae61','#ffffbf','#abd9e9','#2c7bb6'))
 p1
@@ -327,7 +326,7 @@ p1
 pred.train <- predict(lda_train,train)$class
 pred.test <- predict(lda_train,leio)$class
 mean(pred.train == train$Category)
-mean(pred.test == train$Category)
+# mean(pred.test == train$Category)
 
 
 lda.test <- predict(lda_train, train)
