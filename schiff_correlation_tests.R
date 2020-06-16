@@ -344,7 +344,15 @@ ggplot(mean) +
   geom_bar( aes(x=aa, y=mean), stat="identity", fill="#1b9e77", alpha=1, color = "black", size = 0.25) +
   geom_linerange( aes(x=aa, ymin=mean-sd, ymax=mean+sd), colour="#000000", alpha=1, size=0.5) +
   theme_linedraw() +
-  theme(panel.grid = element_blank(), axis.ticks.x = element_line(size = 0.25, color = "black")) +
+  theme(panel.grid = element_blank(), axis.ticks.x = element_line(size = 0.25, color = "black"),
+        axis.text.x = element_text(size = 12), axis.text.y = element_text(size = 12)) +
   ylab("Amino acid (Mol%)") +
   xlab(NULL)
-ggsave("mol_percent.png",width = 5, height = 5)
+ggsave("mol_percent.png",width = 8, height = 5)
+
+
+library(dplyr)
+ndata %>% filter(Region == 'SEUS') -> table
+plot(Phe ~ Year.CE, table)
+summary(lm(Phe ~ Year.CE, table))
+summary(lm(Glu ~ Year.CE, table))
