@@ -41,7 +41,7 @@ library(forecast) # for moving averages
 library(data.table) # alternative for data manipulation
 
 # Establish a pathfile for the data
-path1 <- '~/Documents/GitHub/data/schiff cn age models 09-04-2019.csv'
+path1 <- '~/Documents/GitHub/data/schiff cn age models 06-17-2020.csv'
 # path2 <- 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/schiff cn age models 09-04-2019.csv'
 # path3 <- '/home/Desktop/data' # Linux computer link
 
@@ -80,7 +80,7 @@ jack4684.ad <- 1950 - jack4684depths$best
 stet4904.ad <- 1950 - stet2depths$best # from the coarser resolution Stetson radiocarbon record
 sav4902.ad <- 1950 - savdepths$best
 
-# Add to data frames
+# ADD TO BULK ISOTOPE DATA FRAMES SO THEY NOW HAVE A TIME SERIES
 jack$linear.ad <- jack4907.ad
 stetson$linear.ad <- stet4904.ad
 sav$linear.ad <- sav4902.ad

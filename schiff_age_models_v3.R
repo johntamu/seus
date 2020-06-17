@@ -11,7 +11,7 @@
 library(clam)
 library(dplyr)
 
-path1 <- '~/Documents/GitHub/data/schiff radiocarbon 02-05-2019.csv'
+path1 <- '~/Documents/GitHub/data/schiff radiocarbon 06-10-2020.csv'
 path2 <- 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/schiff radiocarbon 02-05-2019.csv'
 path3 <- '/home/john/Desktop/data/schiff radiocarbon 02-05-2019.csv'
 
@@ -28,6 +28,7 @@ r.jack2 <- radiocarbon %>% filter(Coral == 'jack-4684-bc1')
 r.stet <- radiocarbon %>% filter(Coral == 'stet-4904-bc1-d5')
 r.sav <- radiocarbon %>% filter(Coral == 'sav-4902-bc1')
 r.stet2 <- radiocarbon %>% filter(Coral == 'stet-4904-bc1')
+r.jack4686 <- radiocarbon %>% filter(Coral == 'jack-4686-bc1-t1')
 
 ####################################
 ## Attach yrmin, yrmax estimates  ## 
@@ -58,15 +59,53 @@ r.stet2 <- radiocarbon %>% filter(Coral == 'stet-4904-bc1')
 # Stetson-4904 BC1
 # **********************
 
+# first Stetson record
+lm.stet <- lm(X14C.Age ~ Distance.microns, r.stet)
+plot(X14C.Age ~ Distance.microns, r.stet)
+abline(lm.stet)
+
+summary(lm.stet)
+
+# second Stetson record
+lm.stet2 <- lm(X14C.Age ~ Distance.microns, r.stet2)
+plot(X14C.Age ~ Distance.microns, r.stet2)
+abline(lm.stet2)
+
+summary(lm.stet2)
+
 # **********************
 # Savannah-4902 BC1
 # **********************
+
+lm.sav <- lm(X14C.Age ~ Distance.microns, r.sav)
+plot(X14C.Age ~ Distance.microns, r.sav)
+abline(lm.sav)
+
+summary(lm.sav)
 
 # **********************
 # Jacksonville-4684 BC1
 # **********************
 
+t.df <- r.jack2 %>% filter(X14C.Age > 0)
+lm.jack2<- lm(X14C.Age ~ Distance.microns, t.df)
+
+summary(lm.jack2)
+
+# **********************
+# Jacksonville-4686 BC1 ... or BC2?
+# **********************
+
+# long: 6.7mm, short: 4.7mm
+# going with 6mm length +/- 0.5mm
+
 # Note: This one is particularly important because we can also use the bomb spike
+t.df <- r.jack4686 %>% filter(Fraction.modern < 1)
+t.df$X14C.Age <- as.numeric(as.character(t.df$X14C.Age))
+lm.jack4686 <- lm(X14C.Age ~ Distance.microns, t.df)
+
+summary(lm.jack4686) # Rsquared = 0.95
+
 
 ################
 # Growth rates #
@@ -110,9 +149,9 @@ stetson %>%
 write.table(depths, '~/Documents/GitHub/data/clam/Cores/stetson/stetson_depths.txt', 
             sep = '\t', row.names = FALSE, col.names = FALSE)
 
-clam(core="stetson", type = 1, prob = 0.95, its = 1000, # Linear regression
+clam(core="stetson", type = 2, prob = 0.95, its = 1000, # Linear regression
      coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = TRUE,
-     depths.file = TRUE, thickness = 0.1, est=1, outlier=c(2:11,13:15,17:24,26:27), cmyr = TRUE, youngest = -55, bty = "o")
+     depths.file = TRUE, thickness = 0.1, est=1, cmyr = TRUE, youngest = -55, bty = "o")
 
 clam(core="stetson", type = 4, smooth = 0.8, prob = 0.95, its = 1000, # Spline model
     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
@@ -142,7 +181,7 @@ clam(core="stetson2", type = 1, prob = 0.95, its = 1000,
      coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = TRUE,
      depths.file = TRUE, thickness = 0.1, est = 1, bty = "o", cmyr = TRUE, youngest = (1950-2005))
 
-mix.calibrationcurves(proportion=0.5, cc1 = "IntCal13.14C", cc2 = "Marine13.14C", name = "mixed.14C", dir = ".", offset = c(2,20), sep = "\t")
+# mix.calibrationcurves(proportion=0.5, cc1 = "IntCal13.14C", cc2 = "Marine13.14C", name = "mixed.14C", dir = ".", offset = c(2,20), sep = "\t")
 
 # stet2depths <- read.delim('~/Documents/GitHub/data/clam/Cores/stetson2/stetson2_smooth_spline_ages.txt')
 stet2depths <- read.delim('~/Documents/GitHub/data/clam/Cores/stetson2/stetson2_interpolated_ages.txt')
@@ -340,7 +379,8 @@ clam(core="sav4902", type = 1, smooth = 0.5, prob = 0.95, its = 1000,
 
 clam(core="sav4902", type = 2, smooth = 0.5, prob = 0.95, its = 1000,
      coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
-     depths.file = TRUE, thickness = 0.1, est = 1, youngest = c(1), cmyr = TRUE, hiatus = c(20.5))
+     depths.file = TRUE, thickness = 0.1, est = 1, youngest = c(1), cmyr = TRUE)
+     # , hiatus = c(20.5))
 
 # savdepths <- read.delim('~/Documents/GitHub/data/clam/Cores/sav4902/sav4902_polyn_regr_ages.txt')
 savdepths <- read.delim('~/Documents/GitHub/data/clam/Cores/sav4902/sav4902_interpolated_ages.txt')
@@ -355,9 +395,9 @@ jack4684 %>%
 write.table(depths, '~/Documents/GitHub/data/clam/Cores/jack4684/jack4684_depths.txt', 
             sep = '\t', row.names = FALSE, col.names = FALSE)
 
-clam(core="jack4684", type = 2, smooth = 0.4, prob = 0.95, its = 1000,
+clam(core="jack4684", type = 2, prob = 0.95, its = 1000,
      coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = TRUE,
-     depths.file = TRUE, thickness = 0.1, est = 2, ignore = c(2:7), cmyr = TRUE, youngest = c(1), bty = "o")
+     depths.file = TRUE, thickness = 0.1, ignore = c(2:7), cmyr = TRUE, youngest = c(1), bty = "o")
 
 # jack4684depths <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4684/jack4684_smooth_spline_ages.txt')
 jack4684depths <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4684/jack4684_polyn_regr_ages.txt')
@@ -396,12 +436,3 @@ clam(core="jack4907", type = 2, prob = 0.99, its = 1000, # Use linear regression
      coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
      depths.file = TRUE, thickness = 0.05, est = 1, cmyr = TRUE, hiatus = c(0.935, 3.5), # hiatus argument is depth in cm ***
      bty = "o") 
-
-
-
-
-#' --------------------------------------------
-#' PART 3: Bacon Age Models (with Bacon R package)
-#' 
-#' 
-#' --------------------------------------------
