@@ -18,6 +18,7 @@ path3 <- '/home/john/Desktop/data/schiff radiocarbon 02-05-2019.csv'
 df <- read.csv(path1, header = TRUE)
 
 radiocarbon <- df
+radiocarbon$X14C.Age <- as.numeric(as.character(radiocarbon$X14C.Age))
 core.dir <- '~/Documents/GitHub/data/clam/Cores'
 
 ##################################
@@ -55,12 +56,18 @@ r.jack4686 <- radiocarbon %>% filter(Coral == 'jack-4686-bc1-t1')
 # Jacksonville-4907 BC1 
 # **********************
 
+lm.jack <- lm(X14C.Age ~ Distance.microns, r.jack[c(1:9),])
+plot(X14C.Age ~ Distance.microns, r.jack)
+abline(lm.jack)
+
+summary(lm.jack)
+
 # **********************
 # Stetson-4904 BC1
 # **********************
 
 # first Stetson record
-lm.stet <- lm(X14C.Age ~ Distance.microns, r.stet)
+lm.stet <- lm(X14C.Age ~ Distance.microns, r.stet) # r.stet[c(1:19),] 
 plot(X14C.Age ~ Distance.microns, r.stet)
 abline(lm.stet)
 
@@ -99,10 +106,11 @@ summary(lm.jack2)
 # long: 6.7mm, short: 4.7mm
 # going with 6mm length +/- 0.5mm
 
-# Note: This one is particularly important because we can also use the bomb spike
 t.df <- r.jack4686 %>% filter(Fraction.modern < 1)
 t.df$X14C.Age <- as.numeric(as.character(t.df$X14C.Age))
-lm.jack4686 <- lm(X14C.Age ~ Distance.microns, t.df)
+lm.jack4686 <- lm(X14C.Age ~ Distance.microns, t.df[c(1:5),])
+plot(X14C.Age ~ Distance.microns, t.df)
+abline(lm.jack4686)
 
 summary(lm.jack4686) # Rsquared = 0.95
 
@@ -140,6 +148,18 @@ t.df <- as.data.frame(t.df)
 #' 
 #' --------------------------------------------
 #' 
+
+
+# **********************
+# Jacksonville-4686 BC1
+# ********************** 
+
+clam(core="jack4686", type = 2, prob = 0.95, its = 1000,
+     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = TRUE,
+     depths.file = TRUE, thickness = 0.01, est=1, cmyr = TRUE, bty = "o")
+
+jack4686ages1 <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4686/jack4686_polyn_regr_ages.txt')
+jack4686ages <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4686/jack4686_smooth_spline_ages.txt')
 
 # **********************
 # Stetson-4904 BC1
