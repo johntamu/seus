@@ -56,11 +56,28 @@ r.jack4686 <- radiocarbon %>% filter(Coral == 'jack-4686-bc1-t1')
 # Jacksonville-4907 BC1 
 # **********************
 
-lm.jack <- lm(X14C.Age ~ Distance.microns, r.jack[c(1:9),])
+lm.jack <- lm(X14C.Age ~ Distance.microns, r.jack) # [c(1:8),])
+summary(lm.jack)
+
 plot(X14C.Age ~ Distance.microns, r.jack)
 abline(lm.jack)
 
-summary(lm.jack)
+lm1 <- lm(X14C.Age ~ Distance.microns, r.jack[c(1:4),])
+lm2 <- lm(X14C.Age ~ Distance.microns, r.jack[c(4:18),])
+lm3 <- lm(X14C.Age ~ Distance.microns, r.jack[c(10:18),]) 
+
+plot(X14C.Age ~ Distance.microns, r.jack)
+abline(lm1,col='red')
+abline(lm2)
+abline(lm3)
+
+summary(lm1)
+summary(lm2)
+summary(lm3)
+
+print(as.numeric(1/lm1$coefficients[2]))
+print(as.numeric(1/lm2$coefficients[2]))
+print(as.numeric(1/lm3$coefficients[2]))
 
 # **********************
 # Stetson-4904 BC1
@@ -72,6 +89,16 @@ plot(X14C.Age ~ Distance.microns, r.stet)
 abline(lm.stet)
 
 summary(lm.stet)
+
+lm1 <- lm(X14C.Age ~ Distance.microns, r.stet[c(1:10),])
+lm2 <- lm(X14C.Age ~ Distance.microns, r.stet[c(10:28),])
+
+plot(X14C.Age ~ Distance.microns, r.stet)
+abline(lm1,col='red')
+abline(lm2)
+
+print(as.numeric(1/lm1$coefficients[2]))
+print(as.numeric(1/lm2$coefficients[2]))
 
 # second Stetson record
 lm.stet2 <- lm(X14C.Age ~ Distance.microns, r.stet2)
@@ -89,6 +116,19 @@ plot(X14C.Age ~ Distance.microns, r.sav)
 abline(lm.sav)
 
 summary(lm.sav)
+
+lm1 <- lm(X14C.Age ~ Distance.microns, r.sav[c(1:3),])
+lm2 <- lm(X14C.Age ~ Distance.microns, r.sav[c(3:7),])
+
+plot(X14C.Age ~ Distance.microns, r.sav)
+abline(lm1,col='red')
+abline(lm2)
+
+summary(lm1)
+summary(lm2)
+
+print(as.numeric(1/lm1$coefficients[2]))
+print(as.numeric(1/lm2$coefficients[2]))
 
 # **********************
 # Jacksonville-4684 BC1
@@ -108,12 +148,20 @@ summary(lm.jack2)
 
 t.df <- r.jack4686 %>% filter(Fraction.modern < 1)
 t.df$X14C.Age <- as.numeric(as.character(t.df$X14C.Age))
-lm.jack4686 <- lm(X14C.Age ~ Distance.microns, t.df[c(1:5),])
+lm.jack4686 <- lm(X14C.Age ~ Distance.microns, t.df)
 plot(X14C.Age ~ Distance.microns, t.df)
 abline(lm.jack4686)
 
 summary(lm.jack4686) # Rsquared = 0.95
 
+lm1 <- lm(X14C.Age ~ Distance.microns, t.df[c(1:3),])
+lm2 <- lm(X14C.Age ~ Distance.microns, t.df[c(3:8),])
+plot(X14C.Age ~ Distance.microns, t.df)
+abline(lm1)
+abline(lm2)
+
+print(as.numeric(1/lm1$coefficients[2]))
+print(as.numeric(1/lm2$coefficients[2]))
 
 ################
 # Growth rates #
@@ -236,55 +284,30 @@ jack %>%
 write.table(depths, '~/Documents/GitHub/data/clam/Cores/jack4907/jack4907_depths.txt', 
             sep = '\t', row.names = FALSE, col.names = FALSE)
 
-par(pty = "s", mfrow=c(1,3))
-clam(core="jack4907", type = 4, smooth = 0.5, prob = 0.99, its = 1000,
-     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
-     depths.file = TRUE, thickness = 0.1, est = 5, cmyr = TRUE, bty = "o", mix.calibrationcurves(offset = c(-37,5)))
-
-
-clam(core="jack4907", type = 1, prob = 0.95, its = 1000, # Use linear regression with a hiatus
-     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = TRUE,
-     depths.file = TRUE, outlier = c(4:9,11:16), thickness = 0.05, est = 1, cmyr = TRUE, 
-     bty = "o") 
-
 clam(core="jack4907", type = 2, prob = 0.99, its = 1000, # Use linear regression with a hiatus
      coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = TRUE,
      depths.file = TRUE, thickness = 0.05, est = 1, cmyr = TRUE, hiatus = c(0.935, 3.5), # hiatus argument is depth in cm ***
      bty = "o", youngest = c(1)) 
-
-clam(core="jackusgs", type = 2, prob = 0.99, its = 1000, # Use linear regression with a hiatus
-     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = TRUE,
-     depths.file = TRUE, thickness = 0.05, est = 1, cmyr = TRUE, hiatus = c(0.6, 2.8), # hiatus argument is depth in cm ***
-     bty = "o",  youngest = c(1)) 
-
-clam(core="jack4907", type = 2, prob = 0.95, its = 1000, # Use linear regression with a hiatus
-     coredir = core.dir, cc = 4, ccdir=".", BCAD = FALSE, depth = "mm", plotname = TRUE,
-     depths.file = TRUE, thickness = 0.1, est = 7, cmyr = TRUE, hiatus = c(1.35), # 1.1 works; hiatus argument is depth in cm ***
-     bty = "o", wghts = 0)
 
 clam(core="jack4907", type = 2, prob = 0.95, its = 1000, # Use linear regression with a hiatus
      coredir = core.dir, cc = 4, ccdir=".", BCAD = FALSE, depth = "mm", plotname = FALSE,
      depths.file = TRUE, thickness = 0.05, est = 1, cmyr = TRUE, hiatus = c(1.1), # hiatus argument is depth in cm ***
      bty = "o", youngest = c(1))
 
-mix.calibrationcurves(proportion=0.0, cc1 = "IntCal13.14C", cc2 = "Marine13.14C", name = "mixed.14C", dir = ".", offset = c(2,20), sep = "\t")
-calibrate(1010, 35, cc=2, reservoir=c(2,20), prob = 0.95)
-# One linear regression
+clam(core="jack4907", type = 2, prob = 0.95, its = 1000,
+     coredir = core.dir, cc = 4, ccdir=".", BCAD = FALSE, depth = "mm", plotname = FALSE,
+     depths.file = TRUE, thickness = 0.05, est = 1, cmyr = TRUE,
+     bty = "o", youngest = c(1))
 
-clam(core="jack4907", type = 2, prob = 0.99, its = 1000, # Use linear regression with a hiatus
-     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
-     depths.file = TRUE, thickness = 0.1, est = 1, cmyr = TRUE,
-     bty = "o", youngest = 500) 
-
-# Smoothing spline with clam package
-
-clam(core="jack4907", type = 4, smooth = 0.5, prob = 0.99, its = 1000,
-     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = FALSE,
-     depths.file = TRUE, thickness = 0.1, est = 5, cmyr = TRUE)
+clam(core="jack4907", type = 1, prob = 0.95, its = 1000, # Use linear regression with a hiatus
+     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = TRUE,
+     depths.file = TRUE, outlier = c(2:4,6:17), thickness = 0.05, est = 1, cmyr = TRUE, 
+     bty = "o") 
 
 # jackdepths <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4907/jack4907_smooth_spline_ages.txt')
 jackdepths <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4907/jack4907_polyn_regr_ages.txt')
 # jackdepths <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4907/jack4907_interpolated_ages.txt')
+write.csv(jackdepths, 'ages.csv')
 jackdepths$rate <- jackdepths$acc.rate*1000
 
 # --------------------------------

@@ -279,8 +279,8 @@ carbon %>%
     Category == "Bacteria" |
       Category == "Cyanobacteria" |
       Category == "Eukaryotic phytoplankton" |
-      Category == "Brown algae" |
-      Category == "Green algae"
+      Category == "Brown algae"
+      # Category == "Red algae"
          ) -> endmembers
 head(endmembers)
 carbon %>%

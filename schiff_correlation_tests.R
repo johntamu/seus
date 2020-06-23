@@ -58,6 +58,7 @@ summary(lm(d15n ~ d13c, df.stet2))
 summary(lm(d15n ~ d13c, df.stet3))
 
 summary(lm(d15n ~ linear.ad, test.jack4684))
+summary(lm(d13c ~ linear.ad, test.jack4684))
 summary(lm(d15n ~ linear.ad, df.stet3))
 summary(lm(d13c ~ linear.ad, df.stet3))
 
@@ -69,6 +70,13 @@ abline(lm(d15n ~ linear.ad, df.stet3))
 
 plot(d13c ~ linear.ad, df.stet3)
 abline(lm(d13c ~ linear.ad, df.stet3))
+
+jack4686 <- bulkdata %>% filter(coral.id == 'jack-4686-bc-d1-t1')
+jack4686 <- jack4686 %>% filter(linear.ad > 1849)
+
+plot(d15n.vs.air ~ linear.ad, jack4686)
+summary(lm(d15n.vs.air ~ linear.ad, jack4686))
+summary(lm(d13c.vs.vpdb ~ linear.ad, jack4686))
 
 par(mfrow = c(1,3), bty = 's')
 plot(d15n ~ d13c, df.jack,
@@ -272,15 +280,48 @@ head(df)
 
 # t-test before and after 1900 d15N
 
-t.table <- read.csv('~/Documents/GitHub/data/schiff_bulk_years_09-04-2019.csv')
+t.table <- read.csv('~/Documents/GitHub/data/schiff_bulk_years_06-17-2020.csv')
 library(dplyr)
 
 t.table <- t.table %>% filter(coral.id == "jack-4684-bc-unk" | coral.id == 'stet-4904-bc1-d2')
 t.table1 <- t.table %>% filter(coral.id == "jack-4684-bc-unk")
 t.table2 <- t.table %>% filter(coral.id == "stet-4904-bc1-d2")
 
+t.jack <- t.table %>% filter(coral.id == "jack-4907-bc1-d3")
+t.jack <- t.jack %>% filter(linear.ad > -750 & linear.ad < -450)
+lm1 <- lm(d15n.vs.air ~ d13c.vs.vpdb,data=t.jack)
+summary(lm(lm1))
+plot(d15n.vs.air ~ d13c.vs.vpdb,data=t.jack)
+
+# statistical tests
+t.table1 <- t.table %>% filter(coral.id == "jack-4686-bc-d1-t1")
+t.table2 <- t.table %>% filter(coral.id == "jack-4907-bc1-d3")
+t.table3 <- t.table %>% filter(coral.id == "stet-4904-bc1-d2")
+t.table4 <- t.table %>% filter(coral.id == "sav-4902-bc1-unk")
+
+lm1 <- lm(d15n.vs.air ~ d13c.vs.vpdb,data=t.table1)
+lm2 <- lm(d15n.vs.air ~ d13c.vs.vpdb,data=t.table2)
+lm3 <- lm(d15n.vs.air ~ d13c.vs.vpdb,data=t.table3)
+lm4 <- lm(d15n.vs.air ~ d13c.vs.vpdb,data=t.table4)
+
+summary(lm1)
+plot(d15n.vs.air ~ d13c.vs.vpdb,data=t.table1)
+abline(lm1)
+summary(lm2)
+plot(d15n.vs.air ~ d13c.vs.vpdb,data=t.table2) # jack4907
+abline(lm2)
+summary(lm3)
+plot(d15n.vs.air ~ d13c.vs.vpdb,data=t.table3) # stetson4904
+abline(lm3)
+summary(lm4)
+plot(d15n.vs.air ~ d13c.vs.vpdb,data=t.table4) # sav4902
+abline(lm4)
+
+
 stet1 <- t.table2 %>% filter(linear.ad > 1900)
 stet2 <- t.table2 %>% filter(linear.ad < 1900 & linear.ad > 1500)
+
+stet3 <- t.table2 %>% filter(linear.ad > 700 & linear.ad < 900)
 
 t.test(stet1$d15n.vs.air, stet2$d15n.vs.air)
 
@@ -352,7 +393,62 @@ ggsave("mol_percent.png",width = 8, height = 5)
 
 
 library(dplyr)
+ndata <- read.csv('~/Documents/GitHub/data/cleaned_ndata_06-17-2020.csv')
 ndata %>% filter(Region == 'SEUS') -> table
+table %>% filter(Phe < 13) -> table
+ancient <- table %>% filter(Year.CE < 1500)
+ancient <- table %>% filter(Year.CE > 1000)
 plot(Phe ~ Year.CE, table)
+abline(lm(Phe ~ Year.CE, table))
+plot(Phe ~ Bulk, ancient)
 summary(lm(Phe ~ Year.CE, table))
+summary(lm(Phe ~ Year.CE, ancient))
+summary(lm(Phe ~ Bulk, ancient))
 summary(lm(Glu ~ Year.CE, table))
+
+phe.aov <- aov(Phe ~ Sample.ID2, table) # One-way ANOVA with Phe
+gly.aov <- aov(Gly ~ Sample.ID2, table)
+ser.aov <- aov(Ser ~ Sample.ID2, table)
+glu.aov <- aov(Glu ~ Sample.ID2, table)
+sraa.aov <- aov(SrcAA ~ Coral, corals) # One-way ANOVA with avg Sr-AA
+tp.aov <- aov(TP ~ Coral, corals)
+sumv.aov <- aov(Sum.V ~ Coral, corals)
+
+bulkdata <- read.csv('~/Documents/GitHub/data/schiff_bulk_years_06-21-2020.csv')
+colnames(bulkdata)[names(bulkdata) == "distance..mm."] <- "distance" # Rename some columns for easier coding
+colnames(bulkdata)[names(bulkdata) == "d15n.vs.air"] <- "d15n"
+colnames(bulkdata)[names(bulkdata) == "d13c.vs.vpdb"] <- "d13c"
+colnames(bulkdata)[names(bulkdata) == "linear.ad"] <- "yrAD"
+
+df.jack <- bulkdata %>% filter(coral.id == 'jack-4907-bc1-d3')
+df.sav <- bulkdata %>% filter(coral.id == 'sav-4902-bc1-unk')
+df.stet <- bulkdata %>% filter(coral.id == 'stet-4904-bc1-d2')
+df.jack2 <- bulkdata %>% filter(coral.id == 'jack-4907-bc1-d1')
+df.jack4684 <- bulkdata %>% filter(coral.id == 'jack-4684-bc-unk')
+df.jack4686 <- bulkdata %>% filter(coral.id == 'jack-4686-bc-d1-t1')
+
+plot(d15n ~ d13c, df.jack)
+abline(lm(d15n ~ d13c, df.jack2))
+plot(d15n ~ d13c, df.jack2)
+plot(d15n ~ d13c, df.jack4686)
+plot(d15n ~ d13c, df.stet)
+summary(lm(d15n ~ d13c, df.jack))
+summary(lm(d15n ~ d13c, df.jack4686))
+summary(lm(d15n ~ d13c, df.jack2))
+summary(lm(d15n ~ d13c, df.stet))
+
+df.jack <- df.jack %>% filter(yrAD < 300)
+df.jack <- df.jack %>% filter(yrAD > -250)
+df.jack <- df.jack %>% filter(yrAD > 400 & yrAD < 1500 )
+df.sav <- df.sav %>% filter(yrAD > 400 & yrAD < 1500 )
+plot(d15n ~ yrAD, df.jack) 
+summary(lm(d15n ~ yrAD, df.jack))   
+summary(lm(d15n ~ yrAD, df.sav))     
+
+plot(d15n ~ d13c, df.jack)
+ggplot(table, aes(x=Year.CE, y=Phe))+
+  geom_point()+
+  geom_smooth(method=lm, se=TRUE)
+ggplot(df.jack, aes(x=d13c, y=d15n))+
+  geom_point()+
+  geom_smooth(method=lm, se=TRUE)
