@@ -12,8 +12,8 @@ library(clam)
 library(dplyr)
 
 path1 <- '~/Documents/GitHub/data/schiff radiocarbon 06-10-2020.csv'
-path2 <- 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/schiff radiocarbon 02-05-2019.csv'
-path3 <- '/home/john/Desktop/data/schiff radiocarbon 02-05-2019.csv'
+# path2 <- 'C:/Users/jschiff.GEOSAD/Google Drive/projects/rproj/seus/data/schiff radiocarbon 02-05-2019.csv'
+# path3 <- '/home/john/Desktop/data/schiff radiocarbon 02-05-2019.csv'
 
 df <- read.csv(path1, header = TRUE)
 
@@ -56,20 +56,22 @@ r.jack4686 <- radiocarbon %>% filter(Coral == 'jack-4686-bc1-t1')
 # Jacksonville-4907 BC1 
 # **********************
 
-lm.jack <- lm(X14C.Age ~ Distance.microns, r.jack) # [c(1:8),])
+y <- r.jack$median
+lm.jack <- lm(y ~ Distance.microns, r.jack) # [c(1:8),])
 summary(lm.jack)
 
-plot(X14C.Age ~ Distance.microns, r.jack)
+plot(y ~ Distance.microns, r.jack)
 abline(lm.jack)
 
-lm1 <- lm(X14C.Age ~ Distance.microns, r.jack[c(1:4),])
-lm2 <- lm(X14C.Age ~ Distance.microns, r.jack[c(4:18),])
-lm3 <- lm(X14C.Age ~ Distance.microns, r.jack[c(10:18),]) 
+lm1 <- lm(median ~ Distance.microns, r.jack[c(1:8),])
+# lm2 <- lm(median ~ Distance.microns, r.jack[c(3:10),])
+lm2 <- lm(median ~ Distance.microns, r.jack[c(5:18),])
+# lm3 <- lm(median ~ Distance.microns, r.jack[c(10:18),]) 
 
-plot(X14C.Age ~ Distance.microns, r.jack)
+plot(y ~ Distance.microns, r.jack)
 abline(lm1,col='red')
 abline(lm2)
-abline(lm3)
+# abline(lm3)
 
 summary(lm1)
 summary(lm2)
@@ -90,8 +92,10 @@ abline(lm.stet)
 
 summary(lm.stet)
 
-lm1 <- lm(X14C.Age ~ Distance.microns, r.stet[c(1:10),])
-lm2 <- lm(X14C.Age ~ Distance.microns, r.stet[c(10:28),])
+lm1 <- lm(X14C.Age ~ Distance.microns, r.stet[c(1:16),])
+lm2 <- lm(X14C.Age ~ Distance.microns, r.stet[c(15:28),])
+summary(lm1)
+summary(lm2)
 
 plot(X14C.Age ~ Distance.microns, r.stet)
 abline(lm1,col='red')
@@ -101,11 +105,13 @@ print(as.numeric(1/lm1$coefficients[2]))
 print(as.numeric(1/lm2$coefficients[2]))
 
 # second Stetson record
-lm.stet2 <- lm(X14C.Age ~ Distance.microns, r.stet2)
-plot(X14C.Age ~ Distance.microns, r.stet2)
+r.stet2 %>% filter(X14C.Age > 0) -> t.df
+lm.stet2 <- lm(X14C.Age ~ Distance.microns, t.df)
+plot(X14C.Age ~ Distance.microns, t.df)
 abline(lm.stet2)
 
 summary(lm.stet2)
+print(as.numeric(1/lm.stet2$coefficients[2]))
 
 # **********************
 # Savannah-4902 BC1
@@ -152,10 +158,10 @@ lm.jack4686 <- lm(X14C.Age ~ Distance.microns, t.df)
 plot(X14C.Age ~ Distance.microns, t.df)
 abline(lm.jack4686)
 
-summary(lm.jack4686) # Rsquared = 0.95
+summary(lm.jack4686) # Note to self 6/28/2020-- refine age model before publication using split regressions
 
-lm1 <- lm(X14C.Age ~ Distance.microns, t.df[c(1:3),])
-lm2 <- lm(X14C.Age ~ Distance.microns, t.df[c(3:8),])
+lm1 <- lm(X14C.Age ~ Distance.microns, t.df[c(1:4),])
+lm2 <- lm(X14C.Age ~ Distance.microns, t.df[c(2:8),])
 plot(X14C.Age ~ Distance.microns, t.df)
 abline(lm1)
 abline(lm2)
@@ -204,7 +210,20 @@ t.df <- as.data.frame(t.df)
 
 clam(core="jack4686", type = 2, prob = 0.95, its = 1000,
      coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = TRUE,
+     depths.file = TRUE, thickness = 0.01, est=1, cmyr = TRUE, bty = "o", youngest = c(1))
+
+clam(core="jack4686", type = 3, prob = 0.95, its = 1000,
+     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = TRUE,
      depths.file = TRUE, thickness = 0.01, est=1, cmyr = TRUE, bty = "o")
+
+clam(core="jack4686", type = 4, prob = 0.99, its = 1000,
+     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = TRUE,
+     depths.file = TRUE, thickness = 0.01, est=2, cmyr = TRUE, bty = "o")
+
+clam(core="jack4686", type = 1, prob = 0.95, its = 1000,
+     coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = TRUE,
+     depths.file = TRUE, thickness = 0.01, est=2, cmyr = TRUE, bty = "o")
+
 
 jack4686ages1 <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4686/jack4686_polyn_regr_ages.txt')
 jack4686ages <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4686/jack4686_smooth_spline_ages.txt')
@@ -289,19 +308,14 @@ clam(core="jack4907", type = 2, prob = 0.99, its = 1000, # Use linear regression
      depths.file = TRUE, thickness = 0.05, est = 1, cmyr = TRUE, hiatus = c(0.935, 3.5), # hiatus argument is depth in cm ***
      bty = "o", youngest = c(1)) 
 
-clam(core="jack4907", type = 2, prob = 0.95, its = 1000, # Use linear regression with a hiatus
-     coredir = core.dir, cc = 4, ccdir=".", BCAD = FALSE, depth = "mm", plotname = FALSE,
-     depths.file = TRUE, thickness = 0.05, est = 1, cmyr = TRUE, hiatus = c(1.1), # hiatus argument is depth in cm ***
-     bty = "o", youngest = c(1))
-
 clam(core="jack4907", type = 2, prob = 0.95, its = 1000,
      coredir = core.dir, cc = 4, ccdir=".", BCAD = FALSE, depth = "mm", plotname = FALSE,
      depths.file = TRUE, thickness = 0.05, est = 1, cmyr = TRUE,
      bty = "o", youngest = c(1))
 
-clam(core="jack4907", type = 1, prob = 0.95, its = 1000, # Use linear regression with a hiatus
+clam(core="jackusgs", type = 4, smooth = 0.4, prob = 0.95, its = 1000, # Use linear regression with a hiatus
      coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = TRUE,
-     depths.file = TRUE, outlier = c(2:4,6:17), thickness = 0.05, est = 1, cmyr = TRUE, 
+     depths.file = TRUE, thickness = 0.05, est = 1, cmyr = TRUE, 
      bty = "o") 
 
 # jackdepths <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4907/jack4907_smooth_spline_ages.txt')
@@ -438,9 +452,14 @@ jack4684 %>%
 write.table(depths, '~/Documents/GitHub/data/clam/Cores/jack4684/jack4684_depths.txt', 
             sep = '\t', row.names = FALSE, col.names = FALSE)
 
+temp.df <- read.csv('~/Documents/GitHub/data/clam/Cores/jack4684/jack4684_original.csv', header = TRUE)
+temp.df %>% filter(C14_age > 545) -> temp.df
+write.table(temp.df, '~/Documents/GitHub/data/clam/Cores/jack4684/jack4684.csv',
+            sep = ',', row.names = FALSE)
+
 clam(core="jack4684", type = 2, prob = 0.95, its = 1000,
      coredir = core.dir, cc = 2, BCAD = FALSE, depth = "mm", plotname = TRUE,
-     depths.file = TRUE, thickness = 0.1, ignore = c(2:7), cmyr = TRUE, youngest = c(1), bty = "o")
+     depths.file = FALSE, thickness = 0.1, cmyr = TRUE, bty = "o")
 
 # jack4684depths <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4684/jack4684_smooth_spline_ages.txt')
 jack4684depths <- read.delim('~/Documents/GitHub/data/clam/Cores/jack4684/jack4684_polyn_regr_ages.txt')

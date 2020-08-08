@@ -166,11 +166,11 @@ ndata <- read.csv("cleaned_ndata.csv")
 #' Identifying if differences 
 #' between coral specimens are significant
 
-# ndata %>%
-#   filter(Sample.ID2 == "Jacksonville-4907" | Sample.ID2 == "Jacksonville-4684" | Sample.ID2 == "Savannah Banks-4902") -> corals
-
-seus %>%
+ndata %>%
   filter(Sample.ID2 == "Jacksonville-4907" | Sample.ID2 == "Jacksonville-4684" | Sample.ID2 == "Savannah Banks-4902") -> corals
+
+# seus %>%
+#   filter(Sample.ID2 == "Jacksonville-4907" | Sample.ID2 == "Jacksonville-4684" | Sample.ID2 == "Savannah Banks-4902") -> corals
 
 phe.aov <- aov(Phe ~ Sample.ID2, corals) # One-way ANOVA with Phe
 sraa.aov <- aov(SrcAA ~ Sample.ID2, corals) # One-way ANOVA with avg Sr-AA

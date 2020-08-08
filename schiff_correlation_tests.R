@@ -399,6 +399,7 @@ table %>% filter(Phe < 13) -> table
 ancient <- table %>% filter(Year.CE < 1500)
 ancient <- table %>% filter(Year.CE > 1000)
 plot(Phe ~ Year.CE, table)
+plot(Gly ~ Year.CE, table)
 abline(lm(Phe ~ Year.CE, table))
 plot(Phe ~ Bulk, ancient)
 summary(lm(Phe ~ Year.CE, table))
@@ -406,6 +407,7 @@ summary(lm(Phe ~ Year.CE, ancient))
 summary(lm(Phe ~ Bulk, ancient))
 summary(lm(Glu ~ Year.CE, table))
 
+shapiro.test(table$Phe) # Null hypothesis is that the data are normally distributed
 phe.aov <- aov(Phe ~ Sample.ID2, table) # One-way ANOVA with Phe
 gly.aov <- aov(Gly ~ Sample.ID2, table)
 ser.aov <- aov(Ser ~ Sample.ID2, table)
@@ -414,7 +416,7 @@ sraa.aov <- aov(SrcAA ~ Coral, corals) # One-way ANOVA with avg Sr-AA
 tp.aov <- aov(TP ~ Coral, corals)
 sumv.aov <- aov(Sum.V ~ Coral, corals)
 
-bulkdata <- read.csv('~/Documents/GitHub/data/schiff_bulk_years_06-21-2020.csv')
+bulkdata <- read.csv('~/Documents/GitHub/data/schiff_bulk_years_06-26-2020.csv')
 colnames(bulkdata)[names(bulkdata) == "distance..mm."] <- "distance" # Rename some columns for easier coding
 colnames(bulkdata)[names(bulkdata) == "d15n.vs.air"] <- "d15n"
 colnames(bulkdata)[names(bulkdata) == "d13c.vs.vpdb"] <- "d13c"
@@ -436,6 +438,14 @@ summary(lm(d15n ~ d13c, df.jack))
 summary(lm(d15n ~ d13c, df.jack4686))
 summary(lm(d15n ~ d13c, df.jack2))
 summary(lm(d15n ~ d13c, df.stet))
+
+df.stet3 <- df.stet %>% 
+  filter(yrAD > 1845)
+summary(lm(d15n ~ yrAD, df.stet3))
+
+df.test <- df.jack4686 %>% 
+  filter(yrAD > 1845)
+summary(lm(d15n ~ yrAD, df.test))
 
 df.jack <- df.jack %>% filter(yrAD < 300)
 df.jack <- df.jack %>% filter(yrAD > -250)
